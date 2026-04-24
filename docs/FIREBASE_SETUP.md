@@ -23,6 +23,24 @@ VITE_FIREBASE_APP_ID=
 Firebase web config values are not service account keys. Do not commit
 `.env.local`.
 
+Current local development project noted from Firebase Console:
+
+```text
+VITE_FIREBASE_PROJECT_ID=academic-learning-portal-dev
+```
+
+The Firebase CLI is available through the project dependency, so use local CLI
+commands instead of requiring a global install:
+
+```bash
+npx firebase --version
+npx firebase login
+npx firebase use academic-learning-portal-dev
+```
+
+Do not deploy Hosting until the user explicitly approves preview or production
+deployment in `docs/DECISIONS_NEEDED.md`.
+
 ## Authentication
 
 Enable Google as a sign-in provider in Firebase Console:

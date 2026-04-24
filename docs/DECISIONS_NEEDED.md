@@ -88,10 +88,14 @@ studentId,email,displayName,quiz1,quiz2,midterm
 
 ## Deployment
 
-- [ ] Firebase project ID
+- [x] Firebase project ID for local development: `academic-learning-portal-dev`
 - [ ] custom domain
 - [ ] อนุญาต preview deploy หรือไม่
 - [ ] อนุมัติ production deploy หรือไม่
+
+หมายเหตุ: Firebase CLI ใช้ผ่าน local project dependency ได้ด้วย `npx firebase`
+จึงยังไม่จำเป็นต้องติดตั้ง global CLI ด้วย `npm install -g firebase-tools`
+และยังไม่มีการ deploy จนกว่าผู้ใช้จะอนุมัติชัดเจน
 
 ## Privacy
 
