@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "academic-learning-portal-dev",
+    "dev": "academic-learning-portal-dev"
+  }
+}
