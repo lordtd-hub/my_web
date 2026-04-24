@@ -20,6 +20,12 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/courses/$(courseId)/enrollments/$(request.auth.uid));
     }
 
+    function canReadEnrollment(uid) {
+      return isSelf(uid)
+        || (signedIn() && resource.data.uid == request.auth.uid)
+        || isAdmin();
+    }
+
     match /admins/{uid} {
       allow read: if isAdmin();
       allow write: if false;
@@ -47,12 +53,16 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /{path=**}/enrollments/{uid} {
+      allow read: if canReadEnrollment(uid);
+    }
+
     match /courses/{courseId} {
       allow read: if resource.data.isPublic == true || isAdmin() || isEnrolled(courseId);
       allow write: if isAdmin();
 
       match /enrollments/{uid} {
-        allow read: if isSelf(uid) || isAdmin();
+        allow read: if canReadEnrollment(uid);
         allow write: if isAdmin();
       }
 
