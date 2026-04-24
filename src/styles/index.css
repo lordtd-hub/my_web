@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  body {
+    min-width: 320px;
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+@layer components {
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-academic-blue px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-ink focus:outline-none focus:ring-2 focus:ring-academic-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-ink/30;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-ink/15 bg-white px-4 py-2.5 text-sm font-semibold text-ink transition hover:border-academic-blue hover:text-academic-blue focus:outline-none focus:ring-2 focus:ring-academic-blue focus:ring-offset-2;
+  }
+
+  .button-on-dark {
+    @apply inline-flex items-center justify-center rounded-md border border-white/20 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-white hover:text-ink focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-ink;
+  }
+
+  .section-eyebrow {
+    @apply text-sm font-semibold uppercase tracking-[0.18em] text-academic-blue;
+  }
+
+  .content-grid {
+    @apply grid gap-5 md:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .info-panel {
+    @apply rounded-lg border border-ink/10 bg-white p-6 shadow-sm;
+  }
+
+  .info-panel h2,
+  .info-panel h3 {
+    @apply text-xl font-semibold text-ink;
+  }
+
+  .info-panel p {
+    @apply mt-3 text-sm leading-6 text-ink/65;
+  }
+
+  .text-link {
+    @apply font-semibold text-academic-blue transition hover:text-copper-accent;
+  }
+
+  .status-pill {
+    @apply inline-flex max-w-56 items-center truncate rounded-md border border-sage-line bg-paper-warm px-3 py-2 text-sm font-semibold text-ink;
+  }
+
+  .alert-message {
+    @apply rounded-md border border-copper-accent/30 bg-copper-accent/10 px-4 py-3 text-sm font-medium leading-6 text-ink;
+  }
+
+  .success-message {
+    @apply rounded-md border border-sage-line bg-sage-line/20 px-4 py-3 text-sm font-medium leading-6 text-ink;
+  }
+
+  .section-band {
+    @apply border-y border-ink/10 bg-white/70;
+  }
+
+  .section-heading-row {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .section-heading-row h2 {
+    @apply mt-2 text-3xl font-semibold leading-tight text-ink;
+  }
+
+  .metadata-label {
+    @apply mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-copper-accent;
+  }
+
+  .academic-mark {
+    @apply flex aspect-square w-24 items-center justify-center rounded-lg bg-ink text-6xl font-semibold text-paper-warm shadow-soft;
+  }
+
+  .profile-card {
+    @apply rounded-lg border border-ink/10 bg-ink p-6 text-white shadow-soft;
+  }
+
+  .profile-card dt {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-sage-line;
+  }
+
+  .profile-card dd {
+    @apply mt-1 text-base font-semibold text-white;
+  }
+
+  .profile-avatar {
+    @apply flex aspect-square w-24 items-center justify-center rounded-lg bg-paper-warm text-5xl font-semibold text-academic-blue;
+  }
+
+  .detail-tile {
+    @apply rounded-md border border-sage-line/60 bg-paper-warm p-4;
+  }
+
+  .detail-tile span {
+    @apply block text-xs font-semibold uppercase tracking-[0.14em] text-ink/55;
+  }
+
+  .detail-tile strong {
+    @apply mt-2 block text-sm font-semibold text-ink;
+  }
+
+  .check-row,
+  .resource-row {
+    @apply rounded-md border border-sage-line/60 bg-paper-warm px-4 py-3 text-sm font-medium text-ink/75;
+  }
+
+  .lesson-tile {
+    @apply rounded-md bg-ink px-4 py-3 text-sm font-medium text-white;
+  }
+
+  .score-list {
+    @apply grid gap-4;
+  }
+
+  .score-card {
+    @apply rounded-lg border border-ink/10 bg-white p-6 shadow-sm;
+  }
+
+  .score-card h2 {
+    @apply text-xl font-semibold text-ink;
+  }
+
+  .score-value {
+    @apply mt-4 inline-flex rounded-md bg-academic-blue px-4 py-2 text-lg font-semibold text-white;
+  }
+
+  .admin-sidebar {
+    @apply self-start rounded-lg border border-ink/10 bg-white p-4 shadow-sm;
+  }
+
+  .form-panel {
+    @apply grid gap-5 rounded-lg border border-ink/10 bg-white p-6 shadow-sm;
+  }
+
+  .form-panel label {
+    @apply grid gap-2 text-sm font-semibold text-ink;
+  }
+
+  .form-panel input,
+  .form-panel select,
+  .form-panel textarea {
+    @apply w-full rounded-md border border-ink/15 bg-white px-3 py-2 text-sm font-normal text-ink outline-none transition focus:border-academic-blue focus:ring-2 focus:ring-academic-blue/20;
+  }
+
+  .form-grid {
+    @apply grid gap-4 md:grid-cols-2;
+  }
+
+  .checkbox-row {
+    @apply flex items-start gap-3 text-sm font-medium leading-6 text-ink/75;
+  }
+
+  .checkbox-row input {
+    @apply mt-1 h-4 w-4 shrink-0 accent-academic-blue;
+  }
+
+  .table-wrap {
+    @apply overflow-x-auto rounded-lg border border-ink/10;
+  }
+
+  .table-wrap table {
+    @apply min-w-full divide-y divide-ink/10 bg-white text-left text-sm;
+  }
+
+  .table-wrap th {
+    @apply bg-paper-warm px-4 py-3 font-semibold text-ink;
+  }
+
+  .table-wrap td {
+    @apply px-4 py-3 text-ink/70;
+  }
+
+  .table-wrap tbody tr {
+    @apply border-t border-ink/10;
+  }
+}

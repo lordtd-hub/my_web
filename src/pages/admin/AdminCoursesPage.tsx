@@ -1,0 +1,65 @@
+import { Link } from "react-router-dom";
+import { PageShell } from "../../components/PageShell";
+import { useAdminCourses } from "../../features/admin/useAdminCourses";
+import { AdminLayout } from "./AdminLayout";
+
+export function AdminCoursesPage() {
+  const { courses, error, isLoading } = useAdminCourses();
+
+  return (
+    <PageShell
+      eyebrow="แดชบอร์ดอาจารย์"
+      title="จัดการรายวิชา"
+      description="ข้อมูลรายวิชาอ่านจาก Firestore และต้องใช้สิทธิ์ `admins/{uid}`"
+    >
+      <AdminLayout>
+        <div className="mb-6 flex flex-wrap gap-3">
+          <Link className="button-primary" to="/admin/courses/new">
+            สร้างรายวิชา
+          </Link>
+        </div>
+
+        {isLoading ? (
+          <div className="info-panel">
+            <h2>กำลังโหลดรายวิชา</h2>
+            <p>กำลังอ่าน course records จาก Firestore...</p>
+          </div>
+        ) : null}
+
+        {error ? <p className="alert-message">{error}</p> : null}
+
+        {!isLoading && !error && courses.length === 0 ? (
+          <div className="info-panel">
+            <h2>ยังไม่มีรายวิชา</h2>
+            <p>กรุณาสร้างรายวิชาก่อนเพิ่ม enrollment หรือ import คะแนน</p>
+          </div>
+        ) : null}
+
+        <div className="content-grid">
+          {courses.map(({ data, id }) => (
+            <article className="info-panel" key={id}>
+              <p className="metadata-label">{data.term}</p>
+              <h2>{data.title}</h2>
+              <p>{data.description}</p>
+              <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
+                <div>
+                  <dt className="font-semibold text-ink">ปีการศึกษา</dt>
+                  <dd className="mt-1 text-ink/65">{data.year}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">เผยแพร่ public</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {data.isPublic ? "ใช่" : "ไม่ใช่"}
+                  </dd>
+                </div>
+              </dl>
+              <Link className="button-secondary mt-5" to={`/admin/courses/${id}`}>
+                เปิดรายวิชา
+              </Link>
+            </article>
+          ))}
+        </div>
+      </AdminLayout>
+    </PageShell>
+  );
+}

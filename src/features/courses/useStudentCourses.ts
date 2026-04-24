@@ -1,0 +1,78 @@
+import { FirebaseError } from "firebase/app";
+import { useEffect, useState } from "react";
+import { useAuth } from "../auth/authContext";
+import { fetchStudentCourses, type StudentCourse } from "./studentCourses";
+
+type StudentCoursesState = {
+  courses: StudentCourse[];
+  error: string | null;
+  isLoading: boolean;
+};
+
+export function useStudentCourses() {
+  const { firebaseReady, status, user } = useAuth();
+  const [state, setState] = useState<StudentCoursesState>({
+    courses: [],
+    error: null,
+    isLoading: false,
+  });
+
+  useEffect(() => {
+    let isCurrent = true;
+
+    async function loadCourses() {
+      if (!firebaseReady || status !== "authenticated" || !user) {
+        setState({
+          courses: [],
+          error: null,
+          isLoading: false,
+        });
+        return;
+      }
+
+      setState((current) => ({
+        ...current,
+        error: null,
+        isLoading: true,
+      }));
+
+      try {
+        const courses = await fetchStudentCourses(user.uid);
+
+        if (!isCurrent) {
+          return;
+        }
+
+        setState({
+          courses,
+          error: null,
+          isLoading: false,
+        });
+      } catch (courseError) {
+        if (!isCurrent) {
+          return;
+        }
+
+        setState({
+          courses: [],
+          error:
+            courseError instanceof FirebaseError &&
+            courseError.code === "permission-denied"
+              ? "Firestore ไม่อนุญาตให้อ่าน enrollments กรุณาตรวจสอบว่าผู้ใช้มีเอกสาร enrollment ที่ courses/{courseId}/enrollments/{uid}"
+              : courseError instanceof Error
+                ? courseError.message
+                : "ไม่สามารถโหลดรายวิชาของนักศึกษาได้",
+          isLoading: false,
+        });
+      }
+    }
+
+    void loadCourses();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [firebaseReady, status, user]);
+
+  return state;
+}

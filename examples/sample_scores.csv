@@ -1,0 +1,4 @@
+studentId,email,displayName,quiz1,quiz2,midterm
+65010001,student1@example.com,Alice Example,8,9,32
+65010002,student2@example.com,Bob Example,7,10,29
+65010003,student3@example.com,Charlie Example,10,8,35
