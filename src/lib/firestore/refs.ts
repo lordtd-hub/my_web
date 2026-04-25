@@ -36,7 +36,7 @@ function dbOrThrow() {
   const db = getDbClient();
 
   if (!db) {
-    throw new Error("Firestore is not configured. Add Firebase env values first.");
+    throw new Error("ยังไม่ได้ตั้งค่าฐานข้อมูลของระบบ กรุณาตรวจสอบการตั้งค่า Firebase");
   }
 
   return db;

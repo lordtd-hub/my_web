@@ -62,13 +62,13 @@ export function AdminCourseDetailPage() {
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
       title={course?.data.title ?? "จัดการรายวิชา"}
-      description="จัดการ enrollment, score items และการ import คะแนนจาก CSV สำหรับรายวิชานี้"
+      description="จัดการรายชื่อนักศึกษา รายการคะแนน และการนำเข้าคะแนนจาก CSV สำหรับรายวิชานี้"
     >
       <AdminLayout>
         {isLoading ? (
           <div className="info-panel">
             <h2>กำลังโหลดรายวิชา</h2>
-            <p>กำลังอ่าน course record...</p>
+            <p>กำลังโหลดข้อมูลรายวิชา...</p>
           </div>
         ) : null}
 
@@ -77,7 +77,7 @@ export function AdminCourseDetailPage() {
         {!isLoading && !error && !course ? (
           <div className="info-panel">
             <h2>ไม่พบรายวิชา</h2>
-            <p>course ID นี้ไม่มีอยู่ หรือยังไม่สามารถเข้าถึงได้</p>
+            <p>ไม่พบรายวิชานี้ หรือบัญชีของท่านอาจยังไม่มีสิทธิ์เข้าถึง</p>
           </div>
         ) : null}
 
@@ -85,24 +85,24 @@ export function AdminCourseDetailPage() {
           <>
             <section className="content-grid">
               <article className="info-panel">
-                <p className="metadata-label">Roster</p>
+                <p className="metadata-label">รายชื่อรอผูกบัญชี</p>
                 <h2>{summary?.rosterCount ?? 0}</h2>
-                <p>รายชื่อจากรหัสนักศึกษาที่รอ link ด้วย Firebase Auth UID</p>
+                <p>รายชื่อจากรหัสนักศึกษาที่ยังรอการเข้าสู่ระบบครั้งแรก</p>
               </article>
               <article className="info-panel">
-                <p className="metadata-label">Enrollments</p>
+                <p className="metadata-label">บัญชีผู้เรียน</p>
                 <h2>{summary?.enrollmentCount ?? 0}</h2>
-                <p>นักศึกษาที่ผูกกับ Firebase Auth UID แล้ว</p>
+                <p>นักศึกษาที่ผูกกับบัญชีเข้าสู่ระบบแล้ว</p>
               </article>
               <article className="info-panel">
-                <p className="metadata-label">Score Items</p>
+                <p className="metadata-label">รายการคะแนน</p>
                 <h2>{summary?.scoreItemCount ?? 0}</h2>
                 <p>รายการคะแนนของรายวิชานี้</p>
               </article>
               <article className="info-panel">
-                <p className="metadata-label">Student Scores</p>
+                <p className="metadata-label">คะแนนรายคน</p>
                 <h2>{summary?.studentScoreCount ?? 0}</h2>
-                <p>เอกสารคะแนนรายคนที่เขียนแล้วใน Firestore</p>
+                <p>รายการคะแนนรายคนที่บันทึกไว้แล้ว</p>
               </article>
             </section>
 
@@ -135,7 +135,7 @@ export function AdminCourseDetailPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-ink">Section</dt>
+                  <dt className="font-semibold text-ink">กลุ่มเรียน</dt>
                   <dd className="mt-1 text-ink/65">
                     {course.data.sections?.length
                       ? course.data.sections.join(", ")
@@ -145,20 +145,20 @@ export function AdminCourseDetailPage() {
               </dl>
             </article>
             <article className="info-panel">
-              <h2>Roster และ enrollment</h2>
+              <h2>รายชื่อนักศึกษา</h2>
               <p>
-                เพิ่มรหัสนักศึกษา, import roster CSV และตรวจสอบรายชื่อนักศึกษาก่อน import คะแนน
+                เพิ่มรหัสนักศึกษา นำเข้ารายชื่อจาก CSV และตรวจสอบรายชื่อนักศึกษาก่อนนำเข้าคะแนน
               </p>
               <Link
                 className="button-secondary mt-5"
                 to={`/admin/courses/${course.id}/students`}
               >
-                จัดการ roster/enrollment
+                จัดการรายชื่อนักศึกษา
               </Link>
             </article>
             <article className="info-panel">
               <h2>รายการคะแนน</h2>
-              <p>ตรวจสอบ score columns ที่สร้างจากการ import</p>
+              <p>ตรวจสอบรายการคะแนนที่สร้างจากการนำเข้า CSV</p>
               <Link
                 className="button-secondary mt-5"
                 to={`/admin/courses/${course.id}/scores`}
@@ -167,13 +167,13 @@ export function AdminCourseDetailPage() {
               </Link>
             </article>
             <article className="info-panel">
-              <h2>Import คะแนนจาก CSV</h2>
-              <p>อ่านไฟล์ ตรวจสอบ preview และเขียนเฉพาะแถวที่ match แล้ว</p>
+              <h2>นำเข้าคะแนนจาก CSV</h2>
+              <p>อ่านไฟล์ ตรวจสอบตัวอย่าง และบันทึกเฉพาะแถวที่ตรงกับรายชื่อนักศึกษา</p>
               <Link
                 className="button-primary mt-5"
                 to={`/admin/courses/${course.id}/import`}
               >
-                Import คะแนน
+                นำเข้าคะแนน
               </Link>
             </article>
             </div>

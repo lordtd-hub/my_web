@@ -30,11 +30,11 @@ export function StudentHomePage() {
           <dl className="mt-6 space-y-4">
             <div>
               <dt>เข้าสู่ระบบในชื่อ</dt>
-              <dd>{user?.displayName ?? user?.email ?? "ผู้ใช้ Firebase"}</dd>
+              <dd>{user?.displayName ?? user?.email ?? "ผู้ใช้"}</dd>
             </div>
             <div>
-              <dt>รูปแบบการระบุตัวตน</dt>
-              <dd>Firebase Auth UID</dd>
+              <dt>สถานะบัญชี</dt>
+              <dd>เข้าสู่ระบบแล้ว</dd>
             </div>
             <div>
               <dt>รายวิชาที่ใช้งานอยู่</dt>
@@ -51,9 +51,8 @@ export function StudentHomePage() {
           <div className="info-panel border-copper-accent/30">
             <h2>ภาพรวมรายวิชาส่วนตัว</h2>
             <p>
-              Dashboard นี้แสดงเฉพาะรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนและผูกกับ
-              Firebase Auth UID ของบัญชีที่เข้าสู่ระบบ คะแนนและข้อมูลผู้เรียนคนอื่น
-              จะไม่ถูกอ่านจากหน้านี้
+              หน้านี้แสดงเฉพาะรายวิชาของอาจารย์สิทธิโชคที่ผูกกับบัญชีของท่าน
+              ระบบจะแสดงเฉพาะข้อมูลของท่านและไม่แสดงคะแนนของผู้เรียนคนอื่น
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               <div className="detail-tile bg-white">
@@ -74,7 +73,7 @@ export function StudentHomePage() {
                 ดูรายวิชาของฉัน
               </Link>
               <Link className="button-secondary" to="/">
-                กลับหน้า public
+                กลับหน้าแรก
               </Link>
             </div>
           </div>
@@ -82,7 +81,7 @@ export function StudentHomePage() {
           {isLoading ? (
             <div className="info-panel">
               <h2>กำลังโหลดข้อมูลรายวิชา</h2>
-              <p>กำลังตรวจสอบ enrollment ที่ผูกกับบัญชีของท่าน...</p>
+              <p>กำลังตรวจสอบรายวิชาที่ผูกกับบัญชีของท่าน...</p>
             </div>
           ) : null}
 
@@ -92,8 +91,8 @@ export function StudentHomePage() {
             <div className="info-panel">
               <h2>ยังไม่พบรายวิชาที่ผูกกับบัญชีนี้</h2>
               <p>
-                เมื่อบัญชีนี้มี enrollment ในรายวิชาของอาจารย์สิทธิโชค
-                รายวิชาจะปรากฏใน dashboard นี้โดยอัตโนมัติ
+                เมื่อบัญชีนี้ถูกเพิ่มเข้าในรายวิชาของอาจารย์สิทธิโชค
+                รายวิชาจะปรากฏในหน้านี้โดยอัตโนมัติ
               </p>
             </div>
           ) : null}
@@ -110,7 +109,7 @@ export function StudentHomePage() {
                       {course?.title ?? "รอชื่อรายวิชา"}
                     </strong>
                     <p className="mt-2 text-sm leading-6 text-ink/65">
-                      Section {enrollment.section ?? "ไม่ระบุ"} ·{" "}
+                      กลุ่มเรียน {enrollment.section ?? "ไม่ระบุ"} ·{" "}
                       {formatEnrollmentStatus(enrollment.status)}
                     </p>
                     <Link
@@ -127,11 +126,11 @@ export function StudentHomePage() {
 
           <div className="content-grid">
             <article className="info-panel">
-              <p className="metadata-label">Progress</p>
+              <p className="metadata-label">ความก้าวหน้า</p>
               <h2>พัฒนาการการเรียนรู้</h2>
               <p>
                 เตรียมพื้นที่สำหรับสรุปความก้าวหน้าจากกิจกรรม interactive
-                ในอนาคต โดยยังไม่ใช้ข้อมูลจาก localStorage เป็นคะแนนทางการ
+                ในอนาคต โดยข้อมูลฝึกทำกิจกรรมจะยังไม่ถือเป็นคะแนนทางการ
               </p>
             </article>
             <article className="info-panel">
@@ -143,8 +142,8 @@ export function StudentHomePage() {
               </p>
             </article>
             <article className="info-panel">
-              <p className="metadata-label">Badges</p>
-              <h2>Badge และ XP</h2>
+              <p className="metadata-label">ป้ายความสำเร็จ</p>
+              <h2>ป้ายความสำเร็จและ XP</h2>
               <p>
                 เวอร์ชันถัดไปควรแยก XP เพื่อแสดงพัฒนาการออกจากคะแนนทางการ
                 และต้องมีข้อจำกัดกันการทำซ้ำเพื่อปั่นคะแนน

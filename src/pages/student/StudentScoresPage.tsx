@@ -38,7 +38,7 @@ export function StudentScoresPage() {
     <PageShell
       eyebrow="รายวิชาของฉัน"
       title="คะแนนของฉันในรายวิชานี้"
-      description="หน้านี้อ่านเฉพาะ score document ของผู้ที่เข้าสู่ระบบในรายวิชาที่เลือก route มีเฉพาะ course ID และไม่รับ UID ของนักศึกษาคนอื่น"
+      description="แสดงเฉพาะคะแนนของบัญชีที่ท่านใช้เข้าสู่ระบบในรายวิชานี้"
     >
       <div className="mb-6">
         <Link className="text-link" to="/student/courses">
@@ -49,7 +49,7 @@ export function StudentScoresPage() {
       {isLoading ? (
         <div className="info-panel">
           <h2>กำลังโหลดคะแนน</h2>
-          <p>กำลังอ่าน score document ส่วนตัวของท่านจาก Firestore...</p>
+          <p>กำลังโหลดคะแนนส่วนตัวของท่าน...</p>
         </div>
       ) : null}
 
@@ -59,8 +59,7 @@ export function StudentScoresPage() {
         <div className="info-panel">
           <h2>ยังไม่มีคะแนนที่เผยแพร่</h2>
           <p>
-            อาจยังไม่มี score document สำหรับรายวิชานี้ หรือยังไม่มี score items
-            ที่อาจารย์เผยแพร่ให้นักศึกษาเห็น
+            อาจารย์อาจยังไม่ได้เผยแพร่คะแนนของรายวิชานี้ หรือยังไม่มีรายการคะแนนให้แสดง
           </p>
         </div>
       ) : null}
@@ -77,7 +76,7 @@ export function StudentScoresPage() {
             <div className="info-panel">
               <h2>ยังไม่มีรายการคะแนนที่เผยแพร่</h2>
               <p>
-                คะแนนอาจมีอยู่ในระบบ แต่จะยังไม่แสดงจนกว่าอาจารย์จะเผยแพร่ score items
+                คะแนนอาจถูกบันทึกไว้แล้ว แต่จะยังไม่แสดงจนกว่าอาจารย์จะเผยแพร่รายการนั้น
               </p>
             </div>
           ) : (

@@ -269,7 +269,7 @@ export async function writeRosterImport(
   const db = getDbClient();
 
   if (!db) {
-    throw new Error("Firestore is not configured.");
+    throw new Error("ยังไม่ได้ตั้งค่าฐานข้อมูลของระบบ");
   }
 
   const batch = writeBatch(db);
@@ -335,7 +335,7 @@ export async function writeScoreImport(
   const db = getDbClient();
 
   if (!db) {
-    throw new Error("Firestore is not configured.");
+    throw new Error("ยังไม่ได้ตั้งค่าฐานข้อมูลของระบบ");
   }
 
   const batch = writeBatch(db);

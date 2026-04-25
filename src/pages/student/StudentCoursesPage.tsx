@@ -13,12 +13,12 @@ export function StudentCoursesPage() {
     <PageShell
       eyebrow="รายวิชาของฉัน"
       title="รายวิชาที่ลงทะเบียนกับอาจารย์สิทธิโชค"
-      description="แสดงเฉพาะรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนและมี enrollment document ผูกกับ Firebase Auth UID ของผู้ที่เข้าสู่ระบบ"
+      description="แสดงเฉพาะรายวิชาของอาจารย์สิทธิโชคที่ผูกกับบัญชีที่ท่านใช้เข้าสู่ระบบ"
     >
       {isLoading ? (
         <div className="info-panel">
           <h2>กำลังโหลดรายวิชา</h2>
-          <p>กำลังตรวจสอบข้อมูล enrollment ของท่าน...</p>
+          <p>กำลังตรวจสอบรายวิชาที่ผูกกับบัญชีของท่าน...</p>
         </div>
       ) : null}
 
@@ -28,8 +28,8 @@ export function StudentCoursesPage() {
         <div className="info-panel">
           <h2>ยังไม่พบรายวิชาที่ลงทะเบียน</h2>
           <p>
-            เมื่ออาจารย์สร้าง enrollment document สำหรับ Firebase Auth UID
-            ของท่านในรายวิชาที่เกี่ยวข้อง รายวิชาจะปรากฏในหน้านี้
+            เมื่อบัญชีของท่านถูกเพิ่มเข้าในรายวิชาของอาจารย์สิทธิโชค
+            รายวิชาจะปรากฏในหน้านี้
           </p>
         </div>
       ) : null}
@@ -58,7 +58,7 @@ export function StudentCoursesPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-ink">Section</dt>
+                  <dt className="font-semibold text-ink">กลุ่มเรียน</dt>
                   <dd className="mt-1 text-ink/65">
                     {enrollment.section ?? "ไม่ระบุ"}
                   </dd>

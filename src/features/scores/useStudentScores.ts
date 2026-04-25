@@ -60,7 +60,7 @@ export function useStudentScores(courseId: string | undefined) {
           error:
             scoreError instanceof FirebaseError &&
             scoreError.code === "permission-denied"
-              ? "Firestore ไม่อนุญาตให้อ่าน score document นี้ แอปอ่านเฉพาะ courses/{courseId}/studentScores/{auth.uid}"
+              ? "บัญชีนี้ยังไม่มีสิทธิ์อ่านคะแนนของรายวิชานี้ หรือรายวิชายังไม่ได้ผูกกับบัญชีของท่าน"
               : scoreError instanceof Error
                 ? scoreError.message
                 : "ไม่สามารถโหลดคะแนนของฉันได้",

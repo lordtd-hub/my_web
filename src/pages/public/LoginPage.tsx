@@ -20,7 +20,7 @@ const localTestAccounts = [
     password: "local-test-password",
   },
   {
-    label: "นักศึกษานอก roster",
+    label: "นักศึกษานอกรายชื่อ",
     email: "6612345678999@student.sru.ac.th",
     password: "local-test-password",
   },
@@ -57,18 +57,18 @@ export function LoginPage() {
   return (
     <PageShell
       eyebrow="เข้าสู่ระบบ"
-      title="Firebase Authentication"
-      description="ระบบจะเปิดให้เข้าสู่ระบบด้วย Google เมื่อกำหนดค่า Firebase web app environment variables และเปิด Google provider ใน Firebase Console แล้ว"
+      title="เข้าสู่พื้นที่รายวิชา"
+      description="เข้าสู่ระบบด้วยบัญชี Google เพื่อดูรายวิชา คะแนนส่วนตัว หรือเข้าแดชบอร์ดอาจารย์ตามสิทธิ์ของบัญชี"
     >
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="info-panel">
           <h2>สถานะการเข้าสู่ระบบ</h2>
           {isLoading ? (
-            <p>กำลังตรวจสอบสถานะ Firebase Authentication...</p>
+            <p>กำลังตรวจสอบสถานะการเข้าสู่ระบบ...</p>
           ) : isSignedIn ? (
             <>
               <p>
-                เข้าสู่ระบบในชื่อ {user?.displayName ?? user?.email ?? "ผู้ใช้ Firebase"}
+                เข้าสู่ระบบในชื่อ {user?.displayName ?? user?.email ?? "ผู้ใช้"}
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <button
@@ -79,7 +79,7 @@ export function LoginPage() {
                   ดำเนินการต่อ
                 </button>
                 <Link className="button-secondary" to="/">
-                  กลับหน้า public
+                  กลับหน้าแรก
                 </Link>
               </div>
             </>
@@ -88,8 +88,7 @@ export function LoginPage() {
               <p>
                 เข้าสู่ระบบด้วย Google เพื่อใช้พื้นที่รายวิชาของอาจารย์สิทธิโชค
                 และแดชบอร์ดอาจารย์ ระบบนี้ไม่ใช่ระบบทะเบียนหรือระบบกลางของมหาวิทยาลัย
-                สำหรับสิทธิ์ admin ยังต้องมีเอกสาร `admins/&lbrace;uid&rbrace;`
-                ใน Firestore allowlist
+                บัญชีที่จะเข้าแดชบอร์ดอาจารย์ต้องได้รับสิทธิ์ไว้ล่วงหน้าก่อน
               </p>
               <button
                 className="button-primary mt-5"
@@ -106,7 +105,7 @@ export function LoginPage() {
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-ink/65">
                     โหมดนี้ใช้บัญชีปลอมใน Firebase Emulator เท่านั้น
-                    เพื่อทดสอบ flow โดยไม่ใช้ Google account จริง
+                    เพื่อทดสอบขั้นตอนการใช้งานโดยไม่ใช้ Google account จริง
                   </p>
                   <div className="mt-4 flex flex-wrap gap-3">
                     {localTestAccounts.map((account) => (
@@ -142,7 +141,7 @@ export function LoginPage() {
             <li className="check-row">copy `.env.example` เป็น `.env.local`</li>
             <li className="check-row">เปิด Google Sign-In ใน Firebase Console</li>
             <li className="check-row">
-              สร้าง `admins/&lbrace;uid&rbrace;` ก่อนใช้งานแดชบอร์ดอาจารย์
+              เพิ่มบัญชีอาจารย์ในรายชื่อผู้ดูแลก่อนเข้าแดชบอร์ด
             </li>
             <li className="check-row">
               สำหรับ local QA ให้ใช้ `npm run qa:emulators`, `npm run qa:seed`

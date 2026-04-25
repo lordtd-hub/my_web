@@ -75,7 +75,7 @@ export function AdminCourseNewPage() {
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
       title="สร้างรายวิชา"
-      description="สร้าง course record ใน Firestore โดยใช้ข้อมูล placeholder จนกว่าจะได้รับข้อมูลรายวิชาจริง"
+      description="สร้างรายวิชาสำหรับพื้นที่ผู้เรียน ใช้ข้อมูลชั่วคราวได้จนกว่าจะยืนยันข้อมูลรายวิชาจริง"
     >
       <AdminLayout>
         <form className="form-panel" onSubmit={(event) => void handleSubmit(event)}>
@@ -112,21 +112,21 @@ export function AdminCourseNewPage() {
             </label>
           </div>
           <label>
-            <span>Section / กลุ่มเรียน</span>
+            <span>กลุ่มเรียน</span>
             <input name="sections" placeholder="เช่น P01, P02 หรือ N01" />
           </label>
           <label>
             <span>คำอธิบายรายวิชา</span>
             <textarea
               name="description"
-              placeholder="คำอธิบายรายวิชาสำหรับเผยแพร่ public"
+              placeholder="คำอธิบายรายวิชาสำหรับเผยแพร่บนหน้าเว็บ"
               required
               rows={4}
             />
           </label>
           <label className="checkbox-row">
             <input name="isPublic" type="checkbox" />
-            <span>แสดงเป็นข้อมูลรายวิชา public</span>
+            <span>แสดงเป็นข้อมูลรายวิชาบนหน้าเว็บ</span>
           </label>
           <label className="checkbox-row">
             <input defaultChecked name="portalEnabled" type="checkbox" />

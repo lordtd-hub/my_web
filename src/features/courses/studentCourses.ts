@@ -59,7 +59,7 @@ async function linkRosterEnrollments(input: {
   const db = getDbClient();
 
   if (!db) {
-    throw new Error("Firestore is not configured.");
+    throw new Error("ยังไม่ได้ตั้งค่าฐานข้อมูลของระบบ");
   }
 
   const rosterQuery = query(
@@ -122,7 +122,7 @@ export async function fetchStudentCourses(input: {
   const db = getDbClient();
 
   if (!db) {
-    throw new Error("Firestore is not configured.");
+    throw new Error("ยังไม่ได้ตั้งค่าฐานข้อมูลของระบบ");
   }
 
   await linkRosterEnrollments(input);

@@ -48,7 +48,7 @@ export function AboutPage() {
             </div>
             <div className="detail-tile">
               <span>รูปประจำตัวสำหรับเผยแพร่</span>
-              <strong>ใช้รูปถ่ายที่อาจารย์ให้มาสำหรับหน้า public profile</strong>
+              <strong>ใช้รูปถ่ายที่อาจารย์ให้มาสำหรับหน้าโปรไฟล์สาธารณะ</strong>
             </div>
           </div>
         </div>

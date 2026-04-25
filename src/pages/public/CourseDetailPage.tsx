@@ -11,7 +11,7 @@ export function CourseDetailPage() {
       <PageShell
         eyebrow="รายละเอียดรายวิชา"
         title="ไม่พบข้อมูลรายวิชา"
-        description="ระบบยังไม่มีข้อมูล public metadata สำหรับรายวิชาที่ร้องขอ"
+        description="ยังไม่มีข้อมูลรายวิชาที่เผยแพร่ได้สำหรับหน้านี้"
       >
         <Link className="button-primary" to="/courses">
           กลับไปหน้ารายวิชา
@@ -41,8 +41,8 @@ export function CourseDetailPage() {
             </div>
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink/65">
-            หน้านี้มีเฉพาะข้อมูลรายวิชาที่เผยแพร่ได้เท่านั้น คะแนน enrollment
-            และ feedback ส่วนตัวของผู้เรียนไม่ถูกเก็บไว้ในส่วน public
+            หน้านี้มีเฉพาะข้อมูลรายวิชาที่เผยแพร่ได้เท่านั้น คะแนนและ feedback
+            ส่วนตัวของผู้เรียนไม่ถูกเก็บไว้ในหน้าเว็บสาธารณะ
           </p>
         </aside>
 

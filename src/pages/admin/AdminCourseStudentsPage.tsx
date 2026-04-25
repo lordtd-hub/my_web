@@ -41,7 +41,7 @@ export function AdminCourseStudentsPage() {
     } catch (enrollmentError) {
       throw enrollmentError instanceof Error
         ? enrollmentError
-        : new Error("ไม่สามารถโหลด enrollments ได้");
+        : new Error("ไม่สามารถโหลดรายชื่อนักศึกษาที่ผูกบัญชีแล้วได้");
     }
   }, []);
 
@@ -51,7 +51,7 @@ export function AdminCourseStudentsPage() {
     } catch (rosterError) {
       throw rosterError instanceof Error
         ? rosterError
-        : new Error("ไม่สามารถโหลด roster ได้");
+        : new Error("ไม่สามารถโหลดรายชื่อจากรหัสนักศึกษาได้");
     }
   }, []);
 
@@ -79,7 +79,7 @@ export function AdminCourseStudentsPage() {
           setError(
             enrollmentError instanceof Error
               ? enrollmentError.message
-              : "ไม่สามารถโหลด enrollments ได้",
+              : "ไม่สามารถโหลดรายชื่อนักศึกษาได้",
           );
         }
       } finally {
@@ -116,7 +116,7 @@ export function AdminCourseStudentsPage() {
       setError(
         enrollmentError instanceof Error
           ? enrollmentError.message
-          : "ไม่สามารถโหลด enrollments ได้",
+          : "ไม่สามารถโหลดรายชื่อนักศึกษาได้",
       );
     } finally {
       setIsLoading(false);
@@ -141,7 +141,7 @@ export function AdminCourseStudentsPage() {
       | "inactive";
 
     if (!uid || !studentId || !displayName || !email) {
-      setError("กรุณากรอก UID, studentId, displayName และ email ให้ครบถ้วน");
+      setError("กรุณากรอก UID จากบัญชีเข้าสู่ระบบ รหัสนักศึกษา ชื่อ และ email ให้ครบถ้วน");
       return;
     }
 
@@ -161,7 +161,7 @@ export function AdminCourseStudentsPage() {
       setError(
         enrollmentError instanceof Error
           ? enrollmentError.message
-          : "ไม่สามารถบันทึก enrollment ได้",
+          : "ไม่สามารถบันทึกบัญชีผู้เรียนได้",
       );
     } finally {
       setIsSaving(false);
@@ -205,7 +205,7 @@ export function AdminCourseStudentsPage() {
       setError(
         rosterError instanceof Error
           ? rosterError.message
-          : "ไม่สามารถบันทึก roster ได้",
+          : "ไม่สามารถบันทึกรายชื่อจากรหัสนักศึกษาได้",
       );
     } finally {
       setIsSavingRoster(false);
@@ -230,7 +230,7 @@ export function AdminCourseStudentsPage() {
       setError(
         csvError instanceof Error
           ? csvError.message
-          : "ไม่สามารถอ่านไฟล์ roster CSV ได้",
+          : "ไม่สามารถอ่านไฟล์รายชื่อ CSV ได้",
       );
     }
   }
@@ -243,7 +243,7 @@ export function AdminCourseStudentsPage() {
     }
 
     if (rosterPreview.issues.length > 0) {
-      setError("ยังมีปัญหาในไฟล์ CSV กรุณาแก้ไขก่อนนำเข้า roster");
+      setError("ยังมีปัญหาในไฟล์ CSV กรุณาแก้ไขก่อนนำเข้ารายชื่อ");
       return;
     }
 
@@ -268,7 +268,7 @@ export function AdminCourseStudentsPage() {
       setError(
         importError instanceof Error
           ? importError.message
-          : "ไม่สามารถ import roster CSV ได้",
+          : "ไม่สามารถนำเข้ารายชื่อ CSV ได้",
       );
     } finally {
       setIsImportingRoster(false);
@@ -279,7 +279,7 @@ export function AdminCourseStudentsPage() {
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
       title="นักศึกษาที่ลงทะเบียน"
-      description="Enrollment document ID ต้องเป็น Firebase Auth UID ส่วน studentId ใช้เป็น metadata เท่านั้น"
+      description="จัดการรายชื่อผู้เรียนของรายวิชานี้ ทั้งรายชื่อจากรหัสนักศึกษาและบัญชีที่เข้าสู่ระบบแล้ว"
     >
       <AdminLayout>
         <form
@@ -291,8 +291,7 @@ export function AdminCourseStudentsPage() {
           </h2>
           <p className="text-sm leading-6 text-ink/65">
             ใช้หลังรายชื่อเพิ่ม-ถอนนิ่งแล้ว ระบบจะสร้าง email ให้อัตโนมัติเป็น
-            `รหัสนักศึกษา@student.sru.ac.th` และรอให้นักศึกษา login เพื่อ link
-            กับ Firebase Auth UID ของตนเอง
+            รหัสนักศึกษา@student.sru.ac.th และรอให้นักศึกษาเข้าสู่ระบบเพื่อผูกบัญชีของตนเอง
           </p>
           <div className="form-grid">
             <label>
@@ -307,7 +306,7 @@ export function AdminCourseStudentsPage() {
               />
             </label>
             <label>
-              <span>Section / กลุ่มเรียน</span>
+              <span>กลุ่มเรียน</span>
               <input name="section" placeholder="เช่น P01 หรือ P02" />
             </label>
           </div>
@@ -325,7 +324,7 @@ export function AdminCourseStudentsPage() {
             </label>
           </div>
           <button className="button-primary" disabled={isSavingRoster} type="submit">
-            {isSavingRoster ? "กำลังบันทึก..." : "เพิ่มเข้า roster"}
+            {isSavingRoster ? "กำลังบันทึก..." : "เพิ่มเข้ารายชื่อ"}
           </button>
         </form>
 
@@ -334,15 +333,15 @@ export function AdminCourseStudentsPage() {
           onSubmit={(event) => void handleRosterImportSubmit(event)}
         >
           <h2 className="text-xl font-semibold text-ink">
-            Import roster จาก CSV
+            นำเข้ารายชื่อจาก CSV
           </h2>
           <p className="text-sm leading-6 text-ink/65">
-            ใช้ไฟล์รายชื่อนักศึกษาหลังเพิ่ม-ถอนนิ่งแล้ว ระบบต้องการ column
-            `studentId` และจะสร้าง email ให้อัตโนมัติเป็น
-            `studentId@student.sru.ac.th` โดยไม่รับคะแนนจากไฟล์นี้
+            ใช้ไฟล์รายชื่อนักศึกษาหลังเพิ่ม-ถอนนิ่งแล้ว ระบบต้องการคอลัมน์
+            studentId และจะสร้าง email ให้อัตโนมัติเป็น
+            studentId@student.sru.ac.th โดยไม่รับคะแนนจากไฟล์นี้
           </p>
           <label>
-            <span>ไฟล์ roster CSV</span>
+            <span>ไฟล์รายชื่อ CSV</span>
             <input
               accept=".csv,text/csv"
               name="rosterCsv"
@@ -353,8 +352,8 @@ export function AdminCourseStudentsPage() {
           <div className="info-panel mt-4">
             <h3 className="text-base font-semibold text-ink">รูปแบบ CSV</h3>
             <p className="mt-2 text-sm leading-6 text-ink/65">
-              column ที่รองรับ: `studentId`, `section`, `displayName`,
-              `status` โดย `status` เว้นว่างได้และจะถือว่าใช้งานอยู่
+              คอลัมน์ที่รองรับ: studentId, section, displayName,
+              status โดย status เว้นว่างได้และจะถือว่าใช้งานอยู่
             </p>
           </div>
           {rosterFileName ? (
@@ -385,9 +384,9 @@ export function AdminCourseStudentsPage() {
                     <thead>
                       <tr>
                         <th>แถว</th>
-                        <th>Student ID</th>
+                        <th>รหัสนักศึกษา</th>
                         <th>Email</th>
-                        <th>Section</th>
+                        <th>กลุ่มเรียน</th>
                         <th>สถานะ</th>
                       </tr>
                     </thead>
@@ -431,20 +430,20 @@ export function AdminCourseStudentsPage() {
             }
             type="submit"
           >
-            {isImportingRoster ? "กำลังนำเข้า..." : "นำเข้า roster"}
+            {isImportingRoster ? "กำลังนำเข้า..." : "นำเข้ารายชื่อ"}
           </button>
         </form>
 
         <form className="form-panel" onSubmit={(event) => void handleSubmit(event)}>
-          <h2 className="text-xl font-semibold text-ink">เพิ่มหรือแก้ไข enrollment</h2>
+          <h2 className="text-xl font-semibold text-ink">เพิ่มหรือแก้ไขบัญชีผู้เรียน</h2>
           <label>
-            <span>Firebase Auth UID</span>
-            <input name="uid" placeholder="auth uid" required />
+            <span>UID จากบัญชีเข้าสู่ระบบ</span>
+              <input name="uid" placeholder="UID จากบัญชีที่เข้าสู่ระบบ" required />
           </label>
           <div className="form-grid">
             <label>
-              <span>Student ID</span>
-              <input name="studentId" placeholder="studentId สำหรับแสดงผล" required />
+              <span>รหัสนักศึกษา</span>
+              <input name="studentId" placeholder="รหัสนักศึกษาสำหรับแสดงผล" required />
             </label>
             <label>
               <span>Email</span>
@@ -465,26 +464,26 @@ export function AdminCourseStudentsPage() {
             </label>
           </div>
           <button className="button-primary" disabled={isSaving} type="submit">
-            {isSaving ? "กำลังบันทึก..." : "บันทึก enrollment"}
+            {isSaving ? "กำลังบันทึก..." : "บันทึกบัญชีผู้เรียน"}
           </button>
         </form>
 
         {error ? <p className="alert-message mt-6">{error}</p> : null}
 
         <section className="info-panel mt-6">
-          <h2>Roster จากรหัสนักศึกษา</h2>
-          {isLoading ? <p>กำลังโหลด roster...</p> : null}
+          <h2>รายชื่อจากรหัสนักศึกษา</h2>
+          {isLoading ? <p>กำลังโหลดรายชื่อจากรหัสนักศึกษา...</p> : null}
           {!isLoading && roster.length === 0 ? (
-            <p>ยังไม่มีรายชื่อรอ link ด้วยรหัสนักศึกษา</p>
+            <p>ยังไม่มีรายชื่อรหัสนักศึกษาที่รอผูกบัญชี</p>
           ) : null}
           {roster.length > 0 ? (
             <div className="table-wrap mt-5">
               <table>
                 <thead>
                   <tr>
-                    <th>Student ID</th>
+                    <th>รหัสนักศึกษา</th>
                     <th>Email ที่สร้างจากรหัส</th>
-                    <th>Section</th>
+                    <th>กลุ่มเรียน</th>
                     <th>สถานะ</th>
                   </tr>
                 </thead>
@@ -505,7 +504,7 @@ export function AdminCourseStudentsPage() {
 
         <section className="info-panel mt-6">
           <h2>รายชื่อนักศึกษาที่ลงทะเบียน</h2>
-          {isLoading ? <p>กำลังโหลด enrollments...</p> : null}
+          {isLoading ? <p>กำลังโหลดรายชื่อนักศึกษาที่ผูกบัญชีแล้ว...</p> : null}
           {!isLoading && enrollments.length === 0 ? (
             <p>ยังไม่พบนักศึกษาที่ลงทะเบียนในรายวิชานี้</p>
           ) : null}
@@ -514,7 +513,7 @@ export function AdminCourseStudentsPage() {
               <table>
                 <thead>
                   <tr>
-                    <th>Student ID</th>
+                    <th>รหัสนักศึกษา</th>
                     <th>ชื่อ</th>
                     <th>Email</th>
                     <th>สถานะ</th>

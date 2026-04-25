@@ -62,7 +62,7 @@ export function useStudentCourses() {
           error:
             courseError instanceof FirebaseError &&
             courseError.code === "permission-denied"
-              ? "Firestore ไม่อนุญาตให้อ่าน enrollments กรุณาตรวจสอบว่าผู้ใช้มีเอกสาร enrollment ที่ courses/{courseId}/enrollments/{uid}"
+              ? "บัญชีนี้ยังไม่มีสิทธิ์อ่านรายวิชาของผู้เรียน กรุณาตรวจสอบว่าบัญชีถูกเพิ่มเข้าในรายวิชาแล้ว"
               : courseError instanceof Error
                 ? courseError.message
                 : "ไม่สามารถโหลดรายวิชาของฉันได้",

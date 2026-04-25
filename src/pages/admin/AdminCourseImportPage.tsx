@@ -90,12 +90,12 @@ export function AdminCourseImportPage() {
     try {
       await writeScoreImport(courseId, preview.matchedRows, preview.scoreColumns);
       setSuccessMessage(
-        `Import score documents ที่ match แล้วจำนวน ${preview.matchedRows.length} รายการสำเร็จ`,
+        `นำเข้าคะแนนของนักศึกษาที่ตรวจสอบแล้วจำนวน ${preview.matchedRows.length} รายการสำเร็จ`,
       );
       setConfirmWrite(false);
     } catch (writeError) {
       setError(
-        writeError instanceof Error ? writeError.message : "ไม่สามารถเขียนข้อมูลจาก import ได้",
+        writeError instanceof Error ? writeError.message : "ไม่สามารถบันทึกคะแนนที่นำเข้าได้",
       );
     } finally {
       setIsWriting(false);
@@ -105,8 +105,8 @@ export function AdminCourseImportPage() {
   return (
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
-      title="Import คะแนนจาก CSV"
-      description="ไฟล์ CSV จะถูกอ่านใน browser เท่านั้น ไม่ upload ไป Cloud Storage และจะเขียนเฉพาะแถวที่ match กับนักศึกษาที่ลงทะเบียนแล้ว"
+      title="นำเข้าคะแนนจาก CSV"
+      description="เลือกไฟล์ CSV ตรวจสอบตัวอย่างก่อนบันทึก และนำเข้าเฉพาะแถวที่ตรงกับนักศึกษาในรายวิชา"
     >
       <AdminLayout>
         <div className="mb-6">
@@ -119,7 +119,7 @@ export function AdminCourseImportPage() {
           <h2 className="text-xl font-semibold text-ink">1. เลือกไฟล์ CSV</h2>
           <p className="text-sm leading-6 text-ink/65">
             รูปแบบเริ่มต้น: `studentId,email,displayName,quiz1,quiz2,midterm`
-            และสามารถมี score columns เพิ่มเติมได้
+            และสามารถมีคอลัมน์คะแนนเพิ่มเติมได้
           </p>
           <label>
             <span>ไฟล์ CSV</span>
@@ -137,7 +137,7 @@ export function AdminCourseImportPage() {
             <section className="info-panel">
               <h2>2. ตรวจสอบข้อมูล</h2>
               {preview.issues.length === 0 ? (
-                <p>ไม่พบปัญหารูปแบบ CSV ที่ขัดขวางการ import</p>
+                <p>ไม่พบปัญหาในรูปแบบ CSV ที่ขัดขวางการนำเข้า</p>
               ) : (
                 <ul className="mt-4 space-y-3">
                   {preview.issues.map((issue) => (
@@ -162,12 +162,12 @@ export function AdminCourseImportPage() {
             </section>
 
             <section className="info-panel">
-              <h2>3. Score columns</h2>
+              <h2>3. รายการคะแนนที่พบในไฟล์</h2>
               <div className="table-wrap mt-5">
                 <table>
                   <thead>
                     <tr>
-                      <th>Column</th>
+                      <th>คอลัมน์</th>
                       <th>ประเภท</th>
                       <th>คะแนนเต็ม</th>
                       <th>Feedback</th>
@@ -188,16 +188,16 @@ export function AdminCourseImportPage() {
             </section>
 
             <section className="info-panel">
-              <h2>4. Preview แถวที่ match แล้ว</h2>
+              <h2>4. ตัวอย่างแถวที่ตรงกับรายชื่อนักศึกษา</h2>
               {preview.matchedRows.length === 0 ? (
-                <p>ไม่มีแถวใน CSV ที่ match กับนักศึกษาที่ลงทะเบียน</p>
+                <p>ไม่มีแถวใน CSV ที่ตรงกับนักศึกษาที่ลงทะเบียนในรายวิชานี้</p>
               ) : (
                 <div className="table-wrap mt-5">
                   <table>
                     <thead>
                       <tr>
                         <th>แถว</th>
-                        <th>Student ID</th>
+                        <th>รหัสนักศึกษา</th>
                         <th>ชื่อ</th>
                         <th>Email</th>
                         <th>จำนวนคะแนน</th>
@@ -220,11 +220,10 @@ export function AdminCourseImportPage() {
             </section>
 
             <section className="info-panel">
-              <h2>5. ยืนยันการเขียนลง Firestore</h2>
+              <h2>5. ยืนยันการบันทึกคะแนน</h2>
               <p>
-                ระบบจะเขียนเฉพาะแถวที่ match แล้วไปที่
-                <code>courses/{"{courseId}"}/studentScores/{"{uid}"}</code> และ
-                สร้าง score item metadata สำหรับ score columns ที่ import
+                ระบบจะบันทึกเฉพาะแถวที่ตรงกับนักศึกษาในรายวิชา
+                และสร้างรายการคะแนนตามคอลัมน์ที่พบในไฟล์
               </p>
               <label className="checkbox-row mt-5">
                 <input
@@ -232,7 +231,7 @@ export function AdminCourseImportPage() {
                   onChange={(event) => setConfirmWrite(event.target.checked)}
                   type="checkbox"
                 />
-                <span>ฉันตรวจสอบ preview แล้ว และต้องการเขียนเฉพาะแถวที่ match แล้ว</span>
+                <span>ฉันตรวจสอบตัวอย่างแล้ว และต้องการบันทึกเฉพาะแถวที่ตรงกับรายชื่อ</span>
               </label>
               <button
                 className="button-primary mt-5"
@@ -240,7 +239,7 @@ export function AdminCourseImportPage() {
                 onClick={() => void handleConfirmWrite()}
                 type="button"
               >
-                {isWriting ? "กำลังเขียน..." : "เขียนคะแนนที่ match แล้ว"}
+                {isWriting ? "กำลังบันทึก..." : "บันทึกคะแนนที่ตรวจสอบแล้ว"}
               </button>
             </section>
           </div>

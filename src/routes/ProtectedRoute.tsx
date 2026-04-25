@@ -22,7 +22,7 @@ export function ProtectedRoute({
       <PageShell
         eyebrow="ต้องตั้งค่าระบบ"
         title="ยังไม่ได้ตั้งค่า Firebase"
-        description="พื้นที่รายวิชาของอาจารย์สิทธิโชคและแดชบอร์ดอาจารย์จะใช้งานได้เมื่อ `.env.local` มีค่า Firebase web app และเปิด Google Sign-In ใน Firebase Console แล้ว"
+        description="ระบบเข้าสู่ระบบและพื้นที่รายวิชาจะใช้งานได้หลังตั้งค่า Firebase ของโปรเจกต์นี้เรียบร้อยแล้ว"
       >
         <Link className="button-primary" to="/login">
           ไปที่หน้าตั้งค่าการเข้าสู่ระบบ
@@ -36,7 +36,7 @@ export function ProtectedRoute({
       <PageShell
         eyebrow="กำลังโหลด"
         title="กำลังตรวจสอบสถานะการเข้าสู่ระบบ"
-        description="กรุณารอสักครู่ ระบบกำลังตรวจสอบสถานะ Firebase Authentication"
+        description="กรุณารอสักครู่ ระบบกำลังตรวจสอบว่าท่านเข้าสู่ระบบอยู่หรือไม่"
       />
     );
   }
@@ -53,8 +53,8 @@ export function ProtectedRoute({
     return (
       <PageShell
         eyebrow="แดชบอร์ดอาจารย์"
-        title="กำลังตรวจสอบสิทธิ์ admin"
-        description="กรุณารอสักครู่ Firestore กำลังตรวจสอบ `admins/{uid}` allowlist"
+        title="กำลังตรวจสอบสิทธิ์เข้าใช้งาน"
+        description="กรุณารอสักครู่ ระบบกำลังตรวจสอบว่าบัญชีนี้ได้รับสิทธิ์อาจารย์หรือไม่"
       />
     );
   }
@@ -64,11 +64,11 @@ export function ProtectedRoute({
       <PageShell
         eyebrow="แดชบอร์ดอาจารย์"
         title="ยังไม่มีสิทธิ์เข้าแดชบอร์ดอาจารย์"
-        description="แดชบอร์ดนี้ต้องมีเอกสาร `admins/{uid}` ใน Firestore สำหรับผู้ใช้ที่เข้าสู่ระบบ"
+        description="บัญชีที่เข้าสู่ระบบอยู่ยังไม่ได้รับสิทธิ์อาจารย์ในระบบนี้ หากควรมีสิทธิ์ กรุณาเพิ่มบัญชีนี้ในรายชื่อผู้ดูแลก่อน"
       >
         {error ? <p className="alert-message">{error}</p> : null}
         <Link className="button-secondary mt-6" to="/">
-          กลับหน้า public
+          กลับหน้าแรก
         </Link>
       </PageShell>
     );

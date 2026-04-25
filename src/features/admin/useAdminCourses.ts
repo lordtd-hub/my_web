@@ -30,7 +30,7 @@ export function useAdminCourses() {
         setError(
             courseError instanceof FirebaseError &&
             courseError.code === "permission-denied"
-            ? "Firestore ไม่อนุญาตให้เข้าถึงข้อมูล กรุณาตรวจสอบว่าผู้ใช้นี้มีเอกสาร admins/{uid}"
+            ? "บัญชีนี้ยังไม่มีสิทธิ์ดูข้อมูลรายวิชาในแดชบอร์ดอาจารย์"
             : courseError instanceof Error
               ? courseError.message
               : "ไม่สามารถโหลดข้อมูลรายวิชาได้",

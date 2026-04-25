@@ -46,7 +46,7 @@ export function AdminCourseScoresPage() {
           setError(
             scoreItemError instanceof Error
               ? scoreItemError.message
-              : "ไม่สามารถโหลด score items ได้",
+              : "ไม่สามารถโหลดรายการคะแนนได้",
           );
         }
       } finally {
@@ -67,19 +67,19 @@ export function AdminCourseScoresPage() {
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
       title="รายการคะแนนของรายวิชา"
-      description="ใน milestone นี้ score item metadata ถูกจัดการผ่านการ import CSV"
+      description="รายการคะแนนของรายวิชานี้จะสร้างจากการนำเข้า CSV ในแดชบอร์ดอาจารย์"
     >
       <AdminLayout>
         <div className="mb-6">
           <Link className="button-primary" to={`/admin/courses/${courseId}/import`}>
-            Import คะแนน
+            นำเข้าคะแนน
           </Link>
         </div>
 
         {isLoading ? (
           <div className="info-panel">
             <h2>กำลังโหลดรายการคะแนน</h2>
-            <p>กำลังอ่าน score item metadata...</p>
+            <p>กำลังโหลดรายการคะแนนของรายวิชานี้...</p>
           </div>
         ) : null}
 
@@ -88,7 +88,7 @@ export function AdminCourseScoresPage() {
         {!isLoading && !error && scoreItems.length === 0 ? (
           <div className="info-panel">
             <h2>ยังไม่มีรายการคะแนน</h2>
-            <p>กรุณา import CSV เพื่อสร้าง score item metadata</p>
+            <p>กรุณานำเข้า CSV เพื่อสร้างรายการคะแนนของรายวิชา</p>
           </div>
         ) : null}
 

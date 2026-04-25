@@ -53,7 +53,7 @@ export function buildRosterImportPreview(csvText: string): RosterImportPreview {
   REQUIRED_COLUMNS.forEach((column) => {
     if (!parsed.headers.includes(column)) {
       issues.push({
-        message: `ไม่พบ column ที่จำเป็น: ${column}`,
+        message: `ไม่พบคอลัมน์ที่จำเป็น: ${column}`,
       });
     }
   });
@@ -84,7 +84,7 @@ export function buildRosterImportPreview(csvText: string): RosterImportPreview {
     if (seenStudentIds.has(studentId)) {
       skippedRows.push({
         rowNumber,
-        message: "พบ studentId ซ้ำในไฟล์ CSV",
+        message: "พบรหัสนักศึกษาซ้ำในไฟล์ CSV",
       });
       return;
     }
@@ -92,7 +92,7 @@ export function buildRosterImportPreview(csvText: string): RosterImportPreview {
     if (!status) {
       skippedRows.push({
         rowNumber,
-        message: "สถานะต้องเป็น active/inactive หรือเว้นว่าง",
+        message: "สถานะต้องเป็น active, inactive หรือเว้นว่าง",
       });
       return;
     }

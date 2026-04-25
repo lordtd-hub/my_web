@@ -132,7 +132,7 @@ export function buildCsvImportPreview(
   REQUIRED_COLUMNS.forEach((column) => {
     if (!headers.includes(column)) {
       issues.push({
-        message: `ไม่พบ column ที่จำเป็น: ${column}`,
+        message: `ไม่พบคอลัมน์ที่จำเป็น: ${column}`,
       });
     }
   });
@@ -143,7 +143,7 @@ export function buildCsvImportPreview(
 
   if (scoreHeaders.length === 0) {
     issues.push({
-      message: "ต้องมี score column อย่างน้อย 1 column",
+      message: "ต้องมีคอลัมน์คะแนนอย่างน้อย 1 คอลัมน์",
     });
   }
 
@@ -201,7 +201,7 @@ export function buildCsvImportPreview(
         hasInvalidScore = true;
         skippedRows.push({
           rowNumber,
-          message: `ค่าคะแนนใน column ${scoreColumn.title} ไม่ถูกต้อง`,
+          message: `ค่าคะแนนในคอลัมน์ ${scoreColumn.title} ไม่ถูกต้อง`,
         });
         return;
       }

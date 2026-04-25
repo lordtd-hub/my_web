@@ -11,7 +11,7 @@ export function AdminCoursesPage() {
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
       title="จัดการรายวิชา"
-      description="ข้อมูลรายวิชาอ่านจาก Firestore และต้องใช้สิทธิ์ `admins/{uid}`"
+      description="ดูและจัดการรายวิชาที่ใช้ในพื้นที่ผู้เรียนของอาจารย์สิทธิโชค"
     >
       <AdminLayout>
         <div className="mb-6 flex flex-wrap gap-3">
@@ -23,7 +23,7 @@ export function AdminCoursesPage() {
         {isLoading ? (
           <div className="info-panel">
             <h2>กำลังโหลดรายวิชา</h2>
-            <p>กำลังอ่าน course records จาก Firestore...</p>
+            <p>กำลังโหลดข้อมูลรายวิชา...</p>
           </div>
         ) : null}
 
@@ -32,7 +32,7 @@ export function AdminCoursesPage() {
         {!isLoading && !error && courses.length === 0 ? (
           <div className="info-panel">
             <h2>ยังไม่มีรายวิชา</h2>
-            <p>กรุณาสร้างรายวิชาก่อนเพิ่ม enrollment หรือ import คะแนน</p>
+            <p>กรุณาสร้างรายวิชาก่อนเพิ่มรายชื่อนักศึกษาหรือนำเข้าคะแนน</p>
           </div>
         ) : null}
 
@@ -51,7 +51,7 @@ export function AdminCoursesPage() {
                   <dd className="mt-1 text-ink/65">{data.year}</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-ink">เผยแพร่ public</dt>
+                  <dt className="font-semibold text-ink">เผยแพร่บนหน้าเว็บ</dt>
                   <dd className="mt-1 text-ink/65">
                     {data.isPublic ? "ใช่" : "ไม่ใช่"}
                   </dd>
@@ -69,7 +69,7 @@ export function AdminCoursesPage() {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-ink">Section</dt>
+                  <dt className="font-semibold text-ink">กลุ่มเรียน</dt>
                   <dd className="mt-1 text-ink/65">
                     {data.sections?.length ? data.sections.join(", ") : "-"}
                   </dd>
