@@ -147,6 +147,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 ## Interactive learning activities
 
 - [x] ออกแบบ activity/media ให้เป็น contract กลางเพื่อเสียบสื่อรายวิชาใหม่ได้ง่าย
+- [x] ออกแบบ assessment contract กลางสำหรับ CLO, Bloom level, evidence, rubric, XP/badge และ official score boundary เพื่อให้ Cal1 เป็น pilot แต่รายวิชาอื่นใช้โครงเดียวกันได้
 - [x] แยก learning progress ออกจาก official score
 - [x] ใช้ `activityAttempts` และ `studentProgress` เป็น proposal สำหรับ phase ถัดไป
 - [x] เพิ่ม `แคลคูลัส 1 ภาษาไทย` เป็น external interactive learning resource สำหรับสื่อฝึกเบื้องต้น
@@ -154,13 +155,20 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] ผู้ใช้ต้องการใช้ XP และ badges เป็นเครื่องมือวัดพัฒนาการและการบรรลุ CLOs ของนักศึกษาแต่ละคน
 - [x] หน้า `/student` มี dashboard กลางของผู้เรียนสำหรับรายวิชาของอาจารย์สิทธิโชค โดยแสดงจำนวนรายวิชา สถานะ enrollment และพื้นที่ placeholder สำหรับ progress/CLO/XP ที่ยังไม่ถือเป็นคะแนนจริง
 - [x] activity types แรกที่นำเข้าระบบแบบอ่านอย่างเดียว: `external`, `lesson`, `interactive`, `mission`
+- [x] เพิ่ม prototype ฝั่งอาจารย์ที่ `/admin/courses/:courseId/assessment` เพื่อดูภาพรวม CLO draft, activity mapping, self-assessment generator และ official score boundary แบบยังไม่บันทึกลง Firestore
+- [x] เพิ่ม CLO persistence ชุดแรกใน `courses/{courseId}/learningOutcomes/{outcomeId}`
+- [x] เพิ่ม self-assessment ชุดแรกใน `courses/{courseId}/selfAssessments/{uid}` โดยผู้เรียนเขียนได้เฉพาะของตนเองในรายวิชาที่ enroll แล้ว
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ
 - [ ] learning outcomes หรือ CLO ที่ต้องใช้จริงใน dashboard ของผู้เรียน
 - [ ] นิยาม CLO จริงของรายวิชาแรก เช่น `SMAC001 แคลคูลัส 1`
+- [ ] Bloom level mapping จริงของกิจกรรมใน `SMAC001 แคลคูลัส 1`
+- [ ] rubric จริงสำหรับ mission หรือกิจกรรมที่ต้องวัดการอธิบายเหตุผล
 - [ ] badge rules จริงที่ผูกกับแต่ละ CLO
 - [ ] เกณฑ์กันการปั่น XP เช่น XP เฉพาะครั้งแรกที่ผ่าน, attempt limits, หรือ admin review
 - [ ] จะให้ XP/Badge นับเป็นคะแนนเก็บหรือเป็น progress indicator เท่านั้นในเทอมแรก
+- [ ] รูปแบบ summary self-assessment ที่อาจารย์ควรเห็น เช่น รายคน ราย CLO หรือแยก section
+- [ ] จะเก็บ reflection ของผู้เรียนไว้นานเท่าไร และต้อง export/backup หรือไม่
 
 หมายเหตุจากการตรวจ repo `lordtd-hub/calculus1-thai`:
 

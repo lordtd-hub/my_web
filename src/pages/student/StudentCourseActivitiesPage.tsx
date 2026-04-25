@@ -43,6 +43,14 @@ export function StudentCourseActivitiesPage() {
             ดูคะแนนของฉัน
           </Link>
         ) : null}
+        {courseId ? (
+          <Link
+            className="text-link"
+            to={`/student/courses/${courseId}/self-assessment`}
+          >
+            ประเมินตนเอง
+          </Link>
+        ) : null}
       </div>
 
       {isLoading ? (

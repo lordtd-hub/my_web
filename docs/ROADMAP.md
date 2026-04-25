@@ -79,6 +79,7 @@
 ## Phase 7 — Activity and learning progress foundation
 
 - กำหนด activity/media contract กลาง
+- กำหนด assessment contract กลางสำหรับ CLO, Bloom level, evidence, rubric, XP/badge และ official score boundary
 - เพิ่ม external interactive learning resources เป็นสื่อฝึกในหน้า Teaching/Courses
 - เพิ่ม activity catalog สำหรับรายวิชา
 - เพิ่มพื้นที่เล่นสื่อหรือกิจกรรมสำหรับผู้เรียนที่ enroll แล้ว
@@ -88,7 +89,7 @@
 
 ข้อสำคัญ: คะแนนทางการยังต้องอยู่ใน `studentScores/{uid}` และควรเขียนโดย admin หรือ trusted grading flow เท่านั้น
 
-สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts`, เพิ่ม external resource แรก `แคลคูลัส 1 ภาษาไทย` และเพิ่ม activity catalog แบบอ่านอย่างเดียวที่ `/student/courses/:courseId/activities` สำหรับผู้เรียนที่ลงทะเบียนแล้ว โดยยังไม่เชื่อมคะแนนทางการ
+สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md`, `docs/ASSESSMENT_MODEL.md`, `src/features/activities/activityTypes.ts` และ `src/features/assessment/assessmentTypes.ts`, เพิ่ม external resource แรก `แคลคูลัส 1 ภาษาไทย`, เพิ่ม activity catalog แบบอ่านอย่างเดียวที่ `/student/courses/:courseId/activities` สำหรับผู้เรียนที่ลงทะเบียนแล้ว, เพิ่มหน้าอาจารย์ `/admin/courses/:courseId/assessment` สำหรับบันทึก/แก้ไข CLO และเพิ่มหน้า `/student/courses/:courseId/self-assessment` ให้ผู้เรียนประเมินตนเองตาม CLO ที่ publish แล้ว โดยยังไม่เชื่อมคะแนนทางการ
 
 ## Phase 8 — Preview deployment
 

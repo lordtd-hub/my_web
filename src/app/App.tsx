@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { SiteLayout } from "../components/SiteLayout";
 import { AdminCourseDetailPage } from "../pages/admin/AdminCourseDetailPage";
+import { AdminCourseAssessmentPage } from "../pages/admin/AdminCourseAssessmentPage";
 import { AdminCourseImportPage } from "../pages/admin/AdminCourseImportPage";
 import { AdminCourseNewPage } from "../pages/admin/AdminCourseNewPage";
 import { AdminCourseScoresPage } from "../pages/admin/AdminCourseScoresPage";
@@ -19,6 +20,7 @@ import { ProjectsPage } from "../pages/public/ProjectsPage";
 import { ResearchPage } from "../pages/public/ResearchPage";
 import { TeachingPage } from "../pages/public/TeachingPage";
 import { StudentCourseActivitiesPage } from "../pages/student/StudentCourseActivitiesPage";
+import { StudentCourseSelfAssessmentPage } from "../pages/student/StudentCourseSelfAssessmentPage";
 import { StudentCoursesPage } from "../pages/student/StudentCoursesPage";
 import { StudentHomePage } from "../pages/student/StudentHomePage";
 import { StudentScoresPage } from "../pages/student/StudentScoresPage";
@@ -73,6 +75,14 @@ export default function App() {
           }
         />
         <Route
+          path="/student/courses/:courseId/self-assessment"
+          element={
+            <ProtectedRoute>
+              <StudentCourseSelfAssessmentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/student/courses/:courseId/scores"
           element={
             <ProtectedRoute>
@@ -109,6 +119,14 @@ export default function App() {
           element={
             <ProtectedRoute requireAdmin>
               <AdminCourseDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/courses/:courseId/assessment"
+          element={
+            <ProtectedRoute requireAdmin>
+              <AdminCourseAssessmentPage />
             </ProtectedRoute>
           }
         />

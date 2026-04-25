@@ -157,6 +157,26 @@ async function seedFakeData() {
       },
       updatedAt: "fake-updated-at",
     });
+
+    await setDoc(doc(db, "courses", COURSE_ID, "learningOutcomes", "fake-clo-1"), {
+      title: "Fake CLO 1",
+      description: "Fake published learning outcome.",
+      bloomLevel: "understand",
+      order: 1,
+      isPublished: true,
+      createdAt: "fake-created-at",
+      updatedAt: "fake-updated-at",
+    });
+
+    await setDoc(doc(db, "courses", COURSE_ID, "learningOutcomes", "fake-clo-draft"), {
+      title: "Fake Draft CLO",
+      description: "Fake draft learning outcome.",
+      bloomLevel: "apply",
+      order: 2,
+      isPublished: false,
+      createdAt: "fake-created-at",
+      updatedAt: "fake-updated-at",
+    });
   });
 }
 
@@ -228,6 +248,75 @@ describe("Firestore security rules", () => {
         uid: STUDENT_A_UID,
         courseId: COURSE_ID,
         scores: {},
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("enrolled student can read published learning outcomes only", async () => {
+    await assertSucceeds(
+      getDoc(doc(studentADb(), "courses", COURSE_ID, "learningOutcomes", "fake-clo-1")),
+    );
+
+    await assertFails(
+      getDoc(doc(studentADb(), "courses", COURSE_ID, "learningOutcomes", "fake-clo-draft")),
+    );
+  });
+
+  it("student cannot write learning outcomes", async () => {
+    await assertFails(
+      setDoc(doc(studentADb(), "courses", COURSE_ID, "learningOutcomes", "fake-student-clo"), {
+        title: "Fake Student CLO",
+        description: "Students must not write CLO documents.",
+        bloomLevel: "understand",
+        order: 3,
+        isPublished: true,
+        createdAt: "fake-created-at",
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("enrolled student can write own self assessment", async () => {
+    await assertSucceeds(
+      setDoc(doc(studentADb(), "courses", COURSE_ID, "selfAssessments", STUDENT_A_UID), {
+        uid: STUDENT_A_UID,
+        courseId: COURSE_ID,
+        responses: {
+          "fake-clo-1": {
+            rating: 3,
+            reflection: "Fake reflection for rules test.",
+            updatedAt: "fake-updated-at",
+          },
+        },
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("student cannot write another student's self assessment", async () => {
+    await assertFails(
+      setDoc(doc(studentADb(), "courses", COURSE_ID, "selfAssessments", STUDENT_B_UID), {
+        uid: STUDENT_B_UID,
+        courseId: COURSE_ID,
+        responses: {
+          "fake-clo-1": {
+            rating: 1,
+            reflection: "Fake invalid reflection.",
+            updatedAt: "fake-updated-at",
+          },
+        },
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("non-enrolled student cannot write self assessment", async () => {
+    await assertFails(
+      setDoc(doc(nonRosterStudentDb(), "courses", COURSE_ID, "selfAssessments", "non-roster-student-uid"), {
+        uid: "non-roster-student-uid",
+        courseId: COURSE_ID,
+        responses: {},
         updatedAt: "fake-updated-at",
       }),
     );
@@ -341,6 +430,36 @@ describe("Firestore security rules", () => {
         },
         updatedAt: "fake-updated-at",
       }),
+    );
+  });
+
+  it("admin can write learning outcomes and read self assessments", async () => {
+    await assertSucceeds(
+      setDoc(doc(adminDb(), "courses", COURSE_ID, "learningOutcomes", "fake-admin-clo"), {
+        title: "Fake Admin CLO",
+        description: "Fake admin-created learning outcome.",
+        bloomLevel: "analyze",
+        order: 4,
+        isPublished: true,
+        createdAt: "fake-created-at",
+        updatedAt: "fake-updated-at",
+      }),
+    );
+
+    await testEnv.withSecurityRulesDisabled(async (context) => {
+      await setDoc(
+        doc(context.firestore(), "courses", COURSE_ID, "selfAssessments", STUDENT_A_UID),
+        {
+          uid: STUDENT_A_UID,
+          courseId: COURSE_ID,
+          responses: {},
+          updatedAt: "fake-updated-at",
+        },
+      );
+    });
+
+    await assertSucceeds(
+      getDoc(doc(adminDb(), "courses", COURSE_ID, "selfAssessments", STUDENT_A_UID)),
     );
   });
 });

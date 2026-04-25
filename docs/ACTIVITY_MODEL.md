@@ -131,6 +131,15 @@ StudentProgress -> aggregates XP, badges, CLO progress
 StudentScores -> official score only after review/trusted transfer
 ```
 
+รายละเอียด assessment layer กลางสำหรับ CLO, Bloom level, evidence, rubric, badge rules และ official score boundary อยู่ที่:
+
+```text
+docs/ASSESSMENT_MODEL.md
+src/features/assessment/assessmentTypes.ts
+```
+
+Cal1 ควรเป็น pilot ของ contract นี้ แต่ไม่ควรทำให้ activity/progress model ผูกตายกับ Cal1 เพียงรายวิชาเดียว
+
 ตัวอย่าง:
 
 ```ts
@@ -161,10 +170,11 @@ type BadgeRule = {
 
 สำหรับ phase แรกของ CLO dashboard ควรเริ่มจาก practice-only:
 
-1. แสดง XP/badges/CLO progress ในหน้า learner dashboard
-2. เก็บ attempt/progress ใน Firestore เฉพาะของผู้เรียนที่ authenticated และ enrolled
-3. ยังไม่ส่งเข้า `studentScores`
-4. เพิ่มหน้า admin ให้ review progress ก่อนตัดสินใจว่าจะโอนเป็น score item หรือไม่
+1. แสดง self-assessment และ CLO progress ในหน้า learner dashboard
+2. เก็บ self-assessment ใน Firestore เฉพาะของผู้เรียนที่ authenticated และ enrolled
+3. เก็บ attempt/progress ใน Firestore เฉพาะของผู้เรียนที่ authenticated และ enrolled เมื่อออกแบบ rules พร้อม
+4. ยังไม่ส่งเข้า `studentScores`
+5. เพิ่มหน้า admin ให้ review progress ก่อนตัดสินใจว่าจะโอนเป็น score item หรือไม่
 
 ## Score Boundary
 
@@ -235,6 +245,8 @@ src/pages/student/StudentCourseActivitiesPage.tsx
 - ยังไม่สร้างหรือแก้ `studentProgress`
 - ยังไม่ส่งคะแนนเข้า `studentScores`
 - external media ยังใช้ source URL ของ `calculus1-thai` เป็น launcher เท่านั้น
+- CLO ของรายวิชาเริ่มบันทึกใน `learningOutcomes` ได้จากหน้าอาจารย์
+- ผู้เรียนเริ่มตอบ self-assessment ของตนเองใน `selfAssessments/{uid}` ได้จากหน้า `/student/courses/:courseId/self-assessment`
 
 ## Inspiration: calculus1-thai
 

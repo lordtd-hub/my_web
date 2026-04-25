@@ -15,6 +15,8 @@ courses/{courseId}/enrollments/{uid}
 courses/{courseId}/announcements/{announcementId}
 courses/{courseId}/scoreItems/{scoreItemId}
 courses/{courseId}/studentScores/{uid}
+courses/{courseId}/learningOutcomes/{outcomeId}
+courses/{courseId}/selfAssessments/{uid}
 ```
 
 ห้ามแปล collection names หรือ document paths เหล่านี้ เพราะเป็นส่วนหนึ่งของ schema และ Security Rules
@@ -172,6 +174,45 @@ metadata ของรายการคะแนน เช่น quiz, homework,
 ```
 
 `isPublished` ใช้ควบคุมการแสดง metadata ของ score item ให้กับนักศึกษา
+
+## courses/{courseId}/learningOutcomes/{outcomeId}
+
+CLO หรือผลลัพธ์การเรียนรู้ของรายวิชา ใช้เป็นฐานสำหรับ activity mapping, self-assessment และ dashboard พัฒนาการ
+
+```ts
+{
+  title: string;
+  description: string;
+  bloomLevel: "remember" | "understand" | "apply" | "analyze" | "evaluate" | "create";
+  order: number;
+  isPublished: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+```
+
+admin อ่าน/เขียนได้ นักศึกษาที่ enroll แล้วอ่านได้เฉพาะ CLO ที่ `isPublished == true`
+
+## courses/{courseId}/selfAssessments/{uid}
+
+คำตอบประเมินตนเองของผู้เรียนต่อ CLO ในรายวิชานั้น
+
+```ts
+{
+  uid: string;
+  courseId: string;
+  responses: {
+    [outcomeId: string]: {
+      rating: number;
+      reflection: string;
+      updatedAt: Timestamp;
+    }
+  };
+  updatedAt: Timestamp;
+}
+```
+
+Document ID ต้องเป็น Firebase Auth UID ของผู้เรียน นักศึกษาเขียนได้เฉพาะเอกสารของตนเองและต้องเป็นผู้ที่ enroll ในรายวิชานั้นแล้ว admin อ่านได้เพื่อดูภาพรวม แต่ข้อมูลนี้ยังไม่ใช่คะแนนทางการและไม่เขียนเข้า `studentScores`
 
 ## courses/{courseId}/studentScores/{uid}
 

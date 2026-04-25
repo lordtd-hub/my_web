@@ -145,6 +145,18 @@ export function AdminCourseDetailPage() {
               </dl>
             </article>
             <article className="info-panel">
+              <h2>ออกแบบการสอนและการประเมิน</h2>
+              <p>
+                ตรวจ CLO, กิจกรรม, Bloom, self-assessment และขอบเขตคะแนนจริงในที่เดียว
+              </p>
+              <Link
+                className="button-primary mt-5"
+                to={`/admin/courses/${course.id}/assessment`}
+              >
+                เปิดพื้นที่ออกแบบ
+              </Link>
+            </article>
+            <article className="info-panel">
               <h2>รายชื่อนักศึกษา</h2>
               <p>
                 เพิ่มรหัสนักศึกษา นำเข้ารายชื่อจาก CSV และตรวจสอบรายชื่อนักศึกษาก่อนนำเข้าคะแนน

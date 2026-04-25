@@ -89,6 +89,12 @@ export function StudentCoursesPage() {
                   </Link>
                   <Link
                     className="button-secondary"
+                    to={`/student/courses/${courseId}/self-assessment`}
+                  >
+                    ประเมินตนเอง
+                  </Link>
+                  <Link
+                    className="button-secondary"
                     to={`/student/courses/${courseId}/scores`}
                   >
                     ดูคะแนนของฉัน

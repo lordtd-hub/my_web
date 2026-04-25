@@ -70,6 +70,24 @@ export type ScoreItem = {
   updatedAt: Timestamp;
 };
 
+export type BloomCognitiveLevel =
+  | "remember"
+  | "understand"
+  | "apply"
+  | "analyze"
+  | "evaluate"
+  | "create";
+
+export type CourseLearningOutcome = {
+  title: string;
+  description: string;
+  bloomLevel: BloomCognitiveLevel;
+  order: number;
+  isPublished: boolean;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+};
+
 export type StudentScore = {
   uid: string;
   courseId: string;
@@ -83,5 +101,18 @@ export type StudentScore = {
       updatedAt: Timestamp;
     }
   >;
+  updatedAt: Timestamp;
+};
+
+export type SelfAssessmentResponse = {
+  rating: number;
+  reflection: string;
+  updatedAt: Timestamp;
+};
+
+export type StudentSelfAssessment = {
+  uid: string;
+  courseId: string;
+  responses: Record<string, SelfAssessmentResponse>;
   updatedAt: Timestamp;
 };

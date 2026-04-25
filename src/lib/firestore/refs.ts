@@ -14,9 +14,11 @@ import type {
   AdminProfile,
   Course,
   CourseAnnouncement,
+  CourseLearningOutcome,
   Enrollment,
   RosterEntry,
   ScoreItem,
+  StudentSelfAssessment,
   StudentScore,
   UserProfile,
 } from "./types";
@@ -104,6 +106,40 @@ export function getScoreItemsCollectionRef(courseId: string) {
 
 export function getScoreItemDocRef(courseId: string, scoreItemId: string) {
   return typedDoc<ScoreItem>("courses", courseId, "scoreItems", scoreItemId);
+}
+
+export function getLearningOutcomesCollectionRef(courseId: string) {
+  return typedCollection<CourseLearningOutcome>(
+    "courses",
+    courseId,
+    "learningOutcomes",
+  );
+}
+
+export function getLearningOutcomeDocRef(courseId: string, outcomeId: string) {
+  return typedDoc<CourseLearningOutcome>(
+    "courses",
+    courseId,
+    "learningOutcomes",
+    outcomeId,
+  );
+}
+
+export function getSelfAssessmentDocRef(courseId: string, uid: string) {
+  return typedDoc<StudentSelfAssessment>(
+    "courses",
+    courseId,
+    "selfAssessments",
+    uid,
+  );
+}
+
+export function getSelfAssessmentsCollectionRef(courseId: string) {
+  return typedCollection<StudentSelfAssessment>(
+    "courses",
+    courseId,
+    "selfAssessments",
+  );
 }
 
 export function getOwnStudentScoreDocRef(courseId: string, uid: string) {

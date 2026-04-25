@@ -118,6 +118,12 @@ export function StudentHomePage() {
                     >
                       เปิดสื่อและกิจกรรม
                     </Link>
+                    <Link
+                      className="button-ghost mt-3 px-0"
+                      to={`/student/courses/${courseId}/self-assessment`}
+                    >
+                      ประเมินตนเอง
+                    </Link>
                   </article>
                 ))}
               </div>

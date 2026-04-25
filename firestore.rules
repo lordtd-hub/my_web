@@ -54,6 +54,44 @@ service cloud.firestore {
         || isAdmin();
     }
 
+    function isValidLearningOutcome() {
+      return request.resource.data.keys().hasOnly([
+          'title',
+          'description',
+          'bloomLevel',
+          'order',
+          'isPublished',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.title is string
+        && request.resource.data.description is string
+        && request.resource.data.bloomLevel in [
+          'remember',
+          'understand',
+          'apply',
+          'analyze',
+          'evaluate',
+          'create'
+        ]
+        && request.resource.data.order is number
+        && request.resource.data.isPublished is bool;
+    }
+
+    function isValidSelfAssessment(courseId, uid) {
+      return isSelf(uid)
+        && isEnrolled(courseId)
+        && request.resource.data.keys().hasOnly([
+          'uid',
+          'courseId',
+          'responses',
+          'updatedAt'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.courseId == courseId
+        && request.resource.data.responses is map;
+    }
+
     match /admins/{uid} {
       allow read: if isAdmin();
       allow write: if false;
@@ -116,6 +154,19 @@ service cloud.firestore {
         allow read: if isAdmin()
           || (isEnrolled(courseId) && resource.data.isPublished == true);
         allow write: if isAdmin();
+      }
+
+      match /learningOutcomes/{outcomeId} {
+        allow read: if isAdmin()
+          || (isEnrolled(courseId) && resource.data.isPublished == true);
+        allow create, update: if isAdmin() && isValidLearningOutcome();
+        allow delete: if isAdmin();
+      }
+
+      match /selfAssessments/{uid} {
+        allow read: if (isSelf(uid) && isEnrolled(courseId)) || isAdmin();
+        allow create, update: if isValidSelfAssessment(courseId, uid);
+        allow delete: if false;
       }
 
       match /studentScores/{uid} {
