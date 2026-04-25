@@ -25,6 +25,14 @@ export type AcademicLink = {
   note: string;
 };
 
+export type InteractiveLearningResource = {
+  title: string;
+  href: string;
+  subject: string;
+  summary: string;
+  status: string;
+};
+
 export const profilePlaceholder = {
   displayName: "ดร.สิทธิโชค ทรงสอาด",
   displayNameEn: "Sittichoke Songsa-ard",
@@ -138,6 +146,18 @@ export const publicCourses: PublicCourse[] = [
       "ตัวอย่างเฉลยอย่างเป็นขั้นตอน (รออัปเดต)",
       "กิจกรรมประกอบด้วยซอฟต์แวร์คณิตศาสตร์ (รออัปเดต)",
     ],
+  },
+];
+
+export const interactiveLearningResources: InteractiveLearningResource[] = [
+  {
+    title: "แคลคูลัส 1 ภาษาไทย",
+    href: "https://lordtd-hub.github.io/calculus1-thai/index.html",
+    subject: "Calculus 1",
+    summary:
+      "สื่อฝึกแคลคูลัสแบบ interactive มีบทเรียนเชิงภาพ เกมฝึกคิด และภารกิจสำหรับการเรียนรู้ด้วยตนเอง",
+    status:
+      "ใช้เป็นสื่อฝึกและตัวอย่างแนวทาง interactive learning ยังไม่เชื่อมกับคะแนนทางการในระบบรายวิชานี้",
   },
 ];
 

@@ -1,5 +1,8 @@
 import { PageShell } from "../../components/PageShell";
-import { teachingFocus } from "../../content/publicAcademic";
+import {
+  interactiveLearningResources,
+  teachingFocus,
+} from "../../content/publicAcademic";
 
 export function TeachingPage() {
   return (
@@ -14,8 +17,38 @@ export function TeachingPage() {
             <h2>{item.title}</h2>
             <p>{item.body}</p>
           </article>
-        ))}
+          ))}
       </div>
+      <section className="mt-10">
+        <div className="section-heading-row">
+          <div>
+            <p className="section-eyebrow">Interactive Learning</p>
+            <h2>สื่อฝึกแบบโต้ตอบ</h2>
+          </div>
+        </div>
+        <div className="content-grid mt-6">
+          {interactiveLearningResources.map((resource) => (
+            <article className="detail-tile" key={resource.href}>
+              <span>{resource.subject}</span>
+              <strong>{resource.title}</strong>
+              <p className="mt-3 text-sm leading-6 text-ink/65">
+                {resource.summary}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-ink/65">
+                {resource.status}
+              </p>
+              <a
+                className="text-link mt-4 inline-flex"
+                href={resource.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                เปิดสื่อ interactive
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
       <div className="mt-6 rounded-lg border border-copper-accent/30 bg-white p-6">
         <h2 className="text-xl font-semibold text-ink">
           ขอบเขตของข้อมูลการเรียน

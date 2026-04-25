@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
-import { publicCourses } from "../../content/publicAcademic";
+import {
+  interactiveLearningResources,
+  publicCourses,
+} from "../../content/publicAcademic";
 
 export function CoursesPage() {
   return (
@@ -31,6 +34,35 @@ export function CoursesPage() {
           </article>
         ))}
       </div>
+      <section className="mt-10">
+        <div className="section-heading-row">
+          <div>
+            <p className="section-eyebrow">Interactive Learning</p>
+            <h2>สื่อฝึกที่เชื่อมกับการเรียนรายวิชา</h2>
+          </div>
+          <Link className="text-link" to="/teaching">
+            ดูสื่อการสอนทั้งหมด
+          </Link>
+        </div>
+        <div className="content-grid mt-6">
+          {interactiveLearningResources.map((resource) => (
+            <article className="info-panel" key={resource.href}>
+              <p className="metadata-label">{resource.subject}</p>
+              <h3>{resource.title}</h3>
+              <p>{resource.summary}</p>
+              <p>{resource.status}</p>
+              <a
+                className="text-link mt-4 inline-flex"
+                href={resource.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                เปิดสื่อ interactive
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
     </PageShell>
   );
 }

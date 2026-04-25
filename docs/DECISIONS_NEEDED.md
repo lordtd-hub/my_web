@@ -91,6 +91,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] ออกแบบ activity/media ให้เป็น contract กลางเพื่อเสียบสื่อรายวิชาใหม่ได้ง่าย
 - [x] แยก learning progress ออกจาก official score
 - [x] ใช้ `activityAttempts` และ `studentProgress` เป็น proposal สำหรับ phase ถัดไป
+- [x] เพิ่ม `แคลคูลัส 1 ภาษาไทย` เป็น external interactive learning resource สำหรับสื่อฝึกเบื้องต้น
 - [ ] activity types แรกที่จะนำเข้าระบบ เช่น lesson, interactive graph, quiz, mission หรือ game
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ

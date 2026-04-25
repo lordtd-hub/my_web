@@ -77,6 +77,7 @@
 ## Phase 7 — Activity and learning progress foundation
 
 - กำหนด activity/media contract กลาง
+- เพิ่ม external interactive learning resources เป็นสื่อฝึกในหน้า Teaching/Courses
 - เพิ่ม activity catalog สำหรับรายวิชา
 - เพิ่มพื้นที่เล่นสื่อหรือกิจกรรมสำหรับผู้เรียนที่ enroll แล้ว
 - เก็บ practice attempts แยกจากคะแนนทางการ
@@ -85,7 +86,7 @@
 
 ข้อสำคัญ: คะแนนทางการยังต้องอยู่ใน `studentScores/{uid}` และควรเขียนโดย admin หรือ trusted grading flow เท่านั้น
 
-สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts`
+สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts` และเพิ่ม external resource แรก `แคลคูลัส 1 ภาษาไทย` เป็นสื่อฝึกแบบยังไม่เชื่อมคะแนนทางการ
 
 ## Phase 8 — Preview deployment
 
