@@ -8,7 +8,9 @@ export type AuthContextValue = {
   user: User | null;
   error: string | null;
   firebaseReady: boolean;
+  isEmulatorMode: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithTestAccount: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
 };

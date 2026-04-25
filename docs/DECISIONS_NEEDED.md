@@ -87,11 +87,19 @@
 ## Authentication
 
 - [ ] ใช้ Google sign-in อย่างเดียวหรือไม่
-- [ ] ต้องรองรับ email/password หรือไม่
+- [x] local QA ใช้ Firebase Auth Emulator + email/password fake accounts แทนการสมัคร Google accounts จริง
+- [ ] production ต้องรองรับ email/password หรือไม่
 - [ ] ต้องจำกัด university email domain หรือไม่
 - [ ] วิธีสร้าง student accounts
 - [ ] initial admin UID
 - [ ] วิธีสร้างเอกสาร `admins/{uid}` ครั้งแรก
+
+การตัดสินใจปัจจุบัน:
+
+- Local development และ QA ก่อน preview ใช้ Firebase Auth Emulator + Firestore Emulator
+- บัญชีทดสอบเป็นข้อมูลปลอมใน emulator เท่านั้น
+- Google sign-in จริงใช้เฉพาะ smoke test ตอน preview และการใช้งานจริง
+- Email/password ใน emulator ไม่ใช่ production sign-in method
 
 ## Student identity
 
@@ -173,6 +181,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 
 - [x] Firebase project ID for local development: `academic-learning-portal-dev`
 - [x] เพิ่ม checklist ก่อน Firebase Hosting preview deploy ที่ `docs/PREVIEW_QA_CHECKLIST.md`
+- [x] เพิ่ม Local QA flow ด้วย Firebase Emulator ที่ `docs/LOCAL_QA.md`
 - [ ] custom domain
 - [ ] อนุญาต preview deploy หรือไม่
 - [ ] อนุมัติ production deploy หรือไม่

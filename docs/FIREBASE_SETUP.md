@@ -41,6 +41,28 @@ npx firebase use academic-learning-portal-dev
 Do not deploy Hosting until the user explicitly approves preview or production
 deployment in `docs/DECISIONS_NEEDED.md`.
 
+## Local QA with emulators
+
+ด่าน 1 ก่อน preview deploy ควรใช้ Firebase Emulator และข้อมูลปลอมเป็นมาตรฐาน
+ไม่ควรสร้าง Google accounts หลายบัญชีเพื่อทดสอบระหว่างพัฒนา
+
+ดูขั้นตอนเต็มที่:
+
+```text
+docs/LOCAL_QA.md
+```
+
+คำสั่งหลัก:
+
+```bash
+npm run qa:emulators
+npm run qa:seed
+npm run dev:emulator
+```
+
+โหมดนี้ใช้ `.env.emulator` ซึ่งมีค่า fake project เท่านั้น และหน้า login
+จะแสดงปุ่มบัญชีทดสอบเฉพาะใน emulator mode
+
 ## Authentication
 
 Enable Google as a sign-in provider in Firebase Console:
@@ -57,8 +79,10 @@ Some embedded or in-app browsers can block popups and also partition
 state error. For local admin UID setup, use Safari or Chrome directly at
 `http://localhost:5173/login`.
 
-University domain restrictions, email/password sign-in, and manual student
-account setup are still unresolved decisions in `docs/DECISIONS_NEEDED.md`.
+University domain restrictions and real student account setup are still
+unresolved decisions in `docs/DECISIONS_NEEDED.md`. Email/password sign-in is
+available only in local emulator mode for QA and must not be treated as a
+production sign-in method.
 
 ## Admin allowlist
 
@@ -80,4 +104,8 @@ admin use. Do not use `users/{uid}.role` as the source of truth.
 - Students cannot write scores, enrollments, course settings, or admin docs.
 - Admins are recognized by `admins/{request.auth.uid}`.
 
-Rules tests are planned for Milestone 6.
+Executable rules tests are available through:
+
+```bash
+npm test
+```

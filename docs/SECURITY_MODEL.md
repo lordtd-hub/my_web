@@ -122,6 +122,19 @@ npm test
 
 Firestore Emulator ต้องใช้ Java runtime ในเครื่อง หากยังไม่ได้ติดตั้ง Java คำสั่ง test จะ fail ก่อนเริ่ม assertions
 
+## Local QA strategy
+
+ก่อน preview deploy ให้ทดสอบ browser flow ด้วย Firebase Emulator และข้อมูลปลอม
+ตาม `docs/LOCAL_QA.md` เป็นหลัก โดยไม่ใช้บัญชี Google จริง
+
+แนวทางนี้แยกจาก production sign-in:
+
+- automated rules tests ใช้ fake auth context
+- local browser QA ใช้ Auth Emulator + Firestore Emulator + fake seed data
+- preview smoke test จึงค่อยใช้ Google sign-in จริงใน Firebase project dev
+
+บัญชีทดสอบใน emulator ไม่ใช่บัญชีจริง และห้ามใช้เป็นวิธีเข้าสู่ระบบของ production
+
 ## Firestore Rules Template
 
 ดู template ได้ที่:

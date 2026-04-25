@@ -37,6 +37,7 @@
 │  ├─ ARCHITECTURE.md
 │  ├─ FIRESTORE_SCHEMA.md
 │  ├─ SECURITY_MODEL.md
+│  ├─ LOCAL_QA.md
 │  ├─ ROADMAP.md
 │  ├─ DECISIONS_NEEDED.md
 │  ├─ PREVIEW_QA_CHECKLIST.md
@@ -76,6 +77,14 @@ npm install
 
 ```bash
 npm run dev
+```
+
+เปิด dev server แบบ Firebase Emulator สำหรับ local QA:
+
+```bash
+npm run qa:emulators
+npm run qa:seed
+npm run dev:emulator
 ```
 
 ตรวจ build:
@@ -156,6 +165,7 @@ CSV import ทำงานใน browser:
 - `docs/ARCHITECTURE.md`: โครงสร้างระบบและ data flow
 - `docs/FIRESTORE_SCHEMA.md`: โครงสร้างข้อมูลใน Firestore
 - `docs/SECURITY_MODEL.md`: โมเดลความปลอดภัย
+- `docs/LOCAL_QA.md`: วิธีทดสอบด้วย Firebase Emulator และข้อมูลปลอม
 - `docs/ROADMAP.md`: แผนงานตาม milestone
 - `docs/DECISIONS_NEEDED.md`: เรื่องที่ยังต้องให้ผู้ใช้ตัดสินใจ
 - `docs/PREVIEW_QA_CHECKLIST.md`: checklist ก่อน Firebase Hosting preview deploy

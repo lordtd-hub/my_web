@@ -1,7 +1,16 @@
 import { initializeApp, type FirebaseApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, type Auth } from "firebase/auth";
-import { getFirestore, type Firestore } from "firebase/firestore";
-import { firebaseConfig } from "./config";
+import {
+  connectAuthEmulator,
+  getAuth,
+  GoogleAuthProvider,
+  type Auth,
+} from "firebase/auth";
+import {
+  connectFirestoreEmulator,
+  getFirestore,
+  type Firestore,
+} from "firebase/firestore";
+import { firebaseConfig, firebaseEmulatorConfig } from "./config";
 
 type FirebaseClient = {
   app: FirebaseApp;
@@ -25,6 +34,21 @@ export function getFirebaseClient(): FirebaseClient | null {
     googleProvider.setCustomParameters({
       prompt: "select_account",
     });
+
+    if (firebaseEmulatorConfig.useEmulators) {
+      connectAuthEmulator(
+        auth,
+        `http://${firebaseEmulatorConfig.authHost}:${firebaseEmulatorConfig.authPort}`,
+        {
+          disableWarnings: true,
+        },
+      );
+      connectFirestoreEmulator(
+        db,
+        firebaseEmulatorConfig.firestoreHost,
+        firebaseEmulatorConfig.firestorePort,
+      );
+    }
 
     client = {
       app,

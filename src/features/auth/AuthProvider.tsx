@@ -1,6 +1,7 @@
 import {
   getRedirectResult,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signInWithRedirect,
   signOut,
@@ -14,7 +15,11 @@ import {
   type ReactNode,
 } from "react";
 import { getFirebaseClient } from "../../lib/firebase/app";
-import { firebaseSetupMessage, isFirebaseConfigured } from "../../lib/firebase/config";
+import {
+  firebaseEmulatorConfig,
+  firebaseSetupMessage,
+  isFirebaseConfigured,
+} from "../../lib/firebase/config";
 import { AuthContext, type AuthContextValue, type AuthStatus } from "./authContext";
 
 type AuthProviderProps = {
@@ -101,6 +106,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
+  const signInWithTestAccount = useCallback(
+    async (email: string, password: string) => {
+      const client = getFirebaseClient();
+
+      if (!client) {
+        setError(firebaseSetupMessage);
+        return;
+      }
+
+      if (!firebaseEmulatorConfig.useEmulators) {
+        setError("บัญชีทดสอบใช้ได้เฉพาะ Firebase Emulator local QA เท่านั้น");
+        return;
+      }
+
+      setError(null);
+      setStatus("loading");
+
+      try {
+        await signInWithEmailAndPassword(client.auth, email, password);
+      } catch (authError) {
+        setError(
+          authError instanceof Error
+            ? authError.message
+            : "เข้าสู่ระบบบัญชีทดสอบไม่สำเร็จ กรุณารัน seed emulator ก่อน",
+        );
+        setStatus(client.auth.currentUser ? "authenticated" : "unauthenticated");
+      }
+    },
+    [],
+  );
+
   const logout = useCallback(async () => {
     const client = getFirebaseClient();
 
@@ -124,11 +160,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
       user,
       error,
       firebaseReady: isFirebaseConfigured,
+      isEmulatorMode: firebaseEmulatorConfig.useEmulators,
       signInWithGoogle,
+      signInWithTestAccount,
       logout,
       clearError,
     }),
-    [clearError, error, logout, signInWithGoogle, status, user],
+    [
+      clearError,
+      error,
+      logout,
+      signInWithGoogle,
+      signInWithTestAccount,
+      status,
+      user,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

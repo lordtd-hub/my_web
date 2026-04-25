@@ -120,6 +120,11 @@ Firebase config อ่านจาก Vite environment variables หากยั
 
 Google Sign-In เป็น provider หลักใน Milestone 3 โดยยังขึ้นกับการตั้งค่าใน Firebase Console
 
+สำหรับ local QA ก่อน deploy แอปรองรับ Firebase Auth Emulator และ Firestore
+Emulator ผ่าน `npm run dev:emulator` และ `.env.emulator` หน้า login จะแสดง
+บัญชีทดสอบเฉพาะ emulator mode เท่านั้น เพื่อทดสอบ admin/student flow โดยไม่ใช้
+Google account จริงและไม่แตะ Firebase project จริง
+
 ## Route structure ที่ใช้ในระบบ
 
 ห้ามเปลี่ยน route path เหล่านี้เพียงเพราะ localization เพราะ path เป็นส่วนหนึ่งของโครงสร้างแอป:

@@ -66,13 +66,15 @@
 - Firestore rules tests
 - Build checks
 - Lint checks
+- Local QA with Firebase Auth/Firestore Emulator
+- Fake data seed script สำหรับ admin/student/course/roster/enrollment/score items/student scores
 - Manual QA checklist
 - Thai-first localization review สำหรับข้อความที่ผู้ใช้เห็นและเอกสาร
 - Documentation updates
 
 ข้อควรระวัง: Firestore Rules tests ต้องใช้ Java runtime
 
-สถานะ: เริ่มแล้วและมี tests แล้ว แต่ต้องรันให้ผ่านในเครื่องที่พร้อมก่อนใช้ข้อมูลจริง
+สถานะ: มี rules tests, local emulator QA mode, seed script และ manual QA checklist แล้ว ต้องใช้ให้ผ่านครบก่อน preview deploy
 
 ## Phase 7 — Activity and learning progress foundation
 
@@ -90,6 +92,7 @@
 
 ## Phase 8 — Preview deployment
 
+- ผ่าน Local QA ตาม `docs/LOCAL_QA.md`
 - Firebase Hosting preview
 - ทดสอบด้วย fake data เท่านั้น
 - ตรวจ privacy อีกครั้ง

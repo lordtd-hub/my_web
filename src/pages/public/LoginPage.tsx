@@ -8,11 +8,37 @@ type LocationState = {
   };
 };
 
+const localTestAccounts = [
+  {
+    label: "อาจารย์ทดสอบ",
+    email: "teacher-admin@example.test",
+    password: "local-test-password",
+  },
+  {
+    label: "นักศึกษาทดสอบ",
+    email: "6612345678901@student.sru.ac.th",
+    password: "local-test-password",
+  },
+  {
+    label: "นักศึกษานอก roster",
+    email: "6612345678999@student.sru.ac.th",
+    password: "local-test-password",
+  },
+];
+
 export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { clearError, error, firebaseReady, signInWithGoogle, status, user } =
-    useAuth();
+  const {
+    clearError,
+    error,
+    firebaseReady,
+    isEmulatorMode,
+    signInWithGoogle,
+    signInWithTestAccount,
+    status,
+    user,
+  } = useAuth();
   const fromPath =
     (location.state as LocationState | null)?.from?.pathname ?? "/student";
   const isLoading = status === "loading";
@@ -21,6 +47,11 @@ export function LoginPage() {
   async function handleGoogleSignIn() {
     clearError();
     await signInWithGoogle();
+  }
+
+  async function handleTestSignIn(email: string, password: string) {
+    clearError();
+    await signInWithTestAccount(email, password);
   }
 
   return (
@@ -62,12 +93,38 @@ export function LoginPage() {
               </p>
               <button
                 className="button-primary mt-5"
-                disabled={!firebaseReady || isLoading}
+                disabled={!firebaseReady || isLoading || isEmulatorMode}
                 onClick={() => void handleGoogleSignIn()}
                 type="button"
               >
                 เข้าสู่ระบบด้วย Google
               </button>
+              {isEmulatorMode ? (
+                <div className="mt-5 rounded-md border border-sage-line bg-paper-warm p-4">
+                  <h3 className="text-base font-semibold text-ink">
+                    Local Emulator QA
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-ink/65">
+                    โหมดนี้ใช้บัญชีปลอมใน Firebase Emulator เท่านั้น
+                    เพื่อทดสอบ flow โดยไม่ใช้ Google account จริง
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {localTestAccounts.map((account) => (
+                      <button
+                        className="button-secondary"
+                        disabled={!firebaseReady || isLoading}
+                        key={account.email}
+                        onClick={() =>
+                          void handleTestSignIn(account.email, account.password)
+                        }
+                        type="button"
+                      >
+                        {account.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </>
           )}
           {error ? <p className="alert-message mt-5">{error}</p> : null}
@@ -86,6 +143,10 @@ export function LoginPage() {
             <li className="check-row">เปิด Google Sign-In ใน Firebase Console</li>
             <li className="check-row">
               สร้าง `admins/&lbrace;uid&rbrace;` ก่อนใช้งานแดชบอร์ดอาจารย์
+            </li>
+            <li className="check-row">
+              สำหรับ local QA ให้ใช้ `npm run qa:emulators`, `npm run qa:seed`
+              และ `npm run dev:emulator`
             </li>
           </ul>
         </div>

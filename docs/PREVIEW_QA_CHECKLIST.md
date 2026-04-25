@@ -9,6 +9,7 @@
 - [ ] ใช้ข้อมูลปลอมเท่านั้น
 - [ ] ไม่มีคะแนนใน public files, Markdown, static JSON, URL หรือ localStorage
 - [ ] ยังไม่ deploy production
+- [ ] ผ่าน Local QA ด้วย Firebase Emulator ตาม `docs/LOCAL_QA.md` แล้ว
 
 ## คำสั่งตรวจพื้นฐาน
 
@@ -25,6 +26,19 @@ npm test
 - [ ] lint ผ่าน
 - [ ] build ผ่าน
 - [ ] Firestore Security Rules tests ผ่านครบ
+
+## Local QA ก่อน preview
+
+ก่อนใช้ Firebase project dev จริง ให้รัน:
+
+```bash
+npm run qa:emulators
+npm run qa:seed
+npm run dev:emulator
+```
+
+แล้วทดสอบ admin/student/non-roster flow ด้วยบัญชีปลอมในหน้า `/login`
+ตาม `docs/LOCAL_QA.md`
 
 ## Firestore และสิทธิ์
 

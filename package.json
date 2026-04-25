@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:emulator": "vite --mode emulator --host 127.0.0.1",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "test": "firebase emulators:exec --project demo-personal-academic-learning-portal-rules-test --only firestore \"node --test tests/firestore.rules.test.mjs\"",
+    "qa:emulators": "env PATH=\"/opt/homebrew/opt/openjdk/bin:$PATH\" firebase emulators:start --project demo-personal-academic-learning-portal-local --only auth,firestore",
+    "qa:seed": "node scripts/seed-local-emulator.mjs",
+    "test": "env PATH=\"/opt/homebrew/opt/openjdk/bin:$PATH\" firebase emulators:exec --project demo-personal-academic-learning-portal-rules-test --only firestore \"node --test tests/firestore.rules.test.mjs\"",
     "preview": "vite preview"
   },
   "dependencies": {
