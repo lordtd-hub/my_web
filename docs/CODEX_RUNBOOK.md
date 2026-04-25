@@ -37,7 +37,7 @@ Use Thai as the default language for human-readable UI and documentation text.
 
 1. ใช้ภาษาไทยเป็นหลัก
 2. เนื้อหา public academic ต้องสุภาพ กระชับ เป็นทางการ และเหมาะกับเว็บไซต์อาจารย์คณิตศาสตร์
-3. ข้อความในระบบนักศึกษาต้องสุภาพและเข้าใจง่าย
+3. ข้อความในพื้นที่ผู้เรียนของรายวิชาต้องสุภาพ เข้าใจง่าย และไม่สื่อว่าเป็นระบบกลางของมหาวิทยาลัย
 4. ข้อความในแดชบอร์ดอาจารย์ต้องชัดเจน ใช้งานจริงได้ และไม่เยิ่นเย้อ
 5. คงคำศัพท์เทคนิคเป็น English เมื่อชัดกว่า เช่น Firebase, Firestore, Authentication, Hosting, Security Rules, CSV และ UID
 6. เปลี่ยนเฉพาะ human-readable strings เว้นแต่จำเป็นต้องเปลี่ยน code logic

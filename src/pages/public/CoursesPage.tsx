@@ -6,8 +6,8 @@ export function CoursesPage() {
   return (
     <PageShell
       eyebrow="รายวิชา"
-      title="ภาพรวมรายวิชา"
-      description="หน้านี้แสดงข้อมูลรายวิชาที่เผยแพร่ได้เท่านั้น ส่วนสื่อเฉพาะผู้เรียนและคะแนนนักศึกษาจะถูกคุ้มครองด้วย Firebase และ Firestore Security Rules"
+      title="ข้อมูลรายวิชาที่เผยแพร่ได้"
+      description="หน้านี้แสดงข้อมูลรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนและเผยแพร่ได้เท่านั้น ส่วนสื่อเฉพาะผู้เรียนและคะแนนรายบุคคลจะถูกคุ้มครองด้วย Firebase และ Firestore Security Rules"
     >
       <div className="content-grid">
         {publicCourses.map((course) => (

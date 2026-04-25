@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="title desc">
+  <title id="title">Mathematics profile avatar</title>
+  <desc id="desc">Abstract academic profile image with initials and mathematical curves.</desc>
+  <defs>
+    <linearGradient id="bg" x1="64" x2="576" y1="40" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f3556"/>
+      <stop offset="0.54" stop-color="#163d4d"/>
+      <stop offset="1" stop-color="#7b4a2f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="68%" cy="28%" r="55%">
+      <stop offset="0" stop-color="#e9d8a6" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#8fb3a2" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#03111f" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="640" height="640" rx="72" fill="url(#bg)"/>
+  <rect width="640" height="640" rx="72" fill="url(#glow)"/>
+  <g opacity="0.22" stroke="#f7f0dc" stroke-width="2" fill="none">
+    <path d="M72 446c92-94 155-124 235-88 70 31 122 12 261-134"/>
+    <path d="M78 520c126-120 223-154 315-98 54 33 95 28 170-28"/>
+    <path d="M86 182c87 36 141 31 205-28 72-66 151-70 266-14"/>
+    <path d="M136 92c42 94 48 181 17 260-24 60-19 120 14 183"/>
+  </g>
+  <g opacity="0.18" fill="#f7f0dc">
+    <circle cx="96" cy="122" r="5"/>
+    <circle cx="158" cy="404" r="4"/>
+    <circle cx="504" cy="118" r="5"/>
+    <circle cx="548" cy="492" r="4"/>
+    <circle cx="438" cy="548" r="3"/>
+  </g>
+  <g filter="url(#softShadow)">
+    <rect x="116" y="128" width="408" height="384" rx="48" fill="#f8f2df" opacity="0.94"/>
+    <path d="M170 178h300" stroke="#0f3556" stroke-width="14" stroke-linecap="round" opacity="0.16"/>
+    <path d="M170 462h300" stroke="#0f3556" stroke-width="14" stroke-linecap="round" opacity="0.16"/>
+    <text x="320" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="154" font-weight="700" fill="#0f3556">S</text>
+    <text x="320" y="398" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="7" fill="#7b4a2f">MATH</text>
+    <text x="320" y="438" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-style="italic" fill="#466b63">f(x) = x</text>
+  </g>
+</svg>

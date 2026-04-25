@@ -42,7 +42,7 @@ export function CourseDetailPage() {
           </dl>
           <p className="mt-5 text-sm leading-6 text-ink/65">
             หน้านี้มีเฉพาะข้อมูลรายวิชาที่เผยแพร่ได้เท่านั้น คะแนน enrollment
-            และ feedback ส่วนตัวของนักศึกษาไม่ถูกเก็บไว้ในส่วน public
+            และ feedback ส่วนตัวของผู้เรียนไม่ถูกเก็บไว้ในส่วน public
           </p>
         </aside>
 

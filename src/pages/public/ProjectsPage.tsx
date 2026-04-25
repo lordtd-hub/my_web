@@ -4,9 +4,9 @@ import { publicProjects } from "../../content/publicAcademic";
 export function ProjectsPage() {
   return (
     <PageShell
-      eyebrow="โครงการ"
-      title="โครงการและสื่อวิชาการ"
-      description="พื้นที่สำหรับสรุปโครงการวิชาการ สื่อการสอน หรือเครื่องมือประกอบการเรียนรู้ที่ได้รับอนุญาตให้เผยแพร่"
+      eyebrow="กิจกรรม"
+      title="กิจกรรมและสื่อสนับสนุนการเรียนรู้"
+      description="พื้นที่นี้รวมกิจกรรม สื่อ หรือเครื่องมือประกอบการเรียนรู้ที่เผยแพร่ได้ ส่วนผลงานวิจัยจะแยกไว้ในหน้างานวิจัยโดยเฉพาะ"
     >
       <div className="content-grid">
         {publicProjects.map((project) => (

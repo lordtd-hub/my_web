@@ -1,6 +1,8 @@
 import {
+  getRedirectResult,
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   type User,
 } from "firebase/auth";
@@ -19,6 +21,28 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
+function isPopupBlockedError(error: unknown) {
+  return (
+    error &&
+    typeof error === "object" &&
+    "code" in error &&
+    error.code === "auth/popup-blocked"
+  );
+}
+
+function getSignInErrorMessage(error: unknown) {
+  if (
+    error instanceof Error &&
+    error.message.includes("missing initial state")
+  ) {
+    return "เข้าสู่ระบบแบบ redirect ไม่สำเร็จ เพราะ browser นี้ไม่อนุญาตให้ Firebase อ่าน sessionStorage สำหรับ OAuth state กรุณาเปิด http://localhost:5173/login ใน Safari หรือ Chrome แล้วลองเข้าสู่ระบบใหม่";
+  }
+
+  return error instanceof Error
+    ? error.message
+    : "เข้าสู่ระบบด้วย Google ไม่สำเร็จ กรุณาตรวจสอบการตั้งค่า Firebase Console";
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [status, setStatus] = useState<AuthStatus>(
     isFirebaseConfigured ? "loading" : "unauthenticated",
@@ -32,6 +56,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (!client) {
       return undefined;
     }
+
+    void getRedirectResult(client.auth).catch((redirectError: unknown) => {
+      setError(getSignInErrorMessage(redirectError));
+      setUser(null);
+      setStatus("unauthenticated");
+    });
 
     return onAuthStateChanged(
       client.auth,
@@ -61,11 +91,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await signInWithPopup(client.auth, client.googleProvider);
     } catch (authError) {
-      const message =
-        authError instanceof Error
-          ? authError.message
-          : "เข้าสู่ระบบด้วย Google ไม่สำเร็จ กรุณาตรวจสอบการตั้งค่า Firebase Console";
-      setError(message);
+      if (isPopupBlockedError(authError)) {
+        await signInWithRedirect(client.auth, client.googleProvider);
+        return;
+      }
+
+      setError(getSignInErrorMessage(authError));
       setStatus(client.auth.currentUser ? "authenticated" : "unauthenticated");
     }
   }, []);

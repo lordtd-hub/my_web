@@ -61,7 +61,7 @@ export function useStudentCourses() {
               ? "Firestore ไม่อนุญาตให้อ่าน enrollments กรุณาตรวจสอบว่าผู้ใช้มีเอกสาร enrollment ที่ courses/{courseId}/enrollments/{uid}"
               : courseError instanceof Error
                 ? courseError.message
-                : "ไม่สามารถโหลดรายวิชาของนักศึกษาได้",
+                : "ไม่สามารถโหลดรายวิชาของฉันได้",
           isLoading: false,
         });
       }

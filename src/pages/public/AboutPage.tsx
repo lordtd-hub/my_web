@@ -6,17 +6,23 @@ export function AboutPage() {
     <PageShell
       eyebrow="ประวัติ"
       title="ประวัติทางวิชาการ"
-      description="หน้านี้จัดเตรียมไว้สำหรับแนะนำภูมิหลังทางวิชาการ แนวทางการสอน และข้อมูลวิชาชีพของอาจารย์ เมื่อได้รับข้อมูลที่ตรวจสอบแล้ว"
+      description="ข้อมูลสาธารณะสำหรับแนะนำภูมิหลังทางวิชาการ สังกัด และทิศทางงานวิจัยของอาจารย์"
     >
       <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
         <aside className="profile-card">
-          <div className="profile-avatar" aria-hidden="true">
-            P
-          </div>
+          <img
+            alt="สัญลักษณ์โปรไฟล์คณิตศาสตร์ของ ดร.สิทธิโชค ทรงสอาด"
+            className="profile-avatar-image"
+            src={profilePlaceholder.profileImage}
+          />
           <dl className="mt-6 space-y-4">
             <div>
               <dt>ชื่ออาจารย์</dt>
               <dd>{profilePlaceholder.displayName}</dd>
+            </div>
+            <div>
+              <dt>ชื่อภาษาอังกฤษ</dt>
+              <dd>{profilePlaceholder.displayNameEn}</dd>
             </div>
             <div>
               <dt>ตำแหน่ง</dt>
@@ -33,12 +39,12 @@ export function AboutPage() {
           <p>{profilePlaceholder.bio}</p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="detail-tile">
-              <span>ภาควิชา</span>
+              <span>สังกัด</span>
               <strong>{profilePlaceholder.department}</strong>
             </div>
             <div className="detail-tile">
               <span>รูปประจำตัวสำหรับเผยแพร่</span>
-              <strong>รอข้อมูลยืนยัน</strong>
+              <strong>ใช้รูปถ่ายที่อาจารย์ให้มาสำหรับหน้า public profile</strong>
             </div>
           </div>
         </div>

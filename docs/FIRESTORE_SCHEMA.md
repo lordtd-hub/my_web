@@ -87,7 +87,7 @@ metadata ของรายวิชา
 
 Document ID ควรเป็น Firebase Auth UID
 
-`uid` field ใช้ช่วย query enrollment แบบ collection group ในระบบนักศึกษา field นี้ต้องถูกเขียนโดย admin เท่านั้น ไม่ใช่ข้อมูลที่นักศึกษาแก้เองได้
+`uid` field ใช้ช่วย query enrollment แบบ collection group ในพื้นที่ผู้เรียนของรายวิชา field นี้ต้องถูกเขียนโดย admin เท่านั้น ไม่ใช่ข้อมูลที่นักศึกษาแก้เองได้
 
 ## courses/{courseId}/announcements/{announcementId}
 
@@ -168,7 +168,7 @@ src/lib/firestore/refs.ts
 
 helpers เหล่านี้สะท้อน schema นี้เท่านั้น ไม่ควรมีข้อมูลนักศึกษาจริง คะแนนจริง หรือ static score records
 
-## การอ่านข้อมูลในระบบนักศึกษา
+## การอ่านข้อมูลในพื้นที่ผู้เรียนของรายวิชา
 
 Milestone 4 ใช้รูปแบบการอ่านข้อมูลต่อไปนี้:
 
@@ -181,7 +181,9 @@ courses/{courseId}/studentScores/{auth.uid}
 
 score document ID ต้องมาจาก Firebase Auth UID ของ session ปัจจุบันเสมอ ไม่อ่านจาก URL parameter หรือข้อมูลที่นักศึกษากรอกเอง
 
-Enrollment document IDs ควรยังคงเป็น Firebase Auth UID ส่วน student portal ใช้ `uid` field สำหรับ collection group lookup เพราะ Firestore collection group `documentId()` filters ต้องใช้ path-shaped values ไม่ใช่ leaf UID
+Enrollment document IDs ควรยังคงเป็น Firebase Auth UID ส่วนพื้นที่ผู้เรียนของรายวิชาใช้ `uid` field สำหรับ collection group lookup เพราะ Firestore collection group `documentId()` filters ต้องใช้ path-shaped values ไม่ใช่ leaf UID
+
+Student portal ต้องมี Firestore index สำหรับ `collectionGroup("enrollments")` + `uid ASC` ตาม `firestore.indexes.json`
 
 ## การเขียนข้อมูลจาก Admin CSV import
 

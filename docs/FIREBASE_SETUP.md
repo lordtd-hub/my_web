@@ -49,6 +49,14 @@ Enable Google as a sign-in provider in Firebase Console:
 Firebase Console > Authentication > Sign-in method > Google
 ```
 
+The app starts Google sign-in with a popup and falls back to Firebase redirect
+sign-in if the browser blocks popups.
+
+Some embedded or in-app browsers can block popups and also partition
+`sessionStorage`, which breaks Firebase redirect sign-in with a missing initial
+state error. For local admin UID setup, use Safari or Chrome directly at
+`http://localhost:5173/login`.
+
 University domain restrictions, email/password sign-in, and manual student
 account setup are still unresolved decisions in `docs/DECISIONS_NEEDED.md`.
 

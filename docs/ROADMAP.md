@@ -74,7 +74,20 @@
 
 สถานะ: เริ่มแล้วและมี tests แล้ว แต่ต้องรันให้ผ่านในเครื่องที่พร้อมก่อนใช้ข้อมูลจริง
 
-## Phase 7 — Preview deployment
+## Phase 7 — Activity and learning progress foundation
+
+- กำหนด activity/media contract กลาง
+- เพิ่ม activity catalog สำหรับรายวิชา
+- เพิ่มพื้นที่เล่นสื่อหรือกิจกรรมสำหรับผู้เรียนที่ enroll แล้ว
+- เก็บ practice attempts แยกจากคะแนนทางการ
+- เพิ่ม student progress dashboard เช่น completion, XP, badges, accuracy และ learning outcome progress
+- เพิ่ม admin review flow สำหรับกรณีต้องแปลง activity progress เป็นคะแนนเก็บ
+
+ข้อสำคัญ: คะแนนทางการยังต้องอยู่ใน `studentScores/{uid}` และควรเขียนโดย admin หรือ trusted grading flow เท่านั้น
+
+สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts`
+
+## Phase 8 — Preview deployment
 
 - Firebase Hosting preview
 - ทดสอบด้วย fake data เท่านั้น
@@ -97,11 +110,11 @@
 
 แนวคิดต่อไปนี้อยู่นอกขอบเขต MVP และยังไม่ควร implement หากผู้ใช้ไม่ได้สั่ง:
 
-- online quizzes
-- auto grading
+- official online quizzes
+- auto grading สำหรับคะแนนจริง
 - assignment submission
 - AI tutor
-- learning analytics
+- advanced learning analytics
 - video integration
 - discussion forum
 - multilingual content management

@@ -11,9 +11,9 @@ export function StudentCoursesPage() {
 
   return (
     <PageShell
-      eyebrow="ระบบนักศึกษา"
-      title="รายวิชาของฉัน"
-      description="ระบบแสดงรายวิชาจาก enrollment documents ที่ผูกกับ Firebase Auth UID ของผู้ที่เข้าสู่ระบบ"
+      eyebrow="รายวิชาของฉัน"
+      title="รายวิชาที่ลงทะเบียนกับอาจารย์สิทธิโชค"
+      description="แสดงเฉพาะรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนและมี enrollment document ผูกกับ Firebase Auth UID ของผู้ที่เข้าสู่ระบบ"
     >
       {isLoading ? (
         <div className="info-panel">
@@ -28,8 +28,8 @@ export function StudentCoursesPage() {
         <div className="info-panel">
           <h2>ยังไม่พบรายวิชาที่ลงทะเบียน</h2>
           <p>
-            เมื่ออาจารย์หรือผู้ดูแลระบบสร้าง enrollment document สำหรับ Firebase Auth UID
-            ของท่าน รายวิชาจะปรากฏในหน้านี้
+            เมื่ออาจารย์สร้าง enrollment document สำหรับ Firebase Auth UID
+            ของท่านในรายวิชาที่เกี่ยวข้อง รายวิชาจะปรากฏในหน้านี้
           </p>
         </div>
       ) : null}

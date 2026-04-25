@@ -63,7 +63,7 @@ export function useStudentScores(courseId: string | undefined) {
               ? "Firestore ไม่อนุญาตให้อ่าน score document นี้ แอปอ่านเฉพาะ courses/{courseId}/studentScores/{auth.uid}"
               : scoreError instanceof Error
                 ? scoreError.message
-                : "ไม่สามารถโหลดคะแนนของนักศึกษาได้",
+                : "ไม่สามารถโหลดคะแนนของฉันได้",
           isLoading: false,
           scores: null,
         });

@@ -6,7 +6,7 @@ export function ContactPage() {
     <PageShell
       eyebrow="ติดต่อ"
       title="ช่องทางติดต่อ"
-      description="ข้อมูล email สังกัด และรายละเอียดสำหรับติดต่อจะเผยแพร่เมื่อได้รับข้อมูลที่อาจารย์อนุญาตให้ใช้แล้ว"
+      description="ช่องทางติดต่อและสังกัดสำหรับงานสอน งานวิชาการ และการประสานงานที่เกี่ยวข้อง"
     >
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="info-panel">
@@ -17,7 +17,7 @@ export function ContactPage() {
               <dd className="mt-1 text-ink/65">{profilePlaceholder.email}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-ink">ภาควิชา</dt>
+              <dt className="font-semibold text-ink">สังกัด</dt>
               <dd className="mt-1 text-ink/65">
                 {profilePlaceholder.department}
               </dd>
@@ -33,8 +33,7 @@ export function ContactPage() {
         <div className="info-panel">
           <h2>ข้อควรระวังก่อนเผยแพร่</h2>
           <p>
-            หน้านี้ใช้ข้อมูล placeholder โดยตั้งใจ ควรแทนที่ด้วยข้อมูลที่อาจารย์
-            หรือสถาบันอนุญาตให้เผยแพร่เท่านั้น
+            ข้อมูลสาธารณะในหน้านี้ควรคงไว้เฉพาะช่องทางที่อาจารย์อนุญาตให้เผยแพร่เท่านั้น
           </p>
           <p>
             ห้ามใส่ข้อความส่วนตัวของนักศึกษา คะแนน หรือรายละเอียด enrollment

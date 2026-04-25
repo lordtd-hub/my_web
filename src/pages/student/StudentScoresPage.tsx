@@ -36,9 +36,9 @@ export function StudentScoresPage() {
 
   return (
     <PageShell
-      eyebrow="ระบบนักศึกษา"
-      title="คะแนนของฉัน"
-      description="หน้านี้อ่านเฉพาะ score document ของผู้ที่เข้าสู่ระบบ route มีเฉพาะ course ID และไม่รับ UID ของนักศึกษาคนอื่น"
+      eyebrow="รายวิชาของฉัน"
+      title="คะแนนของฉันในรายวิชานี้"
+      description="หน้านี้อ่านเฉพาะ score document ของผู้ที่เข้าสู่ระบบในรายวิชาที่เลือก route มีเฉพาะ course ID และไม่รับ UID ของนักศึกษาคนอื่น"
     >
       <div className="mb-6">
         <Link className="text-link" to="/student/courses">

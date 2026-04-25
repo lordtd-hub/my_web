@@ -14,8 +14,8 @@ export function PageShell({
   children,
 }: PageShellProps) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-      <div className="max-w-3xl">
+    <section className="page-shell mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div className="page-intro max-w-3xl">
         <p className="section-eyebrow">{eyebrow}</p>
         <h1 className="mt-3 text-4xl font-semibold leading-tight text-ink sm:text-5xl">
           {title}

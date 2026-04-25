@@ -11,20 +11,76 @@ export type PublicCourse = {
   resources: string[];
 };
 
+export type Publication = {
+  title: string;
+  authors: string;
+  venue: string;
+  year: string;
+  url: string;
+};
+
+export type AcademicLink = {
+  label: string;
+  href: string;
+  note: string;
+};
+
 export const profilePlaceholder = {
-  displayName: "ชื่ออาจารย์ (รอข้อมูลยืนยัน)",
-  position: "ตำแหน่งทางวิชาการ (รอข้อมูลยืนยัน)",
-  department: "ภาควิชา (รอข้อมูลยืนยัน)",
-  university: "มหาวิทยาลัย (รอข้อมูลยืนยัน)",
-  email: "email-placeholder@example.edu",
+  displayName: "ดร.สิทธิโชค ทรงสอาด",
+  displayNameEn: "Sittichoke Songsa-ard",
+  position: "ผู้ช่วยศาสตราจารย์ สาขาวิชาคณิตศาสตร์",
+  department: "สาขาวิชาคณิตศาสตร์ คณะวิทยาศาสตร์และเทคโนโลยี",
+  university: "มหาวิทยาลัยราชภัฏสุราษฎร์ธานี",
+  email: "sittichoke.son@sru.ac.th",
+  profileImage: "/sittichoke.png",
   bio:
-    "พื้นที่สำหรับประวัติทางวิชาการของอาจารย์คณิตศาสตร์ จะเพิ่มข้อมูลจริงเมื่อได้รับข้อความที่ตรวจสอบและอนุญาตให้เผยแพร่แล้ว",
+    "อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มีความสนใจทางวิชาการด้าน fixed point theory, uniform spaces และแนวคิดเกี่ยวกับ contractions ในปริภูมิทางคณิตศาสตร์ โดยเว็บไซต์นี้ใช้เป็นพื้นที่รวบรวมข้อมูลการสอน งานวิจัย และพื้นที่รายวิชาสำหรับผู้เรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน",
   researchInterests: [
-    "หัวข้อวิจัยด้านคณิตศาสตร์ (รอข้อมูลยืนยัน)",
-    "หัวข้อวิจัยหรือการสอนเชิงคณิตศาสตร์ (รอข้อมูลยืนยัน)",
-    "ความร่วมมือทางวิชาการ (รอข้อมูลยืนยัน)",
+    "Fixed point theory",
+    "Uniform spaces",
+    "Contractions and generalized contractions",
   ],
 };
+
+export const academicLinks: AcademicLink[] = [
+  {
+    label: "SRU Staff",
+    href: "https://sci.sru.ac.th/staff/",
+    note: "หน้ารวมบุคลากรของคณะวิทยาศาสตร์และเทคโนโลยี",
+  },
+  {
+    label: "Google Scholar",
+    href: "https://scholar.google.com/scholar?q=%22Sittichoke%20Songsa-ard%22",
+    note: "ลิงก์ค้นหาผลงานด้วยชื่อภาษาอังกฤษ",
+  },
+  {
+    label: "ORCID",
+    href: "https://orcid.org/orcid-search/search?searchQuery=Sittichoke%20Songsa-ard",
+    note: "ลิงก์ค้นหา ORCID ด้วยชื่อภาษาอังกฤษ",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/search?q=%22Sittichoke+Songsa-ard%22&type=users",
+    note: "ลิงก์ค้นหา GitHub users ด้วยชื่อภาษาอังกฤษ",
+  },
+];
+
+export const publications: Publication[] = [
+  {
+    title: "Fixed points in uniform spaces",
+    authors: "Phichet Chaoha และ Sittichoke Songsa-ard",
+    venue: "Fixed Point Theory and Applications",
+    year: "2014",
+    url: "https://fixedpointtheoryandalgorithms.springeropen.com/articles/10.1186/1687-1812-2014-134",
+  },
+  {
+    title: "Generalization of alpha-G-Contractions to j-G-Contractions on Uniform Spaces",
+    authors: "Sittichoke Songsa-ard และ Atthakorn Sakda",
+    venue: "Journal of Applied Science and Emerging Technology",
+    year: "2025",
+    url: "https://ph01.tci-thaijo.org/index.php/JASCI/article/view/260436",
+  },
+];
 
 export const publicCourses: PublicCourse[] = [
   {
@@ -87,36 +143,36 @@ export const publicCourses: PublicCourse[] = [
 
 export const publicProjects = [
   {
-    title: "สื่อประกอบการเรียนการสอน (รอข้อมูลยืนยัน)",
+    title: "คลังสื่อประกอบรายวิชา",
     summary:
-      "พื้นที่สำหรับสรุปเอกสาร ตัวอย่าง หรือใบงานที่สนับสนุนการเรียนรู้ด้วยตนเอง",
+      "พื้นที่สำหรับจัดระเบียบเอกสาร ตัวอย่าง ใบงาน และแหล่งอ่านเพิ่มเติมที่เผยแพร่ได้ในรายวิชาคณิตศาสตร์",
   },
   {
-    title: "โครงการวิจัยหรือความร่วมมือทางวิชาการ (รอข้อมูลยืนยัน)",
+    title: "พื้นที่รายวิชาของอาจารย์สิทธิโชค",
     summary:
-      "พื้นที่สำหรับนำเสนอภาพรวมของโครงการวิจัยหรือความร่วมมือที่สามารถเผยแพร่ต่อสาธารณะได้",
+      "พื้นที่สำหรับเชื่อมการเรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนกับข้อมูลส่วนตัวของผู้เรียน โดย enrollment และคะแนนยังคงอยู่หลังการเข้าสู่ระบบเท่านั้น",
   },
   {
-    title: "กิจกรรมส่งเสริมการเรียนรู้คณิตศาสตร์ (รอข้อมูลยืนยัน)",
+    title: "กิจกรรมส่งเสริมการเรียนรู้คณิตศาสตร์",
     summary:
-      "พื้นที่สำหรับกิจกรรมวิชาการ การบรรยาย หรือกิจกรรมเสริมสำหรับนักศึกษา",
+      "พื้นที่สำหรับกิจกรรมวิชาการ การบรรยาย หรือกิจกรรมเสริมสำหรับนักศึกษา เมื่อมีรายละเอียดที่ยืนยันแล้ว",
   },
 ];
 
 export const teachingFocus = [
   {
-    title: "พื้นฐานแนวคิดทางคณิตศาสตร์",
+    title: "ทำความเข้าใจนิยามและโครงสร้าง",
     body:
-      "รายวิชาควรช่วยให้นักศึกษาเข้าใจนิยาม ตัวอย่าง และเหตุผลเชิงคณิตศาสตร์อย่างเป็นระบบ",
+      "การเรียนคณิตศาสตร์ควรเริ่มจากความหมายของนิยาม ตัวอย่าง และเงื่อนไขที่ทำให้ทฤษฎีหนึ่งใช้งานได้จริง",
   },
   {
-    title: "ตัวอย่างและกระบวนการแก้ปัญหา",
+    title: "ฝึกเหตุผลเชิงพิสูจน์และการแก้ปัญหา",
     body:
-      "การเรียนรู้ควรเชื่อมโยงขั้นตอนการคำนวณกับการตีความผลลัพธ์และการตรวจสอบความสมเหตุสมผล",
+      "แบบฝึกหัดและตัวอย่างควรช่วยให้นักศึกษาฝึกตรวจสอบสมมติฐาน วางลำดับเหตุผล และอธิบายคำตอบอย่างเป็นระบบ",
   },
   {
-    title: "การฝึกฝนด้วยตนเอง",
+    title: "แยกสื่อ public ออกจากข้อมูลส่วนตัว",
     body:
-      "สื่อการเรียนรู้ควรสนับสนุนให้นักศึกษาทบทวน ฝึกแก้โจทย์ และติดตามความเข้าใจของตนเอง",
+      "สื่อที่เผยแพร่ได้ เช่น หัวข้อเรียนและเอกสารทั่วไป ควรอยู่ในหน้า public ส่วนคะแนนและ feedback รายบุคคลต้องอยู่ในพื้นที่รายวิชาหลังเข้าสู่ระบบ",
   },
 ];

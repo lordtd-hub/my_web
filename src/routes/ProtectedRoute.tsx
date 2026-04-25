@@ -22,7 +22,7 @@ export function ProtectedRoute({
       <PageShell
         eyebrow="ต้องตั้งค่าระบบ"
         title="ยังไม่ได้ตั้งค่า Firebase"
-        description="ระบบนักศึกษาและแดชบอร์ดอาจารย์จะใช้งานได้เมื่อ `.env.local` มีค่า Firebase web app และเปิด Google Sign-In ใน Firebase Console แล้ว"
+        description="พื้นที่รายวิชาของอาจารย์สิทธิโชคและแดชบอร์ดอาจารย์จะใช้งานได้เมื่อ `.env.local` มีค่า Firebase web app และเปิด Google Sign-In ใน Firebase Console แล้ว"
       >
         <Link className="button-primary" to="/login">
           ไปที่หน้าตั้งค่าการเข้าสู่ระบบ

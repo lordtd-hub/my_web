@@ -31,7 +31,7 @@ The project has two goals:
 - Use Thai where natural, but keep terms such as Firebase, Firestore, Authentication, Hosting, CSV, and UID in English.
 - Acceptable UI translations include:
   - Login: `เข้าสู่ระบบ`
-  - Student Portal: `ระบบนักศึกษา`
+  - Student Portal / learner area: `รายวิชาของฉัน` or `พื้นที่ผู้เรียนในรายวิชา`
   - Admin Dashboard: `แดชบอร์ดอาจารย์`
 - Do not translate code-critical identifiers unless explicitly requested and clearly safe:
   - file names

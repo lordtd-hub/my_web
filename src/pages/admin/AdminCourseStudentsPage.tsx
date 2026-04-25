@@ -94,7 +94,8 @@ export function AdminCourseStudentsPage() {
       return;
     }
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const uid = String(formData.get("uid") ?? "").trim();
     const studentId = String(formData.get("studentId") ?? "").trim();
     const displayName = String(formData.get("displayName") ?? "").trim();
@@ -118,7 +119,7 @@ export function AdminCourseStudentsPage() {
         email,
         status,
       });
-      event.currentTarget.reset();
+      form.reset();
       await refreshEnrollments();
     } catch (enrollmentError) {
       setError(

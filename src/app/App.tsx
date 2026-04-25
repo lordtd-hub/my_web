@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { SiteLayout } from "../components/SiteLayout";
 import { AdminCourseDetailPage } from "../pages/admin/AdminCourseDetailPage";
 import { AdminCourseImportPage } from "../pages/admin/AdminCourseImportPage";
@@ -22,9 +23,20 @@ import { StudentHomePage } from "../pages/student/StudentHomePage";
 import { StudentScoresPage } from "../pages/student/StudentScoresPage";
 import { ProtectedRoute } from "../routes/ProtectedRoute";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <SiteLayout>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

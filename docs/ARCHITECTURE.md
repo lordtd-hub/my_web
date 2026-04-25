@@ -40,7 +40,7 @@ CSS class names
 security rules logic
 ```
 
-คงคำศัพท์เทคนิคเป็น English เมื่อชัดเจนกว่า เช่น Firebase, Firestore, Authentication, Hosting, Security Rules, CSV และ UID ส่วน label ที่ผู้ใช้เห็นสามารถใช้ภาษาไทยได้ เช่น `เข้าสู่ระบบ`, `ระบบนักศึกษา`, และ `แดชบอร์ดอาจารย์`
+คงคำศัพท์เทคนิคเป็น English เมื่อชัดเจนกว่า เช่น Firebase, Firestore, Authentication, Hosting, Security Rules, CSV และ UID ส่วน label ที่ผู้ใช้เห็นสามารถใช้ภาษาไทยได้ เช่น `เข้าสู่ระบบ`, `รายวิชาของฉัน`, `พื้นที่ผู้เรียนในรายวิชา` และ `แดชบอร์ดอาจารย์`
 
 ## โมดูลหลักของระบบ
 
@@ -54,7 +54,7 @@ Public Website
 - Projects
 - Contact
 
-Student Portal
+Course Learner Area
 - Login
 - My Courses
 - My Scores
@@ -66,6 +66,32 @@ Teacher/Admin
 - Manage Score Items
 - Import Scores from CSV
 ```
+
+## Activity and media contract
+
+รายวิชา สื่อ interactive เกม และภารกิจในอนาคตควรต่อเข้าระบบผ่าน contract กลาง ไม่ hardcode เฉพาะหน้าใดหน้าหนึ่ง เพื่อให้เพิ่มสื่อใหม่ได้โดยไม่ต้องแก้โครงสร้างหลักทุกครั้ง
+
+เอกสารหลักอยู่ที่:
+
+```text
+docs/ACTIVITY_MODEL.md
+```
+
+TypeScript contract เบื้องต้นอยู่ที่:
+
+```text
+src/features/activities/activityTypes.ts
+```
+
+แนวคิดหลักคือแยกข้อมูลเป็น 3 ชั้น:
+
+```text
+activityAttempts   = หลักฐานการทำกิจกรรม
+studentProgress    = พัฒนาการและ dashboard ส่วนตัว
+studentScores      = คะแนนทางการที่ publish แล้ว
+```
+
+คะแนนทางการยังต้องอยู่ใน `courses/{courseId}/studentScores/{uid}` และห้ามให้ browser เขียนคะแนนจริงเองจากผลที่คำนวณใน client โดยตรง เว้นแต่มี trusted grading flow ที่ออกแบบและทดสอบแล้ว
 
 ## เนื้อหา public แบบ placeholder
 
@@ -134,7 +160,7 @@ If course is public, show overview and public materials
 
 ผู้เข้าชมเปิดหน้ารายวิชาผ่าน `/courses/:slug` แอปอ่านข้อมูลรายวิชาที่เปิดเผยได้ และแสดงเฉพาะข้อมูล public เท่านั้น
 
-### หน้าคะแนนของนักศึกษา
+### หน้าคะแนนของผู้เรียนในรายวิชา
 
 ```text
 Student logs in

@@ -1,81 +1,149 @@
 import { Link } from "react-router-dom";
 import {
   profilePlaceholder,
+  publications,
   publicCourses,
-  teachingFocus,
 } from "../../content/publicAcademic";
 
 const highlights = [
-  "ประวัติทางวิชาการ",
-  "หน้ารายวิชาสำหรับการเรียนรู้",
-  "ระบบนักศึกษาที่คุ้มครองข้อมูลส่วนตัว",
+  {
+    title: "งานวิจัย",
+    body: "เผยแพร่ผลงานวิจัยในวารสารระดับนานาชาติด้านคณิตศาสตร์บริสุทธิ์และทฤษฎีจุดตรึง",
+    link: "/research",
+    linkLabel: "ดูผลงานวิจัย",
+    tone: "blue",
+  },
+  {
+    title: "การเรียนการสอน",
+    body: "จัดวางรายวิชา สื่อประกอบ และกิจกรรมการเรียนรู้ให้แยกจากข้อมูลคะแนนรายบุคคลอย่างชัดเจน",
+    link: "/teaching",
+    linkLabel: "ดูแนวทางการสอน",
+    tone: "copper",
+  },
+  {
+    title: "รายวิชาของฉัน",
+    body: "พื้นที่ส่วนตัวสำหรับผู้เรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน ใช้ดูข้อมูลรายวิชาและคะแนนที่เผยแพร่แล้ว",
+    link: "/student",
+    linkLabel: "เข้าสู่รายวิชา",
+    tone: "sage",
+  },
 ];
 
 export function HomePage() {
   return (
     <>
-      <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:px-8 lg:py-20">
-        <div className="flex flex-col justify-center">
-          <p className="section-eyebrow">Mathematics Learning Portal</p>
-          <h1 className="mt-4 text-4xl font-semibold leading-tight text-ink sm:text-5xl lg:text-6xl">
-            {profilePlaceholder.displayName}
+      <section className="hero-section mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:min-h-[610px] lg:grid-cols-[0.94fr_1.06fr] lg:items-center lg:px-8 lg:py-16">
+        <div className="hero-copy">
+          <p className="section-eyebrow">Mathematics Lecturer</p>
+          <h1>
+            <span>{profilePlaceholder.displayName}</span>
+            <small>{profilePlaceholder.displayNameEn}</small>
           </h1>
-          <p className="mt-4 text-xl font-medium text-academic-blue">
-            {profilePlaceholder.position} · {profilePlaceholder.university}
+          <span className="hero-rule" aria-hidden="true" />
+          <p className="hero-subtitle">
+            คณิตศาสตร์ • Fixed point theory • รายวิชาของอาจารย์สิทธิโชค
           </p>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-ink/70">
-            เว็บไซต์เชิงวิชาการสำหรับนำเสนอประวัติ การสอน งานวิจัย และรายวิชาคณิตศาสตร์
-            โดยแยกข้อมูลส่วนตัวของนักศึกษาและคะแนนออกจากพื้นที่สาธารณะอย่างชัดเจน
+          <p className="hero-body">
+            อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มุ่งเน้นงานวิจัยทางคณิตศาสตร์บริสุทธิ์
+            โดยเฉพาะทฤษฎีจุดตรึง พร้อมพัฒนาการเรียนรู้ที่เชื่อมโยงทฤษฎีกับการประยุกต์ใช้
+            เพื่อสร้างรากฐานที่แข็งแรงให้กับนักศึกษา
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="hero-actions">
             <Link className="button-primary" to="/courses">
+              <span aria-hidden="true">▱</span>
               ดูรายวิชา
+              <span aria-hidden="true">→</span>
             </Link>
-            <Link className="button-secondary" to="/about">
-              ประวัติอาจารย์
+            <Link className="button-secondary" to="/research">
+              <span aria-hidden="true">⌁</span>
+              งานวิจัย
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
 
-        <aside className="rounded-lg border border-ink/10 bg-white p-6 shadow-soft">
-          <div className="academic-mark" aria-hidden="true">
-            ∫
+        <aside className="concept-hero-visual" aria-label="ภาพรวมระบบวิชาการ">
+          <div className="math-board-wrap">
+            <img
+              alt="ภาพประกอบกราฟและสูตร fixed point theory"
+              className="math-board-image"
+              src="/math-orbit-board.svg"
+            />
           </div>
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-copper-accent">
-            ภาพรวมเว็บไซต์
-          </p>
-          <div className="mt-6 grid gap-4">
-            {highlights.map((highlight) => (
-              <div
-                className="rounded-md border border-sage-line/60 bg-paper-warm p-4"
-                key={highlight}
-              >
-                <p className="font-semibold text-ink">{highlight}</p>
-                <p className="mt-2 text-sm leading-6 text-ink/65">
-                  เตรียมพื้นที่สำหรับข้อมูลที่ตรวจสอบแล้ว โดยไม่ใส่ข้อมูลจริงแทนผู้ใช้
-                </p>
-              </div>
-            ))}
+          <div className="float-card float-card-research">
+            <div className="float-icon" aria-hidden="true">▤</div>
+            <div>
+              <p>งานวิจัยเด่น</p>
+              <ul>
+                {publications.map((publication) => (
+                  <li key={publication.title}>{publication.title}</li>
+                ))}
+              </ul>
+              <Link to="/research">ดูทั้งหมด →</Link>
+            </div>
+          </div>
+          <div className="float-card float-card-course">
+            <div className="float-icon green" aria-hidden="true">▰</div>
+            <div>
+              <p>รายวิชาสาธารณะ</p>
+              <ul>
+                {publicCourses.map((course) => (
+                  <li key={course.slug}>{course.title}</li>
+                ))}
+              </ul>
+              <Link to="/courses">ดูรายวิชา →</Link>
+            </div>
           </div>
         </aside>
       </section>
 
+      <section className="home-focus-section">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="focus-heading">
+            <p>Research · Teaching · Course Portal</p>
+            <h2>งานวิจัย การสอน และพื้นที่ผู้เรียนในรายวิชา</h2>
+          </div>
+          <div className="focus-card-grid">
+            {highlights.map((highlight) => (
+              <article
+                className={`focus-card ${highlight.tone}`}
+                key={highlight.title}
+              >
+                <div className="focus-icon" aria-hidden="true">
+                  {highlight.tone === "blue"
+                    ? "⌕"
+                    : highlight.tone === "copper"
+                      ? "▱"
+                      : "▵"}
+                </div>
+                <h3>{highlight.title}</h3>
+                <p>{highlight.body}</p>
+                <Link to={highlight.link}>{highlight.linkLabel} →</Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="section-band">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="section-heading-row">
             <div>
-              <p className="section-eyebrow">แนวทางการสอน</p>
-              <h2>สนับสนุนการเรียนรู้คณิตศาสตร์อย่างเป็นระบบ</h2>
+              <p className="section-eyebrow">งานวิจัย</p>
+              <h2>ผลงานเผยแพร่ที่คัดไว้</h2>
             </div>
-            <Link className="text-link" to="/teaching">
-              อ่านแนวทางการสอน
+            <Link className="text-link" to="/research">
+              งานวิจัยทั้งหมด
             </Link>
           </div>
           <div className="content-grid mt-8">
-            {teachingFocus.map((item) => (
-              <article className="info-panel" key={item.title}>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
+            {publications.map((publication) => (
+              <article className="info-panel" key={publication.title}>
+                <p className="metadata-label">{publication.year}</p>
+                <h3>{publication.title}</h3>
+                <p>{publication.venue}</p>
+                <a className="text-link mt-4 inline-flex" href={publication.url} rel="noreferrer" target="_blank">
+                  อ่านรายละเอียด
+                </a>
               </article>
             ))}
           </div>
@@ -86,7 +154,7 @@ export function HomePage() {
         <div className="section-heading-row">
           <div>
             <p className="section-eyebrow">รายวิชา</p>
-            <h2>รายวิชาที่จัดเตรียมไว้สำหรับเผยแพร่</h2>
+            <h2>ข้อมูลรายวิชาที่เผยแพร่ได้</h2>
           </div>
           <Link className="text-link" to="/courses">
             รายวิชาทั้งหมด

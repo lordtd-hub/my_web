@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-labelledby="title desc">
+  <title id="title">Fixed point mathematics board</title>
+  <desc id="desc">A blue mathematical board with fixed point formulas and orbit curves.</desc>
+  <defs>
+    <linearGradient id="board" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#254b68"/>
+      <stop offset="0.55" stop-color="#123c5a"/>
+      <stop offset="1" stop-color="#0c2e49"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0v32" fill="none" stroke="#ffffff" stroke-opacity="0.075" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#071827" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect x="48" y="48" width="624" height="624" rx="42" fill="url(#board)" filter="url(#shadow)"/>
+  <rect x="48" y="48" width="624" height="624" rx="42" fill="url(#grid)"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M146 594H592" stroke="#f8f2df" stroke-opacity="0.74" stroke-width="3"/>
+    <path d="M184 604V205" stroke="#f8f2df" stroke-opacity="0.74" stroke-width="3"/>
+    <path d="M592 594l-15-11M592 594l-15 11M184 205l-11 17M184 205l11 17" stroke="#f8f2df" stroke-opacity="0.74" stroke-width="3"/>
+    <path d="M225 578c28-178 86-282 174-312 78-27 139 10 184 102" stroke="#f8f2df" stroke-width="5"/>
+    <path d="M248 558c88-113 171-151 249-113 48 24 78 15 108-27" stroke="#d7a46d" stroke-width="4"/>
+    <path d="M274 516c36-68 84-107 143-116 69-10 121 20 158 91" stroke="#f8f2df" stroke-opacity="0.42" stroke-width="3"/>
+    <path d="M232 470c62-134 147-204 255-210 64-4 114 16 149 60" stroke="#f8f2df" stroke-opacity="0.55" stroke-dasharray="8 13" stroke-width="3"/>
+    <path d="M334 508c32-49 72-75 119-79 52-4 91 20 117 70" stroke="#f8f2df" stroke-opacity="0.42" stroke-dasharray="8 13" stroke-width="3"/>
+    <path d="M390 525c22-30 48-45 79-44 33 1 59 19 78 54" stroke="#f8f2df" stroke-opacity="0.36" stroke-dasharray="8 13" stroke-width="3"/>
+    <circle cx="510" cy="406" r="14" fill="#123c5a" stroke="#f8f2df" stroke-width="5"/>
+    <circle cx="406" cy="504" r="11" fill="#123c5a" stroke="#f8f2df" stroke-opacity="0.85" stroke-width="4"/>
+    <circle cx="528" cy="263" r="6" fill="#f8f2df"/>
+    <path d="M528 263v143" stroke="#f8f2df" stroke-opacity="0.8" stroke-width="3"/>
+    <path d="M582 312c16 18 22 39 18 61" stroke="#f8f2df" stroke-width="3"/>
+    <path d="M600 373l-9-13M600 373l8-13" stroke="#f8f2df" stroke-width="3"/>
+  </g>
+  <g fill="#f8f2df" font-family="Georgia, 'Times New Roman', serif" font-style="italic">
+    <text x="135" y="152" font-size="34">T : X → X</text>
+    <text x="134" y="218" font-size="30">x<tspan baseline-shift="sub" font-size="18">n+1</tspan> = Tx<tspan baseline-shift="sub" font-size="18">n</tspan></text>
+    <text x="425" y="144" font-size="34">x* = T(x*)</text>
+  </g>
+</svg>
