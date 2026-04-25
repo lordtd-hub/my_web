@@ -136,10 +136,20 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] แยก learning progress ออกจาก official score
 - [x] ใช้ `activityAttempts` และ `studentProgress` เป็น proposal สำหรับ phase ถัดไป
 - [x] เพิ่ม `แคลคูลัส 1 ภาษาไทย` เป็น external interactive learning resource สำหรับสื่อฝึกเบื้องต้น
+- [x] ผู้ใช้ชอบแนวคิดของสื่อ `calculus1-thai` และต้องการเก็บเป็นต้นแบบสำหรับ interactive learning ในรายวิชา
 - [ ] activity types แรกที่จะนำเข้าระบบ เช่น lesson, interactive graph, quiz, mission หรือ game
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ
 - [ ] learning outcomes หรือ CLO ที่ต้องใช้จริงใน dashboard ของผู้เรียน
+
+หมายเหตุจากการตรวจ repo `lordtd-hub/calculus1-thai`:
+
+- เป็น public GitHub Pages/static site สำหรับ `แคลคูลัส 1 ภาษาไทย`
+- โครงสร้างมี HTML หลายหน้า เช่น intro, lessons, continuity, differentiation, integration, diff-app, integrate-app, guess-game, match-game และ missions
+- มีระบบ XP/badges/progress/accuracy ใน browser ผ่าน localStorage
+- มีแนวคิดภารกิจ OBE/Bloom, rubric, mission heatmap และ active learning
+- เหมาะใช้เป็นต้นแบบ experience และเป็น external practice resource ก่อน
+- ยังไม่ควรผูก XP/localStorage เป็น official score เพราะ browser/localStorage แก้ไขได้และไม่ผ่าน Firestore Security Rules
 
 ## Grading
 
