@@ -101,6 +101,71 @@ type StudentProgress = {
 
 ข้อมูลนี้ใช้สำหรับ dashboard ส่วนตัวของผู้เรียน เช่น ความคืบหน้า ความแม่นยำ badge และ learning outcome progress
 
+## XP, Badges, and CLO Attainment
+
+ผู้ใช้ต้องการใช้ XP และ badges เป็นเครื่องมือวัดพัฒนาการและการบรรลุ CLOs ของนักศึกษาแต่ละคนในรายวิชาที่สอน แนวคิดนี้เหมาะกับระบบ แต่ต้องปิดจุดอ่อนของ XP/localStorage แบบเดิมก่อนนำไปใช้เป็นหลักฐานเชิงประเมิน
+
+หลักการที่ควรใช้:
+
+- XP คือหลักฐานความก้าวหน้าเชิงพฤติกรรม เช่น ทำกิจกรรมครบ ส่งงานตามขั้นตอน หรือฝึกซ้ำจนผ่านเกณฑ์
+- Badge คือ milestone ของ CLO หรือกลุ่มทักษะ เช่น เข้าใจนิยาม วิเคราะห์กราฟ แก้ปัญหาประยุกต์ หรืออธิบายเหตุผลได้
+- CLO attainment ควรคำนวณจาก `activityAttempts` ที่ผูกกับ Firebase Auth UID และกิจกรรมที่ map กับ CLO ชัดเจน
+- `studentProgress.outcomeProgress` ใช้แสดงภาพรวมรายบุคคล เช่น `CLO1: 80%`, `CLO2: 55%`
+- XP/Badge ใช้เป็น progress indicator ได้ทันที แต่ถ้าจะนับเป็นคะแนนเก็บหรือคะแนนทางการต้องผ่าน admin review หรือ trusted grading flow
+
+จุดอ่อนที่ต้องปิด:
+
+- ห้ามเชื่อ localStorage เป็นหลักฐานทางการ เพราะผู้เรียนแก้ไขเองได้
+- ห้ามให้ browser เขียนคะแนนทางการเองจาก XP หรือ badge โดยตรง
+- ห้ามคำนวณ CLO attainment จากจำนวนคลิกหรือเวลาที่อยู่ในหน้าเพียงอย่างเดียว
+- ต้องกันการ submit ซ้ำเพื่อปั่น XP ด้วย attempt limits, idempotency หรือเกณฑ์ให้ XP เฉพาะครั้งแรกที่ผ่าน
+- ต้องเก็บเฉพาะข้อมูลที่จำเป็นต่อการประเมิน ไม่เก็บข้อมูลส่วนตัวเกินจำเป็น
+- ต้องให้ผู้เรียนเห็นเฉพาะ progress/CLO ของตนเอง และ admin เห็นภาพรวมเฉพาะรายวิชาที่จัดการ
+
+รูปแบบที่แนะนำ:
+
+```text
+Activity -> maps to CLOs and badge criteria
+ActivityAttempt -> stores verifiable learner action/result
+StudentProgress -> aggregates XP, badges, CLO progress
+StudentScores -> official score only after review/trusted transfer
+```
+
+ตัวอย่าง:
+
+```ts
+type CourseLearningOutcome = {
+  id: "CLO1" | "CLO2" | string;
+  title: string;
+  description: string;
+};
+
+type ActivityOutcomeMapping = {
+  outcomeId: string;
+  weight: number;
+  minimumEvidence: "complete" | "accuracy" | "rubric" | "manualReview";
+};
+
+type BadgeRule = {
+  id: string;
+  title: string;
+  outcomeId?: string;
+  criteria: {
+    minimumProgress?: number;
+    requiredActivityIds?: string[];
+    minimumAccuracy?: number;
+    reviewRequired?: boolean;
+  };
+};
+```
+
+สำหรับ phase แรกของ CLO dashboard ควรเริ่มจาก practice-only:
+
+1. แสดง XP/badges/CLO progress ในหน้า learner dashboard
+2. เก็บ attempt/progress ใน Firestore เฉพาะของผู้เรียนที่ authenticated และ enrolled
+3. ยังไม่ส่งเข้า `studentScores`
+4. เพิ่มหน้า admin ให้ review progress ก่อนตัดสินใจว่าจะโอนเป็น score item หรือไม่
+
 ## Score Boundary
 
 แบ่งข้อมูลเป็น 3 ชั้น:

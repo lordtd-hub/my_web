@@ -137,10 +137,15 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] ใช้ `activityAttempts` และ `studentProgress` เป็น proposal สำหรับ phase ถัดไป
 - [x] เพิ่ม `แคลคูลัส 1 ภาษาไทย` เป็น external interactive learning resource สำหรับสื่อฝึกเบื้องต้น
 - [x] ผู้ใช้ชอบแนวคิดของสื่อ `calculus1-thai` และต้องการเก็บเป็นต้นแบบสำหรับ interactive learning ในรายวิชา
+- [x] ผู้ใช้ต้องการใช้ XP และ badges เป็นเครื่องมือวัดพัฒนาการและการบรรลุ CLOs ของนักศึกษาแต่ละคน
 - [ ] activity types แรกที่จะนำเข้าระบบ เช่น lesson, interactive graph, quiz, mission หรือ game
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ
 - [ ] learning outcomes หรือ CLO ที่ต้องใช้จริงใน dashboard ของผู้เรียน
+- [ ] นิยาม CLO จริงของรายวิชาแรก เช่น `SMAC001 แคลคูลัส 1`
+- [ ] badge rules จริงที่ผูกกับแต่ละ CLO
+- [ ] เกณฑ์กันการปั่น XP เช่น XP เฉพาะครั้งแรกที่ผ่าน, attempt limits, หรือ admin review
+- [ ] จะให้ XP/Badge นับเป็นคะแนนเก็บหรือเป็น progress indicator เท่านั้นในเทอมแรก
 
 หมายเหตุจากการตรวจ repo `lordtd-hub/calculus1-thai`:
 
@@ -150,6 +155,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - มีแนวคิดภารกิจ OBE/Bloom, rubric, mission heatmap และ active learning
 - เหมาะใช้เป็นต้นแบบ experience และเป็น external practice resource ก่อน
 - ยังไม่ควรผูก XP/localStorage เป็น official score เพราะ browser/localStorage แก้ไขได้และไม่ผ่าน Firestore Security Rules
+- หากต้องใช้ XP/Badge เพื่อวัด CLO อย่างจริงจัง ต้องย้ายหลักฐานไปอยู่ใน Firestore ผ่าน `activityAttempts` และ aggregate เป็น `studentProgress` โดยใช้ Firebase Auth UID ไม่ใช้ localStorage เป็นแหล่งอ้างอิงหลัก
 
 ## Grading
 
