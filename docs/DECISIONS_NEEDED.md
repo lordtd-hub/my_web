@@ -153,7 +153,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] ผู้ใช้ชอบแนวคิดของสื่อ `calculus1-thai` และต้องการเก็บเป็นต้นแบบสำหรับ interactive learning ในรายวิชา
 - [x] ผู้ใช้ต้องการใช้ XP และ badges เป็นเครื่องมือวัดพัฒนาการและการบรรลุ CLOs ของนักศึกษาแต่ละคน
 - [x] หน้า `/student` มี dashboard กลางของผู้เรียนสำหรับรายวิชาของอาจารย์สิทธิโชค โดยแสดงจำนวนรายวิชา สถานะ enrollment และพื้นที่ placeholder สำหรับ progress/CLO/XP ที่ยังไม่ถือเป็นคะแนนจริง
-- [ ] activity types แรกที่จะนำเข้าระบบ เช่น lesson, interactive graph, quiz, mission หรือ game
+- [x] activity types แรกที่นำเข้าระบบแบบอ่านอย่างเดียว: `external`, `lesson`, `interactive`, `mission`
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ
 - [ ] learning outcomes หรือ CLO ที่ต้องใช้จริงใน dashboard ของผู้เรียน
@@ -171,6 +171,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - เหมาะใช้เป็นต้นแบบ experience และเป็น external practice resource ก่อน
 - ยังไม่ควรผูก XP/localStorage เป็น official score เพราะ browser/localStorage แก้ไขได้และไม่ผ่าน Firestore Security Rules
 - หากต้องใช้ XP/Badge เพื่อวัด CLO อย่างจริงจัง ต้องย้ายหลักฐานไปอยู่ใน Firestore ผ่าน `activityAttempts` และ aggregate เป็น `studentProgress` โดยใช้ Firebase Auth UID ไม่ใช้ localStorage เป็นแหล่งอ้างอิงหลัก
+- Activity catalog phase แรกเพิ่ม route `/student/courses/:courseId/activities` แล้ว รายการปัจจุบันเป็น practice-only ทั้งหมด ยังไม่เขียน attempt/progress/score
 
 ## Grading
 

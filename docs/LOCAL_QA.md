@@ -83,6 +83,7 @@ http://localhost:5173/login
 - [ ] login ด้วยปุ่ม `นักศึกษาทดสอบ`
 - [ ] เข้า `/student` แล้วเห็น dashboard
 - [ ] เข้า `/student/courses` แล้วเห็นเฉพาะ `SMAC001 แคลคูลัส 1`
+- [ ] เปิด `/student/courses/{courseId}/activities` แล้วเห็นสื่อฝึก practice-only ของ `SMAC001`
 - [ ] เข้า score page แล้วเห็นเฉพาะคะแนนของตัวเอง
 - [ ] เข้า `/admin` ไม่ได้
 

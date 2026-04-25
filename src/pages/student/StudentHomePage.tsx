@@ -114,9 +114,9 @@ export function StudentHomePage() {
                     </p>
                     <Link
                       className="button-ghost mt-3 px-0"
-                      to={`/student/courses/${courseId}/scores`}
+                      to={`/student/courses/${courseId}/activities`}
                     >
-                      ดูคะแนนรายวิชานี้
+                      เปิดสื่อและกิจกรรม
                     </Link>
                   </article>
                 ))}

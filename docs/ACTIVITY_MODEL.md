@@ -210,12 +210,31 @@ MVP ปัจจุบันยังคงมีเฉพาะ public pages, l
 
 activity model นี้เป็นฐานสำหรับ phase ถัดไป:
 
-1. เพิ่ม activity catalog แบบอ่านอย่างเดียว
+1. เพิ่ม activity catalog แบบอ่านอย่างเดียว — ทำแล้วใน route `/student/courses/:courseId/activities`
 2. เพิ่ม activity detail/player สำหรับ enrolled learners
 3. เก็บ practice attempts และ student progress
 4. เพิ่ม learner dashboard สำหรับพัฒนาการ
 5. เพิ่ม admin review/transfer progress เป็น score item เมื่อจำเป็น
 6. พิจารณา trusted grading flow หากต้องมี auto-graded official scores
+
+## Current Activity Catalog Implementation
+
+Phase แรกเพิ่ม catalog ในโค้ดที่:
+
+```text
+src/features/activities/activityCatalog.ts
+src/pages/student/StudentCourseActivitiesPage.tsx
+```
+
+ขอบเขตปัจจุบัน:
+
+- map activities ด้วย `courseCode` เช่น `SMAC001` เพื่อไม่ผูกกับ Firestore document ID จริง
+- แสดงเฉพาะผู้เรียนที่มี enrollment ในรายวิชานั้นจาก `/student/courses/:courseId/activities`
+- รายการทั้งหมดเป็น `scoringMode: "practice"`
+- ยังไม่เขียน `activityAttempts`
+- ยังไม่สร้างหรือแก้ `studentProgress`
+- ยังไม่ส่งคะแนนเข้า `studentScores`
+- external media ยังใช้ source URL ของ `calculus1-thai` เป็น launcher เท่านั้น
 
 ## Inspiration: calculus1-thai
 

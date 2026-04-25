@@ -88,7 +88,7 @@
 
 ข้อสำคัญ: คะแนนทางการยังต้องอยู่ใน `studentScores/{uid}` และควรเขียนโดย admin หรือ trusted grading flow เท่านั้น
 
-สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts` และเพิ่ม external resource แรก `แคลคูลัส 1 ภาษาไทย` เป็นสื่อฝึกแบบยังไม่เชื่อมคะแนนทางการ
+สถานะ: วาง contract เริ่มต้นแล้วใน `docs/ACTIVITY_MODEL.md` และ `src/features/activities/activityTypes.ts`, เพิ่ม external resource แรก `แคลคูลัส 1 ภาษาไทย` และเพิ่ม activity catalog แบบอ่านอย่างเดียวที่ `/student/courses/:courseId/activities` สำหรับผู้เรียนที่ลงทะเบียนแล้ว โดยยังไม่เชื่อมคะแนนทางการ
 
 ## Phase 8 — Preview deployment
 

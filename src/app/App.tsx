@@ -18,6 +18,7 @@ import { NotFoundPage } from "../pages/public/NotFoundPage";
 import { ProjectsPage } from "../pages/public/ProjectsPage";
 import { ResearchPage } from "../pages/public/ResearchPage";
 import { TeachingPage } from "../pages/public/TeachingPage";
+import { StudentCourseActivitiesPage } from "../pages/student/StudentCourseActivitiesPage";
 import { StudentCoursesPage } from "../pages/student/StudentCoursesPage";
 import { StudentHomePage } from "../pages/student/StudentHomePage";
 import { StudentScoresPage } from "../pages/student/StudentScoresPage";
@@ -60,6 +61,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <StudentCoursesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/courses/:courseId/activities"
+          element={
+            <ProtectedRoute>
+              <StudentCourseActivitiesPage />
             </ProtectedRoute>
           }
         />
