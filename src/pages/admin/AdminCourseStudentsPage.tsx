@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
 import {
@@ -8,9 +8,14 @@ import {
   isValidStudentId,
   upsertEnrollment,
   upsertRosterEntry,
+  writeRosterImport,
   type EnrollmentSummary,
   type RosterEntrySummary,
 } from "../../features/admin/adminData";
+import {
+  buildRosterImportPreview,
+  type RosterImportPreview,
+} from "../../features/admin/rosterImport";
 import { AdminLayout } from "./AdminLayout";
 
 function formatEnrollmentStatus(status: string) {
@@ -25,6 +30,10 @@ export function AdminCourseStudentsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingRoster, setIsSavingRoster] = useState(false);
+  const [isImportingRoster, setIsImportingRoster] = useState(false);
+  const [rosterFileName, setRosterFileName] = useState<string | null>(null);
+  const [rosterPreview, setRosterPreview] =
+    useState<RosterImportPreview | null>(null);
 
   const loadEnrollments = useCallback(async (targetCourseId: string) => {
     try {
@@ -203,6 +212,69 @@ export function AdminCourseStudentsPage() {
     }
   }
 
+  async function handleRosterCsvChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+
+    setError(null);
+    setRosterPreview(null);
+    setRosterFileName(file?.name ?? null);
+
+    if (!file) {
+      return;
+    }
+
+    try {
+      const csvText = await file.text();
+      setRosterPreview(buildRosterImportPreview(csvText));
+    } catch (csvError) {
+      setError(
+        csvError instanceof Error
+          ? csvError.message
+          : "ไม่สามารถอ่านไฟล์ roster CSV ได้",
+      );
+    }
+  }
+
+  async function handleRosterImportSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!courseId || !rosterPreview || rosterPreview.rows.length === 0) {
+      return;
+    }
+
+    if (rosterPreview.issues.length > 0) {
+      setError("ยังมีปัญหาในไฟล์ CSV กรุณาแก้ไขก่อนนำเข้า roster");
+      return;
+    }
+
+    setIsImportingRoster(true);
+    setError(null);
+
+    try {
+      await writeRosterImport(
+        courseId,
+        rosterPreview.rows.map((row) => ({
+          studentId: row.studentId,
+          displayName: row.displayName,
+          section: row.section,
+          status: row.status,
+        })),
+      );
+      setRosterPreview(null);
+      setRosterFileName(null);
+      event.currentTarget.reset();
+      await refreshEnrollments();
+    } catch (importError) {
+      setError(
+        importError instanceof Error
+          ? importError.message
+          : "ไม่สามารถ import roster CSV ได้",
+      );
+    } finally {
+      setIsImportingRoster(false);
+    }
+  }
+
   return (
     <PageShell
       eyebrow="แดชบอร์ดอาจารย์"
@@ -254,6 +326,112 @@ export function AdminCourseStudentsPage() {
           </div>
           <button className="button-primary" disabled={isSavingRoster} type="submit">
             {isSavingRoster ? "กำลังบันทึก..." : "เพิ่มเข้า roster"}
+          </button>
+        </form>
+
+        <form
+          className="form-panel"
+          onSubmit={(event) => void handleRosterImportSubmit(event)}
+        >
+          <h2 className="text-xl font-semibold text-ink">
+            Import roster จาก CSV
+          </h2>
+          <p className="text-sm leading-6 text-ink/65">
+            ใช้ไฟล์รายชื่อนักศึกษาหลังเพิ่ม-ถอนนิ่งแล้ว ระบบต้องการ column
+            `studentId` และจะสร้าง email ให้อัตโนมัติเป็น
+            `studentId@student.sru.ac.th` โดยไม่รับคะแนนจากไฟล์นี้
+          </p>
+          <label>
+            <span>ไฟล์ roster CSV</span>
+            <input
+              accept=".csv,text/csv"
+              name="rosterCsv"
+              onChange={(event) => void handleRosterCsvChange(event)}
+              type="file"
+            />
+          </label>
+          <div className="info-panel mt-4">
+            <h3 className="text-base font-semibold text-ink">รูปแบบ CSV</h3>
+            <p className="mt-2 text-sm leading-6 text-ink/65">
+              column ที่รองรับ: `studentId`, `section`, `displayName`,
+              `status` โดย `status` เว้นว่างได้และจะถือว่าใช้งานอยู่
+            </p>
+          </div>
+          {rosterFileName ? (
+            <p className="mt-4 text-sm text-ink/65">
+              ไฟล์ที่เลือก: {rosterFileName}
+            </p>
+          ) : null}
+          {rosterPreview ? (
+            <div className="mt-5 space-y-4">
+              {rosterPreview.issues.length > 0 ? (
+                <div className="alert-message">
+                  {rosterPreview.issues.map((issue) => (
+                    <p key={issue.message}>{issue.message}</p>
+                  ))}
+                </div>
+              ) : null}
+              <div className="grid gap-3 text-sm sm:grid-cols-3">
+                <div className="status-pill">
+                  พร้อมนำเข้า {rosterPreview.rows.length} แถว
+                </div>
+                <div className="status-pill">
+                  ข้าม {rosterPreview.skippedRows.length} แถว
+                </div>
+              </div>
+              {rosterPreview.rows.length > 0 ? (
+                <div className="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>แถว</th>
+                        <th>Student ID</th>
+                        <th>Email</th>
+                        <th>Section</th>
+                        <th>สถานะ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rosterPreview.rows.slice(0, 10).map((row) => (
+                        <tr key={`${row.rowNumber}-${row.studentId}`}>
+                          <td>{row.rowNumber}</td>
+                          <td>{row.studentId}</td>
+                          <td>{row.email}</td>
+                          <td>{row.section ?? "-"}</td>
+                          <td>{formatEnrollmentStatus(row.status)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {rosterPreview.rows.length > 10 ? (
+                    <p className="mt-3 text-sm text-ink/65">
+                      แสดงตัวอย่าง 10 แถวแรกจาก {rosterPreview.rows.length} แถว
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
+              {rosterPreview.skippedRows.length > 0 ? (
+                <div className="alert-message">
+                  {rosterPreview.skippedRows.slice(0, 5).map((issue) => (
+                    <p key={`${issue.rowNumber}-${issue.message}`}>
+                      แถว {issue.rowNumber}: {issue.message}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          <button
+            className="button-primary mt-5"
+            disabled={
+              isImportingRoster ||
+              !rosterPreview ||
+              rosterPreview.rows.length === 0 ||
+              rosterPreview.issues.length > 0
+            }
+            type="submit"
+          >
+            {isImportingRoster ? "กำลังนำเข้า..." : "นำเข้า roster"}
           </button>
         </form>
 

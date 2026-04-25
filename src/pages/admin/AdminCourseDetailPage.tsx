@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
-import { fetchAdminCourse, type CourseSummary } from "../../features/admin/adminData";
+import {
+  fetchAdminCourse,
+  fetchCourseControlSummary,
+  formatCourseStatus,
+  type CourseControlSummary,
+  type CourseSummary,
+} from "../../features/admin/adminData";
 import { AdminLayout } from "./AdminLayout";
 
 export function AdminCourseDetailPage() {
   const { courseId } = useParams();
   const [course, setCourse] = useState<CourseSummary | null>(null);
+  const [summary, setSummary] = useState<CourseControlSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,10 +27,14 @@ export function AdminCourseDetailPage() {
       }
 
       try {
-        const nextCourse = await fetchAdminCourse(courseId);
+        const [nextCourse, nextSummary] = await Promise.all([
+          fetchAdminCourse(courseId),
+          fetchCourseControlSummary(courseId),
+        ]);
 
         if (isCurrent) {
           setCourse(nextCourse);
+          setSummary(nextSummary);
         }
       } catch (courseError) {
         if (isCurrent) {
@@ -71,20 +82,78 @@ export function AdminCourseDetailPage() {
         ) : null}
 
         {course ? (
-          <div className="content-grid">
+          <>
+            <section className="content-grid">
+              <article className="info-panel">
+                <p className="metadata-label">Roster</p>
+                <h2>{summary?.rosterCount ?? 0}</h2>
+                <p>รายชื่อจากรหัสนักศึกษาที่รอ link ด้วย Firebase Auth UID</p>
+              </article>
+              <article className="info-panel">
+                <p className="metadata-label">Enrollments</p>
+                <h2>{summary?.enrollmentCount ?? 0}</h2>
+                <p>นักศึกษาที่ผูกกับ Firebase Auth UID แล้ว</p>
+              </article>
+              <article className="info-panel">
+                <p className="metadata-label">Score Items</p>
+                <h2>{summary?.scoreItemCount ?? 0}</h2>
+                <p>รายการคะแนนของรายวิชานี้</p>
+              </article>
+              <article className="info-panel">
+                <p className="metadata-label">Student Scores</p>
+                <h2>{summary?.studentScoreCount ?? 0}</h2>
+                <p>เอกสารคะแนนรายคนที่เขียนแล้วใน Firestore</p>
+              </article>
+            </section>
+
+            <div className="content-grid mt-6">
             <article className="info-panel">
               <p className="metadata-label">{course.data.term}</p>
               <h2>รายละเอียดรายวิชา</h2>
               <p>{course.data.description}</p>
+              <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
+                <div>
+                  <dt className="font-semibold text-ink">รหัสวิชา</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {course.data.courseCode ?? "-"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">ปีการศึกษา</dt>
+                  <dd className="mt-1 text-ink/65">{course.data.year}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">สถานะรายวิชา</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {formatCourseStatus(course.data.status)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">ใช้ใน portal</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {course.data.portalEnabled === false ? "ไม่ใช่" : "ใช่"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">Section</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {course.data.sections?.length
+                      ? course.data.sections.join(", ")
+                      : "-"}
+                  </dd>
+                </div>
+              </dl>
             </article>
             <article className="info-panel">
-              <h2>นักศึกษาที่ลงทะเบียน</h2>
-              <p>ตรวจสอบรายชื่อนักศึกษาก่อน import คะแนน</p>
+              <h2>Roster และ enrollment</h2>
+              <p>
+                เพิ่มรหัสนักศึกษา, import roster CSV และตรวจสอบรายชื่อนักศึกษาก่อน import คะแนน
+              </p>
               <Link
                 className="button-secondary mt-5"
                 to={`/admin/courses/${course.id}/students`}
               >
-                จัดการนักศึกษา
+                จัดการ roster/enrollment
               </Link>
             </article>
             <article className="info-panel">
@@ -107,7 +176,8 @@ export function AdminCourseDetailPage() {
                 Import คะแนน
               </Link>
             </article>
-          </div>
+            </div>
+          </>
         ) : null}
       </AdminLayout>
     </PageShell>

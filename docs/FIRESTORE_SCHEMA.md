@@ -60,16 +60,32 @@ metadata ของรายวิชา
 {
   title: string;
   slug: string;
+  courseCode?: string;
   term: string;
   year: number;
   description: string;
   isPublic: boolean;
+  portalEnabled?: boolean;
+  sections?: string[];
+  status?: "draft" | "active" | "archived";
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
 ```
 
 `isPublic` ใช้บอกว่าผู้เข้าชมทั่วไปอ่านข้อมูลรายวิชานี้ได้หรือไม่
+
+`portalEnabled` ใช้บอกว่ารายวิชานี้ถูกใช้ในพื้นที่ผู้เรียนและแดชบอร์ดอาจารย์จริงหรือเป็นเพียง public summary
+
+`sections` เก็บกลุ่มเรียนที่ใช้ในรายวิชานั้น เช่น `P01`, `P02` หรือ `N01` แต่ไม่ควรสร้าง course แยกหาก section เรียนร่วมกัน ใช้สื่อร่วมกัน และใช้คะแนนชุดเดียวกัน
+
+`status` ใช้จัดวงจรชีวิตรายวิชา:
+
+```text
+draft    = กำลังเตรียมข้อมูล ยังไม่พร้อมใช้จริง
+active   = ใช้งานในภาคเรียนปัจจุบัน
+archived = จบภาคเรียนหรือเก็บไว้ดูย้อนหลัง
+```
 
 ## courses/{courseId}/roster/{studentId}
 
@@ -232,6 +248,28 @@ courses/{courseId}/studentScores/{uid}
 ระบบจะเขียนเฉพาะ row ที่ match `studentId` หรือ `email` กับ enrollment ที่มีอยู่ใน `courses/{courseId}/enrollments/{uid}` แล้วเท่านั้น
 
 enrollment document ID คือ Firebase Auth UID เดียวกับที่ใช้เป็น student score document ID
+
+## การ import roster จากรหัสนักศึกษา
+
+แดชบอร์ดอาจารย์รองรับการ import roster จาก CSV สำหรับรายวิชา โดยใช้ข้อมูลหลังเพิ่ม-ถอนนิ่งแล้วเท่านั้น
+
+รูปแบบที่รองรับ:
+
+```csv
+studentId,section,displayName,status
+6612345678901,P01,,active
+6612345678902,P02,,active
+```
+
+ข้อกำหนด:
+
+- `studentId` ต้องเป็นตัวเลข 13 หลัก
+- `email` ไม่ต้องอยู่ในไฟล์ เพราะระบบสร้างจาก `{studentId}@student.sru.ac.th`
+- `section`, `displayName`, `status` เป็น optional
+- `status` เว้นว่างได้และจะถือว่า `active`
+- ไฟล์ roster CSV ไม่ใช่ไฟล์คะแนน และห้ามใส่คะแนนใน flow นี้
+- ระบบ preview แถวที่พร้อมนำเข้าและแถวที่ข้ามก่อนเขียน Firestore
+- แถวที่นำเข้าเขียนไปที่ `courses/{courseId}/roster/{studentId}` ด้วย `source: "registrar-import"`
 
 ## ห้ามใช้รูปแบบเหล่านี้
 

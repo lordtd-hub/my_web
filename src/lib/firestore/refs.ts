@@ -113,3 +113,7 @@ export function getOwnStudentScoreDocRef(courseId: string, uid: string) {
 export function getStudentScoreDocRef(courseId: string, uid: string) {
   return typedDoc<StudentScore>("courses", courseId, "studentScores", uid);
 }
+
+export function getStudentScoresCollectionRef(courseId: string) {
+  return typedCollection<StudentScore>("courses", courseId, "studentScores");
+}

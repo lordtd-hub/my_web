@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
+import { formatCourseStatus } from "../../features/admin/adminData";
 import { useAdminCourses } from "../../features/admin/useAdminCourses";
 import { AdminLayout } from "./AdminLayout";
 
@@ -39,7 +40,10 @@ export function AdminCoursesPage() {
           {courses.map(({ data, id }) => (
             <article className="info-panel" key={id}>
               <p className="metadata-label">{data.term}</p>
-              <h2>{data.title}</h2>
+              <h2>
+                {data.courseCode ? `${data.courseCode} ` : ""}
+                {data.title}
+              </h2>
               <p>{data.description}</p>
               <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
                 <div>
@@ -50,6 +54,24 @@ export function AdminCoursesPage() {
                   <dt className="font-semibold text-ink">เผยแพร่ public</dt>
                   <dd className="mt-1 text-ink/65">
                     {data.isPublic ? "ใช่" : "ไม่ใช่"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">สถานะรายวิชา</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {formatCourseStatus(data.status)}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">ใช้ใน portal</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {data.portalEnabled === false ? "ไม่ใช่" : "ใช่"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-ink">Section</dt>
+                  <dd className="mt-1 text-ink/65">
+                    {data.sections?.length ? data.sections.join(", ") : "-"}
                   </dd>
                 </div>
               </dl>

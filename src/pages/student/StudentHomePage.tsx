@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import { PageShell } from "../../components/PageShell";
 import { useAuth } from "../../features/auth/authContext";
+import { useStudentCourses } from "../../features/courses/useStudentCourses";
+
+function formatEnrollmentStatus(status: string) {
+  return status === "active" ? "ใช้งานอยู่" : "ไม่ใช้งาน";
+}
 
 export function StudentHomePage() {
   const { user } = useAuth();
+  const { courses, error, isLoading } = useStudentCourses();
+  const activeCourses = courses.filter(
+    ({ enrollment }) => enrollment.status === "active",
+  );
+  const inactiveCourses = courses.length - activeCourses.length;
+  const latestCourses = activeCourses.slice(0, 3);
 
   return (
     <PageShell
@@ -25,23 +36,120 @@ export function StudentHomePage() {
               <dt>รูปแบบการระบุตัวตน</dt>
               <dd>Firebase Auth UID</dd>
             </div>
+            <div>
+              <dt>รายวิชาที่ใช้งานอยู่</dt>
+              <dd>{activeCourses.length} รายวิชา</dd>
+            </div>
+            <div>
+              <dt>บัญชีผู้เรียน</dt>
+              <dd>{user?.email ?? "รอข้อมูลอีเมล"}</dd>
+            </div>
           </dl>
         </aside>
 
-        <div className="info-panel border-copper-accent/30">
-          <h2>พื้นที่การเรียนรู้ส่วนบุคคล</h2>
-          <p>
-            ระบบอ่านข้อมูลรายวิชาจาก enrollment documents ใน Firestore
-            ที่ผูกกับบัญชีของท่านสำหรับรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน
-            หน้าคะแนนจะใช้ Firebase Auth UID ของท่านในการอ่าน score document เสมอ
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link className="button-primary" to="/student/courses">
-              ดูรายวิชาของฉัน
-            </Link>
-            <Link className="button-secondary" to="/">
-              กลับหน้า public
-            </Link>
+        <div className="grid gap-5">
+          <div className="info-panel border-copper-accent/30">
+            <h2>ภาพรวมรายวิชาส่วนตัว</h2>
+            <p>
+              Dashboard นี้แสดงเฉพาะรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอนและผูกกับ
+              Firebase Auth UID ของบัญชีที่เข้าสู่ระบบ คะแนนและข้อมูลผู้เรียนคนอื่น
+              จะไม่ถูกอ่านจากหน้านี้
+            </p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              <div className="detail-tile bg-white">
+                <span>ทั้งหมด</span>
+                <strong>{courses.length} รายวิชา</strong>
+              </div>
+              <div className="detail-tile bg-white">
+                <span>ใช้งานอยู่</span>
+                <strong>{activeCourses.length} รายวิชา</strong>
+              </div>
+              <div className="detail-tile bg-white">
+                <span>ไม่ใช้งาน</span>
+                <strong>{inactiveCourses} รายวิชา</strong>
+              </div>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link className="button-primary" to="/student/courses">
+                ดูรายวิชาของฉัน
+              </Link>
+              <Link className="button-secondary" to="/">
+                กลับหน้า public
+              </Link>
+            </div>
+          </div>
+
+          {isLoading ? (
+            <div className="info-panel">
+              <h2>กำลังโหลดข้อมูลรายวิชา</h2>
+              <p>กำลังตรวจสอบ enrollment ที่ผูกกับบัญชีของท่าน...</p>
+            </div>
+          ) : null}
+
+          {error ? <p className="alert-message">{error}</p> : null}
+
+          {!isLoading && !error && courses.length === 0 ? (
+            <div className="info-panel">
+              <h2>ยังไม่พบรายวิชาที่ผูกกับบัญชีนี้</h2>
+              <p>
+                เมื่อบัญชีนี้มี enrollment ในรายวิชาของอาจารย์สิทธิโชค
+                รายวิชาจะปรากฏใน dashboard นี้โดยอัตโนมัติ
+              </p>
+            </div>
+          ) : null}
+
+          {latestCourses.length > 0 ? (
+            <section className="info-panel">
+              <h2>รายวิชาที่ใช้งานอยู่</h2>
+              <div className="mt-5 grid gap-3">
+                {latestCourses.map(({ course, courseId, enrollment }) => (
+                  <article className="detail-tile bg-paper-warm" key={courseId}>
+                    <span>{course?.term ?? "รอข้อมูลภาคการศึกษา"}</span>
+                    <strong>
+                      {course?.courseCode ? `${course.courseCode} ` : ""}
+                      {course?.title ?? "รอชื่อรายวิชา"}
+                    </strong>
+                    <p className="mt-2 text-sm leading-6 text-ink/65">
+                      Section {enrollment.section ?? "ไม่ระบุ"} ·{" "}
+                      {formatEnrollmentStatus(enrollment.status)}
+                    </p>
+                    <Link
+                      className="button-ghost mt-3 px-0"
+                      to={`/student/courses/${courseId}/scores`}
+                    >
+                      ดูคะแนนรายวิชานี้
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <div className="content-grid">
+            <article className="info-panel">
+              <p className="metadata-label">Progress</p>
+              <h2>พัฒนาการการเรียนรู้</h2>
+              <p>
+                เตรียมพื้นที่สำหรับสรุปความก้าวหน้าจากกิจกรรม interactive
+                ในอนาคต โดยยังไม่ใช้ข้อมูลจาก localStorage เป็นคะแนนทางการ
+              </p>
+            </article>
+            <article className="info-panel">
+              <p className="metadata-label">CLO</p>
+              <h2>การบรรลุผลลัพธ์การเรียนรู้</h2>
+              <p>
+                จะผูกกับ CLO จริงของรายวิชาหลังจากกำหนดเกณฑ์และวิธีตรวจสอบแล้ว
+                เพื่อไม่ให้คะแนนหรือ badge ถูกสร้างจากข้อมูลที่แก้ไขเองได้ง่าย
+              </p>
+            </article>
+            <article className="info-panel">
+              <p className="metadata-label">Badges</p>
+              <h2>Badge และ XP</h2>
+              <p>
+                เวอร์ชันถัดไปควรแยก XP เพื่อแสดงพัฒนาการออกจากคะแนนทางการ
+                และต้องมีข้อจำกัดกันการทำซ้ำเพื่อปั่นคะแนน
+              </p>
+            </article>
           </div>
         </div>
       </div>

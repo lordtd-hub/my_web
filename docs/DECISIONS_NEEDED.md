@@ -46,6 +46,8 @@
 - [ ] course title
 - [ ] รูปแบบ term หรือ semester
 - [ ] สื่อการเรียนรู้ใดเปิด public ได้ และสื่อใดต้อง private
+- [x] course model รองรับ `courseCode`, `sections`, `status` และ `portalEnabled` สำหรับรายวิชาจริง
+- [x] หน้า admin course detail แสดง control summary สำหรับ roster, enrollments, score items และ student scores
 
 หมายเหตุจากข้อมูลภาคเรียน 1/2569:
 
@@ -104,6 +106,7 @@
 การตัดสินใจปัจจุบันสำหรับรายวิชาที่มีรายชื่อจาก registrar:
 
 - [x] อาจารย์สามารถเพิ่ม roster ด้วยรหัสนักศึกษา 13 หลัก
+- [x] อาจารย์สามารถ import roster CSV ด้วย `studentId`, `section`, `displayName`, `status`
 - [x] email นักศึกษาอนุมานจากรหัสเป็น `{studentId}@student.sru.ac.th`
 - [x] roster ใช้กันคนนอกก่อนสร้าง enrollment จริง
 - [x] เมื่อนักศึกษา login ด้วย email ที่อยู่ใน roster ระบบจึง link เป็น enrollment ด้วย Firebase Auth UID
@@ -138,6 +141,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 - [x] เพิ่ม `แคลคูลัส 1 ภาษาไทย` เป็น external interactive learning resource สำหรับสื่อฝึกเบื้องต้น
 - [x] ผู้ใช้ชอบแนวคิดของสื่อ `calculus1-thai` และต้องการเก็บเป็นต้นแบบสำหรับ interactive learning ในรายวิชา
 - [x] ผู้ใช้ต้องการใช้ XP และ badges เป็นเครื่องมือวัดพัฒนาการและการบรรลุ CLOs ของนักศึกษาแต่ละคน
+- [x] หน้า `/student` มี dashboard กลางของผู้เรียนสำหรับรายวิชาของอาจารย์สิทธิโชค โดยแสดงจำนวนรายวิชา สถานะ enrollment และพื้นที่ placeholder สำหรับ progress/CLO/XP ที่ยังไม่ถือเป็นคะแนนจริง
 - [ ] activity types แรกที่จะนำเข้าระบบ เช่น lesson, interactive graph, quiz, mission หรือ game
 - [ ] กิจกรรมใดเป็น practice เท่านั้น และกิจกรรมใดนับเป็นคะแนนเก็บ
 - [ ] วิธี review หรือ approve activity result ก่อนโอนเป็นคะแนนทางการ
@@ -168,6 +172,7 @@ studentId,email,displayName,quiz1,quiz2,midterm
 ## Deployment
 
 - [x] Firebase project ID for local development: `academic-learning-portal-dev`
+- [x] เพิ่ม checklist ก่อน Firebase Hosting preview deploy ที่ `docs/PREVIEW_QA_CHECKLIST.md`
 - [ ] custom domain
 - [ ] อนุญาต preview deploy หรือไม่
 - [ ] อนุมัติ production deploy หรือไม่

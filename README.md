@@ -39,6 +39,7 @@
 │  ├─ SECURITY_MODEL.md
 │  ├─ ROADMAP.md
 │  ├─ DECISIONS_NEEDED.md
+│  ├─ PREVIEW_QA_CHECKLIST.md
 │  └─ CODEX_RUNBOOK.md
 ├─ prompts/
 │  ├─ 00_read_context_first.md
@@ -157,4 +158,5 @@ CSV import ทำงานใน browser:
 - `docs/SECURITY_MODEL.md`: โมเดลความปลอดภัย
 - `docs/ROADMAP.md`: แผนงานตาม milestone
 - `docs/DECISIONS_NEEDED.md`: เรื่องที่ยังต้องให้ผู้ใช้ตัดสินใจ
+- `docs/PREVIEW_QA_CHECKLIST.md`: checklist ก่อน Firebase Hosting preview deploy
 - `docs/CODEX_RUNBOOK.md`: วิธีให้ Codex ทำงานกับโครงการนี้

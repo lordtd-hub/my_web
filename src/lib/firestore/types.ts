@@ -16,10 +16,14 @@ export type AdminProfile = {
 export type Course = {
   title: string;
   slug: string;
+  courseCode?: string;
   term: string;
   year: number;
   description: string;
   isPublic: boolean;
+  portalEnabled?: boolean;
+  sections?: string[];
+  status?: "draft" | "active" | "archived";
   createdAt: Timestamp;
   updatedAt: Timestamp;
 };

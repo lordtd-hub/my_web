@@ -19,6 +19,7 @@ import {
   getScoreItemDocRef,
   getScoreItemsCollectionRef,
   getStudentScoreDocRef,
+  getStudentScoresCollectionRef,
 } from "../../lib/firestore/refs";
 import type {
   Course,
@@ -47,6 +48,32 @@ export type ScoreItemSummary = {
   data: ScoreItem;
 };
 
+export type CourseControlSummary = {
+  enrollmentCount: number;
+  rosterCount: number;
+  scoreItemCount: number;
+  studentScoreCount: number;
+};
+
+export function formatCourseStatus(status?: Course["status"]) {
+  if (status === "active") {
+    return "เปิดใช้งาน";
+  }
+
+  if (status === "archived") {
+    return "เก็บถาวร";
+  }
+
+  return "ร่าง";
+}
+
+export function parseSectionsInput(sectionsText: string) {
+  return sectionsText
+    .split(",")
+    .map((section) => section.trim())
+    .filter(Boolean);
+}
+
 export async function fetchAdminCourses(): Promise<CourseSummary[]> {
   const snapshot = await getDocs(
     query(getCoursesCollectionRef(), orderBy("year", "desc"), orderBy("title")),
@@ -70,18 +97,41 @@ export async function fetchAdminCourse(courseId: string) {
 }
 
 export async function createCourse(input: {
+  courseCode?: string;
   description: string;
   isPublic: boolean;
+  portalEnabled: boolean;
+  sections: string[];
+  status: NonNullable<Course["status"]>;
   slug: string;
   term: string;
   title: string;
   year: number;
 }) {
-  return addDoc(getCoursesCollectionRef(), {
+  const payload: {
+    courseCode?: string;
+    createdAt: ReturnType<typeof serverTimestamp>;
+    description: string;
+    isPublic: boolean;
+    portalEnabled: boolean;
+    sections: string[];
+    slug: string;
+    status: NonNullable<Course["status"]>;
+    term: string;
+    title: string;
+    updatedAt: ReturnType<typeof serverTimestamp>;
+    year: number;
+  } = {
     ...input,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
-  });
+  };
+
+  if (!input.courseCode?.trim()) {
+    delete payload.courseCode;
+  }
+
+  return addDoc(getCoursesCollectionRef(), payload);
 }
 
 export async function fetchCourseEnrollments(courseId: string) {
@@ -115,6 +165,25 @@ export async function fetchCourseScoreItems(courseId: string) {
     id: scoreItemDoc.id,
     data: scoreItemDoc.data(),
   }));
+}
+
+export async function fetchCourseControlSummary(
+  courseId: string,
+): Promise<CourseControlSummary> {
+  const [enrollmentsSnapshot, rosterSnapshot, scoreItemsSnapshot, scoresSnapshot] =
+    await Promise.all([
+      getDocs(getEnrollmentsCollectionRef(courseId)),
+      getDocs(getRosterCollectionRef(courseId)),
+      getDocs(getScoreItemsCollectionRef(courseId)),
+      getDocs(getStudentScoresCollectionRef(courseId)),
+    ]);
+
+  return {
+    enrollmentCount: enrollmentsSnapshot.size,
+    rosterCount: rosterSnapshot.size,
+    scoreItemCount: scoreItemsSnapshot.size,
+    studentScoreCount: scoresSnapshot.size,
+  };
 }
 
 export async function upsertEnrollment(
@@ -186,6 +255,59 @@ export async function upsertRosterEntry(
   await setDoc(getRosterDocRef(courseId, input.studentId), payload, {
     merge: true,
   });
+}
+
+export async function writeRosterImport(
+  courseId: string,
+  importRows: Array<{
+    displayName?: string;
+    section?: string;
+    status: RosterEntry["status"];
+    studentId: string;
+  }>,
+) {
+  const db = getDbClient();
+
+  if (!db) {
+    throw new Error("Firestore is not configured.");
+  }
+
+  const batch = writeBatch(db);
+  const now = serverTimestamp();
+
+  importRows.forEach((row) => {
+    const payload: {
+      createdAt: ReturnType<typeof serverTimestamp>;
+      displayName?: string;
+      email: string;
+      section?: string;
+      source: RosterEntry["source"];
+      status: RosterEntry["status"];
+      studentId: string;
+      updatedAt: ReturnType<typeof serverTimestamp>;
+    } = {
+      studentId: row.studentId,
+      email: buildStudentEmail(row.studentId),
+      status: row.status,
+      source: "registrar-import",
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    if (row.displayName?.trim()) {
+      payload.displayName = row.displayName.trim();
+    }
+
+    if (row.section?.trim()) {
+      payload.section = row.section.trim();
+    }
+
+    batch.set(getRosterDocRef(courseId, row.studentId), payload, {
+      merge: true,
+    });
+  });
+
+  await batch.commit();
 }
 
 export async function writeScoreImport(
