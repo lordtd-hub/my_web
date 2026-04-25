@@ -29,6 +29,12 @@ const highlights = [
   },
 ];
 
+const researchHeroTopics = [
+  "Fixed point theory",
+  "Generalized contractions",
+  "Distinct length path decomposition",
+];
+
 export function HomePage() {
   return (
     <>
@@ -71,28 +77,33 @@ export function HomePage() {
               src="/math-orbit-board.svg"
             />
           </div>
-          <div className="float-card float-card-research">
-            <div className="float-icon" aria-hidden="true">▤</div>
-            <div>
-              <p>งานวิจัยเด่น</p>
-              <ul>
-                {publications.map((publication) => (
-                  <li key={publication.title}>{publication.title}</li>
-                ))}
-              </ul>
-              <Link to="/research">ดูทั้งหมด →</Link>
+          <div className="hero-float-stack">
+            <div className="float-card float-card-research">
+              <div className="float-icon" aria-hidden="true">▤</div>
+              <div>
+                <p>งานวิจัยเด่น</p>
+                <ul>
+                  {researchHeroTopics.map((topic) => (
+                    <li key={topic}>{topic}</li>
+                  ))}
+                </ul>
+                <span className="float-card-note">
+                  ผลงานเผยแพร่ {publications.length} รายการในหน้างานวิจัย
+                </span>
+                <Link to="/research">ดูทั้งหมด →</Link>
+              </div>
             </div>
-          </div>
-          <div className="float-card float-card-course">
-            <div className="float-icon green" aria-hidden="true">▰</div>
-            <div>
-              <p>รายวิชาสาธารณะ</p>
-              <ul>
-                {publicCourses.map((course) => (
-                  <li key={course.slug}>{course.title}</li>
-                ))}
-              </ul>
-              <Link to="/courses">ดูรายวิชา →</Link>
+            <div className="float-card float-card-course">
+              <div className="float-icon green" aria-hidden="true">▰</div>
+              <div>
+                <p>รายวิชาสาธารณะ</p>
+                <ul>
+                  {publicCourses.map((course) => (
+                    <li key={course.slug}>{course.title}</li>
+                  ))}
+                </ul>
+                <Link to="/courses">ดูรายวิชา →</Link>
+              </div>
             </div>
           </div>
         </aside>
