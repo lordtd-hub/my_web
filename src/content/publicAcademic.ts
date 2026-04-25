@@ -118,6 +118,13 @@ export const publications: Publication[] = [
     url: "https://doi.org/10.14416/JASET.KMUTNB.2025.01.003",
   },
   {
+    title: "A Distinct Length Path Decomposition of Graphs",
+    authors: "Sittichoke Songsa-ard และ Atthakorn Sakda",
+    venue:
+      "Presented at 29th Annual Meeting in Mathematics (AMM 2025), Srinakharinwirot University, Bangkok, Thailand",
+    year: "2025",
+  },
+  {
     title: "Fixed point theory for alpha-G-contraction types on uniform spaces with a graph G",
     authors: "Sittichoke Songsa-ard",
     venue:
