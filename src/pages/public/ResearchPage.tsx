@@ -10,15 +10,13 @@ export function ResearchPage() {
     <PageShell
       eyebrow="วิจัย"
       title="ความสนใจด้านวิจัย"
-      description="หัวข้อวิจัยหลักอยู่ในกลุ่ม fixed point theory, uniform spaces และ generalized contractions"
+      description="หัวข้อวิจัยหลักครอบคลุม fixed point theory, uniform spaces, generalized contractions และ graph theory บางแขนง"
     >
       <div className="content-grid">
         {profilePlaceholder.researchInterests.map((interest) => (
-          <article className="info-panel" key={interest}>
-            <h2>{interest}</h2>
-            <p>
-              หัวข้อวิจัยด้านคณิตศาสตร์ที่เกี่ยวข้องกับโครงสร้างของปริภูมิและเงื่อนไขของการมีจุดตรึง
-            </p>
+          <article className="info-panel" key={interest.title}>
+            <h2>{interest.title}</h2>
+            <p>{interest.summary}</p>
           </article>
         ))}
       </div>
@@ -39,14 +37,16 @@ export function ResearchPage() {
               <p className="mt-1 text-sm leading-6 text-ink/65">
                 {publication.venue}, {publication.year}
               </p>
-              <a
-                className="text-link mt-3 inline-flex"
-                href={publication.url}
-                rel="noreferrer"
-                target="_blank"
-              >
-                อ่านรายละเอียด
-              </a>
+              {publication.url ? (
+                <a
+                  className="text-link mt-3 inline-flex"
+                  href={publication.url}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  อ่านรายละเอียด
+                </a>
+              ) : null}
             </article>
           ))}
         </div>

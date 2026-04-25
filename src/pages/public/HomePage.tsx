@@ -8,7 +8,7 @@ import {
 const highlights = [
   {
     title: "งานวิจัย",
-    body: "เผยแพร่ผลงานวิจัยในวารสารระดับนานาชาติด้านคณิตศาสตร์บริสุทธิ์และทฤษฎีจุดตรึง",
+    body: "เผยแพร่ผลงานด้านคณิตศาสตร์บริสุทธิ์ โดยเน้นทฤษฎีจุดตรึงและเริ่มขยายความสนใจไปยัง graph theory บางแขนง",
     link: "/research",
     linkLabel: "ดูผลงานวิจัย",
     tone: "blue",
@@ -41,11 +41,12 @@ export function HomePage() {
           </h1>
           <span className="hero-rule" aria-hidden="true" />
           <p className="hero-subtitle">
-            คณิตศาสตร์ • Fixed point theory • รายวิชาของอาจารย์สิทธิโชค
+            คณิตศาสตร์ • Fixed point theory • Graph theory
           </p>
           <p className="hero-body">
             อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มุ่งเน้นงานวิจัยทางคณิตศาสตร์บริสุทธิ์
-            โดยเฉพาะทฤษฎีจุดตรึง พร้อมพัฒนาการเรียนรู้ที่เชื่อมโยงทฤษฎีกับการประยุกต์ใช้
+            โดยเฉพาะทฤษฎีจุดตรึง ปริภูมิเอกรูป และ generalized contractions
+            พร้อมขยายความสนใจไปยัง graph theory ด้าน distinct length path decomposition
             เพื่อสร้างรากฐานที่แข็งแรงให้กับนักศึกษา
           </p>
           <div className="hero-actions">
@@ -141,9 +142,11 @@ export function HomePage() {
                 <p className="metadata-label">{publication.year}</p>
                 <h3>{publication.title}</h3>
                 <p>{publication.venue}</p>
-                <a className="text-link mt-4 inline-flex" href={publication.url} rel="noreferrer" target="_blank">
-                  อ่านรายละเอียด
-                </a>
+                {publication.url ? (
+                  <a className="text-link mt-4 inline-flex" href={publication.url} rel="noreferrer" target="_blank">
+                    อ่านรายละเอียด
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>

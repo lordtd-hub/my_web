@@ -16,7 +16,12 @@ export type Publication = {
   authors: string;
   venue: string;
   year: string;
-  url: string;
+  url?: string;
+};
+
+export type ResearchInterest = {
+  title: string;
+  summary: string;
 };
 
 export type AcademicLink = {
@@ -54,11 +59,23 @@ export const profilePlaceholder = {
   office: "อาคารเรียนรวม คณะวิทยาศาสตร์และเทคโนโลยี ชั้น 6 ห้อง δ (เดลต้าเล็ก)",
   profileImage: "/sittichoke.png",
   bio:
-    "อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มีความสนใจทางวิชาการด้าน fixed point theory, uniform spaces และแนวคิดเกี่ยวกับ contractions ในปริภูมิทางคณิตศาสตร์ โดยเว็บไซต์นี้ใช้เป็นพื้นที่รวบรวมข้อมูลการสอน งานวิจัย และพื้นที่รายวิชาสำหรับผู้เรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน",
+    "อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มีความสนใจทางวิชาการด้าน fixed point theory, uniform spaces, generalized contractions และ graph theory บางแขนง โดยเว็บไซต์นี้ใช้เป็นพื้นที่รวบรวมข้อมูลการสอน งานวิจัย และพื้นที่รายวิชาสำหรับผู้เรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน",
   researchInterests: [
-    "Fixed point theory",
-    "Uniform spaces",
-    "Contractions and generalized contractions",
+    {
+      title: "Fixed point theory และ uniform spaces",
+      summary:
+        "ศึกษาการมีอยู่ เอกลักษณ์ และการลู่เข้าของจุดตรึงในปริภูมิเอกรูป โดยอาศัยแนวคิดของ Picard operator และโครงสร้างที่กำหนดผ่าน pseudo-metrics",
+    },
+    {
+      title: "Generalized contractions with graph structures",
+      summary:
+        "สนใจการขยายแนวคิด alpha-G-contractions และ j-G-contractions บน uniform spaces โดยเชื่อมเงื่อนไขการหดตัวเข้ากับโครงสร้างกราฟ เช่น directed graphs และ weighted graphs",
+    },
+    {
+      title: "Graph theory: distinct length path decomposition",
+      summary:
+        "สนใจปัญหาการแบ่งกราฟออกเป็นเส้นทางที่มีความยาวไม่ซ้ำกัน โดยเฉพาะแนวทางพิสูจน์เชิงสร้างสำหรับ complete graphs และกราฟที่ได้จากการลบโครงสร้างย่อย เช่น cycles, paths หรือ stars",
+    },
   ],
 };
 
@@ -95,10 +112,17 @@ export const publications: Publication[] = [
   },
   {
     title: "Generalization of alpha-G-Contractions to j-G-Contractions on Uniform Spaces",
-    authors: "Sittichoke Songsa-ard และ Atthakorn Sakda",
+    authors: "Atthakorn Sakda และ Sittichoke Songsa-ard",
     venue: "Journal of Applied Science and Emerging Technology",
     year: "2025",
-    url: "https://ph01.tci-thaijo.org/index.php/JASCI/article/view/260436",
+    url: "https://doi.org/10.14416/JASET.KMUTNB.2025.01.003",
+  },
+  {
+    title: "Fixed point theory for alpha-G-contraction types on uniform spaces with a graph G",
+    authors: "Sittichoke Songsa-ard",
+    venue:
+      "Proceedings of the 28th Annual Meeting in Mathematics, The Mathematical Association of Thailand",
+    year: "2024",
   },
 ];
 

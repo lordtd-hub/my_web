@@ -16,8 +16,11 @@
 - [ ] Google Scholar URL แบบ profile เฉพาะตัว
 - [ ] GitHub URL แบบ profile เฉพาะตัว
 - [ ] ORCID หรือ research profile URL แบบ profile เฉพาะตัว
+- [ ] ยืนยันบรรณานุกรมที่ถูกต้องของงานด้าน graph theory / distinct length path decomposition ก่อนเพิ่มเป็น publication เต็มในหน้าเว็บ
 
 หมายเหตุ: ข้อมูล public profile เบื้องต้นได้รับการยืนยันจากผู้ใช้แล้ว หน้า research ใส่ลิงก์ค้นหา Google Scholar, ORCID และ GitHub ไว้ชั่วคราว แต่ยังไม่ถือว่าเป็น profile URL เฉพาะตัวจนกว่าจะพบหรือได้รับ URL ที่ยืนยันได้
+
+หมายเหตุงานวิจัยล่าสุด: อัปเดตหน้าเว็บให้สะท้อนความสนใจวิจัยด้าน fixed point theory, uniform spaces, generalized contractions และ graph theory: distinct length path decomposition แล้ว โดยยังไม่เพิ่มงาน path decomposition เป็น publication เต็ม เพราะไฟล์หลักฐานที่ให้มามีเนื้อหาเกี่ยวกับ path decomposition แต่หัวบรรณานุกรมในเอกสารยังไม่สอดคล้องกับชื่อไฟล์/เนื้อหา
 
 ## ขอบเขตชื่อระบบรายวิชา
 
