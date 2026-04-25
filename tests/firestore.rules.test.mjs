@@ -21,6 +21,9 @@ const PRIVATE_COURSE_ID = "fake-private-course";
 const ADMIN_UID = "admin-test-uid";
 const STUDENT_A_UID = "student-a-test-uid";
 const STUDENT_B_UID = "student-b-test-uid";
+const STUDENT_ROSTER_UID = "student-roster-test-uid";
+const STUDENT_ROSTER_ID = "6612345678901";
+const STUDENT_ROSTER_EMAIL = `${STUDENT_ROSTER_ID}@student.sru.ac.th`;
 
 let testEnv;
 
@@ -45,6 +48,22 @@ function adminDb() {
 
 function studentADb() {
   return testEnv.authenticatedContext(STUDENT_A_UID).firestore();
+}
+
+function rosterStudentDb() {
+  return testEnv
+    .authenticatedContext(STUDENT_ROSTER_UID, {
+      email: STUDENT_ROSTER_EMAIL,
+    })
+    .firestore();
+}
+
+function nonRosterStudentDb() {
+  return testEnv
+    .authenticatedContext("non-roster-student-uid", {
+      email: "6612345678999@student.sru.ac.th",
+    })
+    .firestore();
 }
 
 function anonymousDb() {
@@ -98,6 +117,17 @@ async function seedFakeData() {
       email: "student-b@example.test",
       status: "active",
       createdAt: "fake-created-at",
+    });
+
+    await setDoc(doc(db, "courses", COURSE_ID, "roster", STUDENT_ROSTER_ID), {
+      studentId: STUDENT_ROSTER_ID,
+      email: STUDENT_ROSTER_EMAIL,
+      displayName: "Fake Roster Student",
+      section: "P01",
+      status: "active",
+      source: "registrar-import",
+      createdAt: "fake-created-at",
+      updatedAt: "fake-updated-at",
     });
 
     await setDoc(doc(db, "courses", COURSE_ID, "studentScores", STUDENT_A_UID), {
@@ -238,6 +268,60 @@ describe("Firestore security rules", () => {
         email: "student-c@example.test",
         status: "active",
         createdAt: "fake-created-at",
+      }),
+    );
+  });
+
+  it("admin can write roster entries by student ID", async () => {
+    await assertSucceeds(
+      setDoc(doc(adminDb(), "courses", COURSE_ID, "roster", "6612345678902"), {
+        studentId: "6612345678902",
+        email: "6612345678902@student.sru.ac.th",
+        section: "P02",
+        status: "active",
+        source: "manual",
+        createdAt: "fake-created-at",
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("rostered student can read own roster and create own enrollment", async () => {
+    await assertSucceeds(
+      getDocs(
+        query(
+          collectionGroup(rosterStudentDb(), "roster"),
+          where("email", "==", STUDENT_ROSTER_EMAIL),
+        ),
+      ),
+    );
+
+    await assertSucceeds(
+      setDoc(doc(rosterStudentDb(), "courses", COURSE_ID, "enrollments", STUDENT_ROSTER_UID), {
+        uid: STUDENT_ROSTER_UID,
+        studentId: STUDENT_ROSTER_ID,
+        displayName: "Fake Roster Student",
+        email: STUDENT_ROSTER_EMAIL,
+        section: "P01",
+        status: "active",
+        source: "student-self-link",
+        createdAt: "fake-created-at",
+        updatedAt: "fake-updated-at",
+      }),
+    );
+  });
+
+  it("non-rostered student cannot create enrollment", async () => {
+    await assertFails(
+      setDoc(doc(nonRosterStudentDb(), "courses", COURSE_ID, "enrollments", "non-roster-student-uid"), {
+        uid: "non-roster-student-uid",
+        studentId: "6612345678999",
+        displayName: "Fake Non Roster Student",
+        email: "6612345678999@student.sru.ac.th",
+        status: "active",
+        source: "student-self-link",
+        createdAt: "fake-created-at",
+        updatedAt: "fake-updated-at",
       }),
     );
   });

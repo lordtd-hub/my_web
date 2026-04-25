@@ -14,11 +14,18 @@ import {
   getCoursesCollectionRef,
   getEnrollmentDocRef,
   getEnrollmentsCollectionRef,
+  getRosterCollectionRef,
+  getRosterDocRef,
   getScoreItemDocRef,
   getScoreItemsCollectionRef,
   getStudentScoreDocRef,
 } from "../../lib/firestore/refs";
-import type { Course, Enrollment, ScoreItem } from "../../lib/firestore/types";
+import type {
+  Course,
+  Enrollment,
+  RosterEntry,
+  ScoreItem,
+} from "../../lib/firestore/types";
 
 export type CourseSummary = {
   id: string;
@@ -28,6 +35,11 @@ export type CourseSummary = {
 export type EnrollmentSummary = {
   id: string;
   data: Enrollment;
+};
+
+export type RosterEntrySummary = {
+  id: string;
+  data: RosterEntry;
 };
 
 export type ScoreItemSummary = {
@@ -83,6 +95,17 @@ export async function fetchCourseEnrollments(courseId: string) {
     .sort((a, b) => a.data.displayName.localeCompare(b.data.displayName));
 }
 
+export async function fetchCourseRoster(courseId: string) {
+  const snapshot = await getDocs(getRosterCollectionRef(courseId));
+
+  return snapshot.docs
+    .map((rosterDoc) => ({
+      id: rosterDoc.id,
+      data: rosterDoc.data(),
+    }))
+    .sort((a, b) => a.data.studentId.localeCompare(b.data.studentId));
+}
+
 export async function fetchCourseScoreItems(courseId: string) {
   const snapshot = await getDocs(
     query(getScoreItemsCollectionRef(courseId), orderBy("order")),
@@ -107,7 +130,61 @@ export async function upsertEnrollment(
   await setDoc(getEnrollmentDocRef(courseId, uid), {
     uid,
     ...input,
+    source: "admin",
     createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+}
+
+export function buildStudentEmail(studentId: string) {
+  return `${studentId}@student.sru.ac.th`;
+}
+
+export function isValidStudentId(studentId: string) {
+  return /^\d{13}$/.test(studentId);
+}
+
+export async function upsertRosterEntry(
+  courseId: string,
+  input: {
+    displayName?: string;
+    section?: string;
+    status: RosterEntry["status"];
+    studentId: string;
+  },
+) {
+  if (!isValidStudentId(input.studentId)) {
+    throw new Error("รหัสนักศึกษาต้องเป็นตัวเลข 13 หลัก");
+  }
+
+  const payload: {
+    createdAt: ReturnType<typeof serverTimestamp>;
+    displayName?: string;
+    email: string;
+    section?: string;
+    source: RosterEntry["source"];
+    status: RosterEntry["status"];
+    studentId: string;
+    updatedAt: ReturnType<typeof serverTimestamp>;
+  } = {
+    studentId: input.studentId,
+    email: buildStudentEmail(input.studentId),
+    status: input.status,
+    source: "manual",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  };
+
+  if (input.displayName?.trim()) {
+    payload.displayName = input.displayName.trim();
+  }
+
+  if (input.section?.trim()) {
+    payload.section = input.section.trim();
+  }
+
+  await setDoc(getRosterDocRef(courseId, input.studentId), payload, {
+    merge: true,
   });
 }
 

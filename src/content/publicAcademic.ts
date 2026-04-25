@@ -33,6 +33,17 @@ export type InteractiveLearningResource = {
   status: string;
 };
 
+export type TeachingScheduleDay = {
+  day: string;
+  availableSlots: string[];
+  classes: Array<{
+    courseCode: string;
+    room: string;
+    section: string;
+    time: string;
+  }>;
+};
+
 export const profilePlaceholder = {
   displayName: "ดร.สิทธิโชค ทรงสอาด",
   displayNameEn: "Sittichoke Songsa-ard",
@@ -40,6 +51,7 @@ export const profilePlaceholder = {
   department: "สาขาวิชาคณิตศาสตร์ คณะวิทยาศาสตร์และเทคโนโลยี",
   university: "มหาวิทยาลัยราชภัฏสุราษฎร์ธานี",
   email: "sittichoke.son@sru.ac.th",
+  office: "อาคารเรียนรวม คณะวิทยาศาสตร์และเทคโนโลยี ชั้น 6 ห้อง δ (เดลต้าเล็ก)",
   profileImage: "/sittichoke.png",
   bio:
     "อาจารย์ประจำสาขาวิชาคณิตศาสตร์ มีความสนใจทางวิชาการด้าน fixed point theory, uniform spaces และแนวคิดเกี่ยวกับ contractions ในปริภูมิทางคณิตศาสตร์ โดยเว็บไซต์นี้ใช้เป็นพื้นที่รวบรวมข้อมูลการสอน งานวิจัย และพื้นที่รายวิชาสำหรับผู้เรียนในรายวิชาที่อาจารย์สิทธิโชคเป็นผู้สอน",
@@ -158,6 +170,94 @@ export const interactiveLearningResources: InteractiveLearningResource[] = [
       "สื่อฝึกแคลคูลัสแบบ interactive มีบทเรียนเชิงภาพ เกมฝึกคิด และภารกิจสำหรับการเรียนรู้ด้วยตนเอง",
     status:
       "ใช้เป็นสื่อฝึกและตัวอย่างแนวทาง interactive learning ยังไม่เชื่อมกับคะแนนทางการในระบบรายวิชานี้",
+  },
+];
+
+export const teachingScheduleTerm = "ภาคเรียนที่ 1/2569";
+
+export const teachingSchedule: TeachingScheduleDay[] = [
+  {
+    day: "จันทร์",
+    classes: [
+      {
+        time: "08:30-11:30",
+        courseCode: "SMA7005",
+        section: "N01",
+        room: "ED229",
+      },
+      {
+        time: "13:30-17:30",
+        courseCode: "SMA6002",
+        section: "N01",
+        room: "SCI0606",
+      },
+    ],
+    availableSlots: ["11:30-13:30", "17:30-18:30"],
+  },
+  {
+    day: "อังคาร",
+    classes: [
+      {
+        time: "08:30-11:30",
+        courseCode: "SMA2401",
+        section: "N01",
+        room: "SCI0606",
+      },
+      {
+        time: "11:30-13:30",
+        courseCode: "SMA6001",
+        section: "P01",
+        room: "N/A",
+      },
+      {
+        time: "13:30-16:30",
+        courseCode: "SMA2106",
+        section: "X01",
+        room: "SCI0605",
+      },
+    ],
+    availableSlots: ["16:30-18:30"],
+  },
+  {
+    day: "พุธ",
+    classes: [
+      {
+        time: "08:30-11:30",
+        courseCode: "GESC102",
+        section: "N09",
+        room: "SCI0511",
+      },
+      {
+        time: "13:30-16:30",
+        courseCode: "SMAC001",
+        section: "P01/P02",
+        room: "N/A",
+      },
+    ],
+    availableSlots: ["11:30-13:30", "16:30-18:30"],
+  },
+  {
+    day: "พฤหัสบดี",
+    classes: [],
+    availableSlots: ["08:30-18:30"],
+  },
+  {
+    day: "ศุกร์",
+    classes: [
+      {
+        time: "08:30-11:30",
+        courseCode: "SMA2301",
+        section: "N01",
+        room: "SCI0606",
+      },
+      {
+        time: "13:30-17:30",
+        courseCode: "SCI0007",
+        section: "N01",
+        room: "SCI0307",
+      },
+    ],
+    availableSlots: ["11:30-13:30", "17:30-18:30"],
   },
 ];
 

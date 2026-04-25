@@ -15,6 +15,7 @@ import type {
   Course,
   CourseAnnouncement,
   Enrollment,
+  RosterEntry,
   ScoreItem,
   StudentScore,
   UserProfile,
@@ -79,6 +80,14 @@ export function getEnrollmentDocRef(courseId: string, uid: string) {
 
 export function getEnrollmentsCollectionRef(courseId: string) {
   return typedCollection<Enrollment>("courses", courseId, "enrollments");
+}
+
+export function getRosterDocRef(courseId: string, studentId: string) {
+  return typedDoc<RosterEntry>("courses", courseId, "roster", studentId);
+}
+
+export function getRosterCollectionRef(courseId: string) {
+  return typedCollection<RosterEntry>("courses", courseId, "roster");
 }
 
 export function getAnnouncementsCollectionRef(courseId: string) {

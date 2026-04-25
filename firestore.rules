@@ -20,6 +20,34 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/courses/$(courseId)/enrollments/$(request.auth.uid));
     }
 
+    function isSruStudentEmail(email) {
+      return email is string
+        && email.matches('^\\d{13}@student\\.sru\\.ac\\.th$');
+    }
+
+    function canCreateOwnEnrollmentFromRoster(courseId, uid) {
+      return isSelf(uid)
+        && request.resource.data.keys().hasOnly([
+          'uid',
+          'studentId',
+          'displayName',
+          'email',
+          'section',
+          'status',
+          'source',
+          'createdAt',
+          'updatedAt'
+        ])
+        && request.resource.data.uid == uid
+        && request.resource.data.email == request.auth.token.email
+        && isSruStudentEmail(request.resource.data.email)
+        && request.resource.data.status == 'active'
+        && request.resource.data.source == 'student-self-link'
+        && exists(/databases/$(database)/documents/courses/$(courseId)/roster/$(request.resource.data.studentId))
+        && get(/databases/$(database)/documents/courses/$(courseId)/roster/$(request.resource.data.studentId)).data.email == request.auth.token.email
+        && get(/databases/$(database)/documents/courses/$(courseId)/roster/$(request.resource.data.studentId)).data.status == 'active';
+    }
+
     function canReadEnrollment(uid) {
       return isSelf(uid)
         || (signedIn() && resource.data.uid == request.auth.uid)
@@ -57,12 +85,24 @@ service cloud.firestore {
       allow read: if canReadEnrollment(uid);
     }
 
+    match /{path=**}/roster/{studentId} {
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.email == request.auth.token.email);
+    }
+
     match /courses/{courseId} {
       allow read: if resource.data.isPublic == true || isAdmin() || isEnrolled(courseId);
       allow write: if isAdmin();
 
       match /enrollments/{uid} {
         allow read: if canReadEnrollment(uid);
+        allow create: if isAdmin() || canCreateOwnEnrollmentFromRoster(courseId, uid);
+        allow update, delete: if isAdmin();
+      }
+
+      match /roster/{studentId} {
+        allow read: if isAdmin()
+          || (signedIn() && resource.data.email == request.auth.token.email);
         allow write: if isAdmin();
       }
 

@@ -37,7 +37,11 @@ export function useStudentCourses() {
       }));
 
       try {
-        const courses = await fetchStudentCourses(user.uid);
+        const courses = await fetchStudentCourses({
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+        });
 
         if (!isCurrent) {
           return;

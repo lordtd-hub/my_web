@@ -43,6 +43,10 @@ export function AboutPage() {
               <strong>{profilePlaceholder.department}</strong>
             </div>
             <div className="detail-tile">
+              <span>ห้องทำงาน</span>
+              <strong>{profilePlaceholder.office}</strong>
+            </div>
+            <div className="detail-tile">
               <span>รูปประจำตัวสำหรับเผยแพร่</span>
               <strong>ใช้รูปถ่ายที่อาจารย์ให้มาสำหรับหน้า public profile</strong>
             </div>

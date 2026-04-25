@@ -27,6 +27,7 @@
 อ่านได้:
 
 - user profile ของตนเอง
+- roster entry ของตนเองในรายวิชาที่ email ตรงกับ Firebase Auth email
 - enrollment ของตนเอง
 - course materials ที่ publish แล้วสำหรับรายวิชาที่ตนลงทะเบียน
 - score documents ของตนเอง
@@ -40,9 +41,12 @@
 เขียนไม่ได้:
 
 - scores
-- enrollments
 - admin documents
 - course settings
+
+เขียนได้แบบจำกัด:
+
+- สร้าง enrollment ของตนเองได้เฉพาะเมื่อมี `courses/{courseId}/roster/{studentId}` ที่ active และ email ตรงกับ Firebase Auth email รูปแบบ `รหัสนักศึกษา@student.sru.ac.th`
 
 ### อาจารย์หรือ admin
 
@@ -100,6 +104,8 @@ test suite ใช้ fake UIDs, fake courses, fake enrollments และ fake sc
 - Anonymous users อ่าน student score documents ไม่ได้
 - Public visitors อ่าน public course metadata ได้
 - Students query ได้เฉพาะ enrollment records ที่ `uid` field ตรงกับ Auth UID ของตน
+- Students ที่อยู่ใน roster และใช้ email นักศึกษาถูกต้องสามารถสร้าง enrollment ของตนเองจาก roster ได้
+- Students ที่ไม่อยู่ใน roster สร้าง enrollment ไม่ได้
 - Student A อ่าน score document ของ Student A ได้
 - Student A อ่าน score document ของ Student B ไม่ได้
 - Students เขียน score documents ไม่ได้

@@ -10,6 +10,7 @@
 admins/{uid}
 users/{uid}
 courses/{courseId}
+courses/{courseId}/roster/{studentId}
 courses/{courseId}/enrollments/{uid}
 courses/{courseId}/announcements/{announcementId}
 courses/{courseId}/scoreItems/{scoreItemId}
@@ -70,6 +71,35 @@ metadata ของรายวิชา
 
 `isPublic` ใช้บอกว่าผู้เข้าชมทั่วไปอ่านข้อมูลรายวิชานี้ได้หรือไม่
 
+## courses/{courseId}/roster/{studentId}
+
+รายชื่อผู้เรียนที่มีสิทธิ์เข้าใช้รายวิชานี้จาก registrar หรือการกรอกโดยอาจารย์
+
+```ts
+{
+  studentId: string;
+  email: string;
+  displayName?: string;
+  section?: string;
+  status: "active" | "inactive";
+  source: "registrar-import" | "manual";
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}
+```
+
+Document ID คือ `studentId` 13 หลัก
+
+สำหรับนักศึกษา SRU ใช้ email รูปแบบ:
+
+```text
+{studentId}@student.sru.ac.th
+```
+
+roster ใช้เป็น allowlist ก่อนนักศึกษามี Firebase Auth UID เมื่อนักศึกษา login ด้วย email นักศึกษา ระบบจึง link เป็น enrollment ที่ `courses/{courseId}/enrollments/{uid}` โดยใช้ Firebase Auth UID เป็น document ID
+
+ห้ามใช้ roster เป็นคะแนนหรือข้อมูลผลการเรียน
+
 ## courses/{courseId}/enrollments/{uid}
 
 ข้อมูลการลงทะเบียนของนักศึกษาในแต่ละรายวิชา
@@ -80,8 +110,11 @@ metadata ของรายวิชา
   studentId: string;
   displayName: string;
   email: string;
+  section?: string;
+  source?: "admin" | "student-self-link";
   status: "active" | "inactive";
   createdAt: Timestamp;
+  updatedAt?: Timestamp;
 }
 ```
 
@@ -184,6 +217,8 @@ score document ID ต้องมาจาก Firebase Auth UID ของ sessio
 Enrollment document IDs ควรยังคงเป็น Firebase Auth UID ส่วนพื้นที่ผู้เรียนของรายวิชาใช้ `uid` field สำหรับ collection group lookup เพราะ Firestore collection group `documentId()` filters ต้องใช้ path-shaped values ไม่ใช่ leaf UID
 
 Student portal ต้องมี Firestore index สำหรับ `collectionGroup("enrollments")` + `uid ASC` ตาม `firestore.indexes.json`
+
+หากยังไม่มี enrollment แต่มี roster ที่ email ตรงกับ Firebase Auth email ของผู้เรียน ระบบสามารถ link enrollment ให้เองได้ โดยยังต้องผ่าน Firestore Security Rules ที่ตรวจว่า roster ของรายวิชานั้นมี email และ studentId ตรงกัน
 
 ## การเขียนข้อมูลจาก Admin CSV import
 

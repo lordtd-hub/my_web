@@ -29,8 +29,22 @@ export type Enrollment = {
   studentId: string;
   displayName: string;
   email: string;
+  section?: string;
+  source?: "admin" | "student-self-link";
   status: "active" | "inactive";
   createdAt: Timestamp;
+  updatedAt?: Timestamp;
+};
+
+export type RosterEntry = {
+  studentId: string;
+  email: string;
+  displayName?: string;
+  section?: string;
+  status: "active" | "inactive";
+  source: "registrar-import" | "manual";
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
 };
 
 export type CourseAnnouncement = {
